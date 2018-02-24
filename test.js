@@ -4,45 +4,50 @@ var express = require("express"),
     router = express.Router();
 app.set('port', (process.env.PORT || 8000));
 app.use(express.static(__dirname + '/public'));
-
 app.set('views', path);
 app.set('view engine', 'ejs');
-
 app.listen(app.get('port'), function () {
     console.log('Node app is running on port', app.get('port'));
 });
-
 app.get('/', function (req, res) {
     res.render('index');
 })
-app.get('/index', function (req, res) {
-    res.render('index');
-})
-
 app.get('/login', function (req, res) {
-    res.render('selectUser');
+    res.render('login');
 })
-
-app.get('/deanLogin', function (req, res) {
-
-    res.render('deanLogin');
+app.get('/dashboard', function (req, res) {
+    res.render('dashboard');
 })
-
-app.get('/facilityLogin', function (req, res) {
-    res.render('facilityLogin');
-})
-
-app.get('/facultyLogin', function (req, res) {
-    res.render('facultyLogin');
-})
-
-app.get('/clubLogin', function (req, res) {
-    res.render('clubLogin');
-})
-
 app.get('/request', function (req, res) {
     res.render('request');
 })
+app.get('/logout', function (req, res) {
+    res.render('logout');
+})
+app.get('/onLogin', function (req, res) {
+    console.log("Login");
+})
+app.get('/getUserProfile', function (req, res) {
+    console.log("getUserProfile");
+})
+app.get('/getUserRequest', function (req, res) {
+    console.log("getUserRequest");
+})
+app.get('/getCalendar', function (req, res) {
+    console.log("getCalendar");
+})
+app.get('/updateRequest', function (req, res) {
+    console.log("updateRequest");
+})
+app.get('/deleteRequest', function (req, res) {
+    console.log("deleteRequest");
+})
+app.get('/submitRequest', function (req, res) {
+    console.log("submitRequest");
+})
+app.get('*', function(req, res){
+    res.status(404).send('Something broke!');
+});
 
 /*
 
@@ -275,7 +280,7 @@ app.get('/grantPermission', function (req, res) {
     });*/
 
 
-    
+
 /*
 app.get('/SudhamaniHallInfo', function (req, res) {
     var request = "Select * from requests where Hname='Sudhamani';"
