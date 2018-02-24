@@ -1,22 +1,44 @@
 {
-  "name": "hall-management-system",
+  "name": "bookmyhall",
   "version": "1.0.0",
-  "description": "A Hall Management System made originally for Amrita University based on HTML, CSS, JS, Node.js",
-  "main": "index.js",
+  "description": "",
+  "main": "app.js",
+  "keywords": [
+    "Amrita",
+    "BookMyHall",
+    "Hall",
+    "Booking"
+  ],
+  "man": [
+    "./README.MD"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aravindvnair99/Hall-Management-System.git"
+    "url": "https://github.com/Ashnayak/BookMyHall.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Contributors",
+  "contributors": [
+    {
+      "name": "Aravind V Nair",
+      "url": "https://aravindvnair1999.blogspot.com"
+    },
+    {
+      "name": "Ashwini Nayak",
+      "url": "https://github.com/Ashnayak"
+    }
+  ],
+  "license": "SEE LICENSE IN LICENSE",
   "bugs": {
-    "url": "https://github.com/aravindvnair99/Hall-Management-System/issues"
+    "url": "https://github.com/Ashnayak/BookMyHall/issues"
   },
-  "homepage": "https://github.com/aravindvnair99/Hall-Management-System#readme",
+  "homepage": "https://github.com/Ashnayak/BookMyHall",
   "dependencies": {
-    "ejs": "^2.5.7"
+    "body-parser": "^1.18.2",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "mysql": "^2.15.0"
   }
 }
