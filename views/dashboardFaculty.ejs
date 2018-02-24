@@ -10,6 +10,9 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+  <style> 
+       <%- include calendarcss.ejs %>
+  </style>
 </head>
 
 <body bgcolor="darkslateblue">
@@ -26,23 +29,46 @@
   </div>
   <div class="container">
     <center><h1>My Requests</h1></center>
-    Name of hall,Date,Time,Purpose
+    Amriteshwari Hall<br>
+    I/O week talk<br>
+    3rd March,2018,3:30-4:20<br>
+    Rajesh <br>
+    Status:Accept 
     <button onclick="location.href = 'www.yoursite.com';">Edit</button>
     <button onclick="location.href = 'www.yoursite.com';">Accept</button>
     <button onclick="location.href = 'www.yoursite.com';">Reject</button>
     <br>
-    Request 2
+    Sudhamani Hall<br>
+    Maardhani event<br>
+    4th March,2018,3:30-4:20<br>
+    Sreevidya <br>
+    Status:Accept 
     <button onclick="location.href = 'www.yoursite.com';">Edit</button>
     <button onclick="location.href = 'www.yoursite.com';">Accept</button>
     <button onclick="location.href = 'www.yoursite.com';">Reject</button>
     <br>
-    Request 3
+    Vyasa Hall<br>
+    Narthana<br>
+    23rd March,2018,3:30-4:20<br>
+    Praveen <br>
+    Status:Accept 
     <button onclick="location.href = 'www.yoursite.com';">Edit</button>
     <button onclick="location.href = 'www.yoursite.com';">Accept</button>
     <button onclick="location.href = 'www.yoursite.com';">Reject</button>
     <br>
     <br>
   </div>
+
+  
+
+  <%- include calendarview.ejs %>
+
+<div class="container">
+    <button onclick="location.href = 'www.yoursite.com';">Form</button>
+</div>
+
+      
+
 
   <!--
   <div class="container" >
@@ -54,6 +80,11 @@
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="js/materialize.js"></script>
   <script src="js/init.js"></script>
+
+  <script>
+        
+      <%- include calendarscript.ejs %>
+    </script> 
 
 </body>
 
