@@ -1,13 +1,9 @@
-# I found some bugs or issues. Where do I report?
+What steps did you take to make the bug appear?
 
-Report [here](https://github.com/aravindvnair99/Hall-Management-System/issues/new) in detail answering these questions:
+How can the bug be fixed? (In case you know)
 
-* What steps did you take to make the bug appear?
-* How can the bug be fixed? (Incase you know)
-* Which OS are you using?
-* Have you tried any troubleshooting steps such as a reboot for example?
-* Have you followed the prescribed prerequisites?
+Which OS and which all packages / softwares / dependencies are you using?
 
-# How do I contact the team?
+Have you tried any troubleshooting steps such as a reboot for example?
 
-Check [here](https://github.com/aravindvnair99/Hall-Management-System/graphs/contributors) for the list of contributors. Contact one of them through their profiles.
+Have you followed the prescribed prerequisites?
