@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ASE-B Hall Booking</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+</head>
+
+<body bgcolor="darkslateblue">
+  <nav class="white" role="navigation">
+    <div class="nav-wrapper container">
+      <a id="logo-container" href="#" class="brand-logo">ASE-B Hall Booking</a>
+
+    </div>
+  </nav>
+
+
+  <div class="row">
+    <div class="col s12 m6 l6 offset-l3 offset-m3">
+      <div class="card">
+
+
+
+        <div class="container">
+          <div class="row"></div>
+          <div class="row"></div>
+          <div class="row"></div>
+          <div class="row">
+            <form class="col s12" action="/makeRequest" method="post">
+              <div class="row">
+                <h3 class="center">Request Form</h3>
+              </div>
+              <div class="row">
+                <div class="input-field col s6">
+                  <input id="first_name" name="first_name" type="text" class="validate">
+                  <label for="first_name">First Name</label>
+                </div>
+                <div class="input-field col s6">
+                  <input id="last_name" name="last_name" type="text" class="validate">
+                  <label for="last_name">Last Name</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="club_name" name="club_name" type="text">
+                  <label for="club_name">Club Name</label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="mentor_name" name="mentor_name" type="text">
+                  <label for="mentor_name">Faculty Name / Club Mentor Name</label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="sec_name" name="sec_name" type="text">
+                  <label for="sec_name">Secretary Name</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <select name="wing_name">
+                    <option value="" disabled selected>Amritadhara Wing </option>
+                    <option value="Prachodana">Prachodhana</option>
+                    <option value="Sanskriti">Sanskriti</option>
+                    <option value="None">None of these</option>
+                  </select>
+                  <label>Choose a Wing</label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="input-field col s12">
+                  <select name="hall_name">
+                    <option value="Sudhamani">Sudhamani Hall</option>
+                    <option value="Amriteshwari">Amriteshwari Hall</option>
+                    <option value="Vyasa">Vyasa Hall</option>
+                    <option value="Krishna">Krishna Hall</option>
+                    <option value="Rama">Rama Hall</option>
+                    <option value="Valmiki">Valmiki Hall</option>
+                    <option value="ELearning">E-Learning Hall</option>
+                  </select>
+                  <label>Choose a Hall</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="date_slot" type="text" class="datepicker" name="date_slot">
+                  <label>Choose a date</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s6">
+                  <input id="from_slot" type="text" class="timepicker" name="from_slot">
+                  <label>From Time</label>
+                </div>
+
+                <div class="input-field col s6">
+                  <input id="to_slot" type="text" class="timepicker" name="to_slot">
+                  <label>To Time</label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="event_name" type="text" name="event_name">
+                  <label for="event_name">Event Name</label>
+                </div>
+              </div>
+
+
+
+              <div class="row">
+
+                <button class="btn waves-effect waves-light" type="submit">Submit
+                  <i class="material-icons right">send</i>
+                </button>
+                <div class="row"></div>
+                <div class="row">
+                  <input class="btn waves-effect waves-light" action="action" onclick="window.history.go(-1); return false;" type="button"
+                    value="Back" />
+                </div>
+              </div>
+            </form>
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('select').material_select();
+    });
+
+  </script>
+  <script>
+    $('.datepicker').pickadate({
+      selectMonths: true, // Creates a dropdown to control month
+      selectYears: 15, // Creates a dropdown of 15 years to control year,
+      today: 'Today',
+      clear: 'Clear',
+      close: 'Ok',
+      closeOnSelect: false // Close upon selecting a date,
+    }); 
+  </script>
+  <script>
+    $('.timepicker').pickatime({
+      default: 'now', // Set default time: 'now', '1:30AM', '16:30'
+      fromnow: 0,       // set default time to * milliseconds from now (using with default = 'now')
+      twelvehour: false, // Use AM/PM or 24-hour format
+      donetext: 'OK', // text for done-button
+      cleartext: 'Clear', // text for clear-button
+      canceltext: 'Cancel', // Text for cancel-button
+      autoclose: false, // automatic close timepicker
+      ampmclickable: true, // make AM PM clickable
+      aftershow: function () { } //Function for after opening timepicker
+    });
+  </script>
+</body>
+
+</html>

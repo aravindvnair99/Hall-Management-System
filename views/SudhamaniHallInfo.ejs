@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+  <link href="css/style1.css" type="text/css" rel="stylesheet" media="screen,projection" />
+</head>
+
+<body bgcolor="darkslateblue">
+  <nav class="white" role="navigation">
+    <div class="nav-wrapper container">
+      <a id="logo-container" href="#" class="brand-logo">ASE-B Hall Booking</a>
+    </div>
+  </nav>
+
+
+  <div class="row">
+    <div class="col s12 m6 l6 offset-l3 offset-m3">
+      <div class="card">
+
+
+
+        <div class="container">
+          <div class="row"></div>
+          <div class="row"></div>
+          <div class="row"></div>
+          <div class="row">
+            <form class="col s12" action="/makeRequest" method="post">
+              <div class="row">
+                <h3 class="center">Scheduled Events</h3>
+                <h5 class="center">Sudhamani Hall</h5>
+              </div>
+          </div>
+
+          <ul class="collection">
+
+            <li class="collection-item avatar">
+              <p>
+                <table class="table"></table>
+                <% for(var i=0; i<res.length; i++) {%>
+                  <div class="row">
+                    <i class="material-icons circle blue">menu</i>
+
+                    <tr>
+                      <td> Request ID :
+                        <%= res[i].rid  %>
+                      </td>
+                      <br>
+                      <td> Request By :
+                        <%= res[i].Fname %>
+                      </td>
+                      <td>
+                        <%= res[i].Lname  %>
+                      </td>
+                      <br>
+                      <td> Club Name :
+                        <%= res[i].ClubName  %>
+                      </td>
+                      <br>
+                      <td> Faculty/Mentor Name :
+                        <%= res[i].FacultyOrMentorName  %>
+                      </td>
+                      <br>
+                      <td> Secretary Name :
+                        <%= res[i].ClubSecName  %>
+                      </td>
+                      <br>
+                      <td> Dhara Wing :
+                        <%= res[i].Wing  %>
+                      </td>
+                      <br>
+                      <td> Event Date :
+                        <%= res[i].EventDate  %>
+                      </td>
+                      <br>
+                      <td> From Time :
+                        <%= res[i].FromTime  %>
+                      </td>
+                      <br>
+                      <td> To Time :
+                        <%= res[i].ToTime  %>
+                      </td>
+                      <br>
+                      <td> Event Name :
+                        <%= res[i].EventName  %>
+                      </td>
+                      <br>
+
+                    </tr>
+                  </div>
+                  <% } %>
+                    </table>
+
+              </p>
+
+            </li>
+
+          </ul>
+          </form>
+
+
+        </div>
+
+
+        <div class="row">
+
+          <input class="btn waves-effect waves-light" action="action" onclick="window.history.go(-1); return false;" type="button"
+            value="Back" />
+
+        </div>
+        </form>
