@@ -1,0 +1,22 @@
+{
+  "name": "hall-management-system",
+  "version": "1.0.0",
+  "description": "A Hall Management System made originally for Amrita University based on HTML, CSS, JS, Node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aravindvnair99/Hall-Management-System.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aravindvnair99/Hall-Management-System/issues"
+  },
+  "homepage": "https://github.com/aravindvnair99/Hall-Management-System#readme",
+  "dependencies": {
+    "ejs": "^2.5.7"
+  }
+}
