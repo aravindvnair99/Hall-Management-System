@@ -85,16 +85,19 @@ app.get('/getUserRequest', function (req, res) {
 app.get('/getCalendar', function (req, res) {
     console.log("getCalendar");
 })
-app.get('/updateRequest', function (req, res) {
+app.post('/updateRequest', function (req, res) {
     console.log("updateRequest");
 })
-app.get('/deleteRequest', function (req, res) {
+app.post('/deleteRequest', function (req, res) {
     console.log("deleteRequest");
 })
 app.get('/submitRequest', function (req, res) {
     console.log("submitRequest");
 })
 app.get('*', function(req, res){
+    res.status(404).send('Something broke!');
+});
+app.post('*', function(req, res){
     res.status(404).send('Something broke!');
 });
 
