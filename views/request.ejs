@@ -32,7 +32,6 @@
   <div class="row">
     <div class="col s12 m6 l6 offset-l3 offset-m3">
       <div class="card">
-
         <div>
           <div class="row"></div>
           <div class="row"></div>
@@ -43,7 +42,8 @@
                 <h3 class="center">Request Form</h3>
               </div>
               <div>
-                <%- include calendarview.ejs %>
+                <%- include calendarview.ejs %> 
+                <%= date1.dateis %>
               </div>
               <div class="row">
                 <div class="input-field col s12">
@@ -65,7 +65,7 @@
                 </div>
               </div>
               <div class="row">
-                <button class="btn waves-effect waves-light" type="submit">Submit
+                <button class="btn waves-effect waves-light" type="submit" >Submit
                   <i class="material-icons right">send</i>
                 </button>
                 <div class="row"></div>
@@ -75,10 +75,6 @@
                 </div>
               </div>
             </form>
-
-
-
-
           </div>
         </div>
       </div>
