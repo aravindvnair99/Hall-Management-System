@@ -1,6 +1,7 @@
 function selected(event){
     $("td").attr("class","");
     event.target.className += " random";
+    var temp=event.target;
   } 
   $("td").click(selected);
 
@@ -12,3 +13,4 @@ function selected(event){
      close: 'Ok',
      closeOnSelect: false // Close upon selecting a date,
    });
+
