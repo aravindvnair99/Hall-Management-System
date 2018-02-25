@@ -97,9 +97,6 @@ app.get('/submitRequest', function (req, res) {
 app.get('*', function(req, res){
     res.status(404).send('Something broke!');
 });
-app.post('*', function(req, res){
-    res.status(404).send('Something broke!');
-});
 
 /*
 
