@@ -1,7 +1,12 @@
 var express = require("express"),
     app = express(),
     path = __dirname + '/views/',
+    bodyParser = require('body-parser'),
     router = express.Router();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 app.set('port', (process.env.PORT || 8000));
 app.use(express.static(__dirname + '/public'));
 app.set('views', path);
