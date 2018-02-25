@@ -16,7 +16,56 @@ app.get('/login', function (req, res) {
     res.render('login');
 })
 app.get('/dashboard', function (req, res) {
-    res.render('dashboard');
+    let profile = {
+        name:"Rajesh",
+        department:"CSE"
+    };
+    let requests = [
+        {
+            hall:"Rama hall",
+            purpose:"ll",
+            date:"23/10/2108",
+            time:"3:30-4:30",
+            name:"Rajesh",
+            status:"pending",
+            accept:"False",
+            reject:"False",
+            update:"True"
+        },
+        {
+            hall:"Rama hall",
+            purpose:"ll",
+            date:"23/10/2108",
+            time:"3:30-4:30",
+            name:"Rajesh",
+            status:"pending",
+            accept:"False",
+            reject:"False",
+            update:"True"
+        },
+        {
+            hall:"Rama hall",
+            purpose:"ll",
+            date:"23/10/2108",
+            time:"3:30-4:30",
+            name:"Rajesh",
+            status:"pending",
+            accept:"False",
+            reject:"False",
+            update:"True"
+        }
+    ];
+    let calendar = [
+        {
+            hall: "xyz",
+            slots: [false, false, true, false, false, false, false, false]
+        },
+        {
+            hall: "abc",
+            slots: [false, false, false, false, true, false, false, false]
+        }
+    ];
+    res.render('dashboard', {profile: profile, requests: requests, calendar: calendar});
 })
 app.get('/request', function (req, res) {
     res.render('request');
