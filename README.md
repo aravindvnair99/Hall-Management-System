@@ -13,10 +13,12 @@ This project is licensed under the GNU General Public License v3.0 - see the [LI
 
 # :octocat: Team
 
+* **Rajesh Madathil** - *Mentor*
+* **Sreevidya Balakrishnan** - *Mentor*
+* **Renzil DSouza** - *Mentor* - [renzil](https://github.com/renzil)
 * **Ashwini Nayak** - *Base HTML, CSS and JS - Frontend* - [Ashnayak](https://github.com/Ashnayak)
 * **Abhishek Sai** - *Main HTML, CSS and JS - Frontend* - [Abhishek-Sai](https://github.com/Abhishek-Sai)
 * **Aravind V. Nair** - *Backend, Database, refactoring, bug fixes and security* - [AravindVNair99](https://github.com/aravindvnair99)
-* **Renzil DSouza** - *Mentor* - [renzil](https://github.com/renzil)
 
 See the full list of [contributors](https://github.com/aravindvnair99/Hall-Management-System/graphs/contributors) who participated in this project and statistics.
 
