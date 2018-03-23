@@ -73,9 +73,6 @@ app.get('/dashboard', function (req, res) {
     res.render('dashboard', {profile: profile, requests: requests, calendar: calendar});
 })
 app.get('/request', function (req, res) {
-    let date1{
-        dateis:23/03/2018
-    };
     res.render('request');
 })
 app.get('/logout', function (req, res) {
