@@ -1,9 +1,9 @@
-function selected(event){
+  function selected(event){
     $("td").attr("class","");
-    event.target.className += " random";
+    event.target.className += "random";
     
   } 
-  $("td").click(selected);
+  $("td").click(selected); 
 
   $('.datepicker').pickadate({
     selectMonths: true, // Creates a dropdown to control month
@@ -14,3 +14,11 @@ function selected(event){
      closeOnSelect: false // Close upon selecting a date,
    });
 
+   function colorpicker() {
+    document.getElementsbyclassName("colours");
+   }
+   
+  
+   
+    
+ 
