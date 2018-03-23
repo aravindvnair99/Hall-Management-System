@@ -100,5 +100,5 @@ app.get('/submitRequest', function (req, res) {
     console.log("submitRequest");
 })
 app.get('*', function(req, res){
-    res.status(404).send('Something broke!');
+    res.status(404).send('Error 404 - Not Found');
 });
