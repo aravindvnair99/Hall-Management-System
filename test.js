@@ -73,8 +73,9 @@ app.post('/onLogin', function (req, res) {
                     con.query("select * from booking where id='" + req.session.user.id + ";", function(err,rows1){
                         if (!err){
                             if(rows1.length > 0){
-                                console.log(req.session.book );
+                                
                                 req.session.book = rows1[0];
+                                console.log(req.session.book );
                             }
                             else{
                                 console.log("No booking");
