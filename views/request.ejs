@@ -52,7 +52,7 @@
                             <div>
                                 <div class="row container">
                                     <div class="input-field col s12">
-                                        <input id="date_slot" type="text" class="datepicker" name="date_slot">
+                                        <input id="date_wanted" type="text" class="datepicker" name="date_wanted">
                                         <label>Choose a date</label>
                                     </div>
                                 </div>
@@ -64,11 +64,10 @@
                                     <label for="club_name">Club Name</label>
                                 </div>
                             </div>
-
                             <div class="row container">
                                 <div class="input-field col s12">
-                                    <input id="sec_name" name="sec_name" type="text">
-                                    <label for="sec_name">Description</label>
+                                    <input id="desc" type="text" name="desc">
+                                    <label for="desc">Description</label>
                                 </div>
                             </div>
                             <div class="row container">
@@ -79,8 +78,8 @@
                             </div>
                             <div class="row container">
                                 <div class="input-field col s12">
-                                    <input id="req" type="text" name="req">
-                                    <label for="req">Requirements</label>
+                                    <input id="requir" type="text" name="requir">
+                                    <label for="requir">Requirements</label>
                                 </div>
                                 </div>
                             <div class="row container" align="center">
@@ -118,7 +117,8 @@
             today: 'Today',
             clear: 'Clear',
             close: 'Ok',
-            closeOnSelect: false // Close upon selecting a date,
+            closeOnSelect: false, // Close upon selecting a date,
+            format: 'yyyy/mm/dd'
         }); 
     </script>
     <script>
