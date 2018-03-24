@@ -2,8 +2,8 @@ var express = require("express"),
     app = express(),
     path = __dirname + '/views/',
     router = express.Router(),
-    bodyParser = require('body-parser'),
-    mysql = require('mysql');
+    bodyParser = require('body-parser');
+    //mysql = require('mysql')
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -19,7 +19,7 @@ app.listen(app.get('port'), function () {
     console.log('Node app is running on port', app.get('port'));
 });
 
-var con = mysql.createConnection({
+/*var con = mysql.createConnection({
     host: "localhost",
     user: 'root',
     password: '',
@@ -34,7 +34,7 @@ con.connect(function (error) {
     } else {
         console.log(" Connected Yo!");
     }
-});
+});*/
 
 app.get('/', function (req, res) {
     res.render('index');
