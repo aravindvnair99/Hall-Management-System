@@ -40,7 +40,7 @@ app.get('/login', function (req, res) {
     res.render('login');
 });
 app.get('/dashboard', function (req, res) {
-    res.render("dashboard");
+    res.render("dashboard", {res: name});
 });
 app.get('/request', function (req, res) {
     res.render('request');
