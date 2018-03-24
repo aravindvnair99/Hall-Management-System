@@ -4219,7 +4219,7 @@ nav.nav-extended {
 }
 
 nav.nav-extended .nav-wrapper {
-  min-height: 70px;
+  min-height: 56px;
   height: auto;
 }
 
@@ -4264,6 +4264,7 @@ nav .button-collapse i {
   height: 56px;
   line-height: 56px;
 }
+
 
 nav .brand-logo {
   position: absolute;
