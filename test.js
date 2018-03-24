@@ -74,7 +74,7 @@ app.get('/getUserProfile', function (req, res) {
         if (!err) {
             if (rows.length > 0) {
                 dbname = rows[0].name;
-                sessionStorage.setItem(name , dbname);
+                sessionStorage.setItem('name' , dbname);
                 res.redirect('/getUserRequest');
             }
         } else {
