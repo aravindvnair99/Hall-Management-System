@@ -80,25 +80,33 @@ app.get('/logout', function (req, res) {
 })
 app.get('/onLogin', function (req, res) {
     console.log("Login");
+    res.send('Need to add. Contact Aravind.');
 })
 app.get('/getUserProfile', function (req, res) {
     console.log("getUserProfile");
+    res.send('Need to add. Contact Aravind.');
 })
 app.get('/getUserRequest', function (req, res) {
     console.log("getUserRequest");
+    res.send('Need to add. Contact Aravind.');
 })
 app.get('/getCalendar', function (req, res) {
     console.log("getCalendar");
+    res.send('Need to add. Contact Aravind.');
 })
 app.post('/updateRequest', function (req, res) {
     console.log("updateRequest");
+    res.send('Need to add. Contact Aravind.');
 })
 app.post('/deleteRequest', function (req, res) {
     console.log("deleteRequest");
+    res.send('Need to add. Contact Aravind.');
 })
 app.get('/submitRequest', function (req, res) {
     console.log("submitRequest");
+    res.send('Need to add. Contact Aravind.');
 })
 app.get('*', function(req, res){
-    res.status(404).send('Error 404 - Not Found');
+    console.log("404");
+    res.status(404).send('Error 404 - Not Found Contact Aravind.');
 });
