@@ -51,6 +51,13 @@ app.get('/dashboard', function (req, res) {
         res.redirect('/login');
     }
 });
+app.get('/dashboard_tab', function (req, res) {
+    if(req.session.user){
+        res.render("dashboard_tab", {res: req.session.user});
+    } else{
+        res.redirect('/login');
+    }
+});
 app.get('/request', function (req, res) {
     if(req.session.user){
         res.render('request');
