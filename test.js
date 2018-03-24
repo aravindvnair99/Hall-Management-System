@@ -7,6 +7,23 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
 }));
+mysql = require('mysql');
+var con = mysql.createConnection({
+    host: "localhost",
+    user: 'root',
+    password: '',
+    database: 'ahms',
+    multipleStatements: true
+});
+
+con.connect(function (error) {
+    if (error) {
+        console.log("Error Connecting Yo!");
+        return;
+    } else {
+        console.log(" Connected Yo!");
+    }
+});
 app.set('port', (process.env.PORT || 8000));
 app.use(express.static(__dirname + '/public'));
 app.set('views', path);
@@ -80,7 +97,7 @@ app.get('/logout', function (req, res) {
 })
 app.get('/onLogin', function (req, res) {
     console.log("Login");
-    res.send('Need to add. Contact Aravind.');
+    
 })
 app.get('/getUserProfile', function (req, res) {
     console.log("getUserProfile");
