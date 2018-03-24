@@ -194,20 +194,6 @@ app.post('/dashboardClub', function (req, res) {
     //res.render('dashboardDhara');
 })
 
-app.get('/dashboardFaculty', function (req, res) {
-    res.render('dashboardFaculty');
-})
-app.get('/dashboardFacility', function (req, res) {
-    res.render('dashboardFacility');
-})
-app.get('/dashboardClub', function (req, res) {
-    res.render('dashboardClub');
-})
-app.get('/anagha', function (req, res) {
-    res.render('anagha');
-})
-
-
 
 app.post('/makeRequest', function (req, res) {
     var fname = req.body.first_name;
