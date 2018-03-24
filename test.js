@@ -33,10 +33,10 @@ app.listen(app.get('port'), function () {
 });
 app.get('/', function (req, res) {
     res.render('index');
-})
+});
 app.get('/login', function (req, res) {
     res.render('login');
-})
+});
 app.get('/dashboard', function (req, res) {
     let profile = {
         name:"Rajesh",
@@ -88,13 +88,13 @@ app.get('/dashboard', function (req, res) {
         }
     ];
     res.render('dashboard', {profile: profile, requests: requests, calendar: calendar});
-})
+});
 app.get('/request', function (req, res) {
     res.render('request');
-})
+});
 app.get('/logout', function (req, res) {
     res.render('logout');
-})
+});
 app.get('/onLogin', function (req, res) {
     console.log("Before Login");
     var username = req.body.username;
@@ -122,31 +122,31 @@ app.get('/onLogin', function (req, res) {
             res.render("error", { message: "Dont Poke Your Nose where you don't Belong!" });
         }
         console.log("After Login");    
-})
+});
 app.get('/getUserProfile', function (req, res) {
     console.log("getUserProfile");
     res.send('Need to add. Contact Aravind.');
-})
+});
 app.get('/getUserRequest', function (req, res) {
     console.log("getUserRequest");
     res.send('Need to add. Contact Aravind.');
-})
+});
 app.get('/getCalendar', function (req, res) {
     console.log("getCalendar");
     res.send('Need to add. Contact Aravind.');
-})
+});
 app.post('/updateRequest', function (req, res) {
     console.log("updateRequest");
     res.send('Need to add. Contact Aravind.');
-})
+});
 app.post('/deleteRequest', function (req, res) {
     console.log("deleteRequest");
     res.send('Need to add. Contact Aravind.');
-})
+});
 app.get('/submitRequest', function (req, res) {
     console.log("submitRequest");
     res.send('Need to add. Contact Aravind.');
-})
+});
 app.get('*', function(req, res){
     console.log("404");
     res.status(404).send('Error 404 - Not Found Contact Aravind.');
