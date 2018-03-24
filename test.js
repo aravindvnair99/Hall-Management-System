@@ -127,7 +127,8 @@ app.get('/getCalendar', function (req, res) {
 });
 app.post('/makeRequest', function (req, res) {
     let reqobj = [
-        
+        date_wanted = req.body.date_wanted,
+        date_
     ]
 });
 app.post('/updateRequest', function (req, res) {
