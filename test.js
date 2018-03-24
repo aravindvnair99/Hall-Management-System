@@ -96,8 +96,32 @@ app.get('/logout', function (req, res) {
     res.render('logout');
 })
 app.get('/onLogin', function (req, res) {
-    console.log("Login");
-    
+    console.log("Before Login");
+    var username = req.body.username;
+    var password = req.body.password;
+
+    con.query("select * from users where username='" + username + "' and role='1';", function (err, rows) {
+        if (!err) {
+            if (rows.length > 0) {
+
+                if (password === rows[0].Password) {
+                    res.render("dashboard");
+                } else {
+                    console.log("Password is Wrong Buddy!");
+                    res.render("error", { message: "Password is Wrong Buddy!" });
+                }
+
+            } else {
+                console.log("Username Not Found!");
+                res.render("error", { message: "Username Not Found!" });
+            }
+
+
+        } else {
+
+            res.render("error", { message: "Dont Poke Your Nose where you don't Belong!" });
+        }
+        console.log("After Login");    
 })
 app.get('/getUserProfile', function (req, res) {
     console.log("getUserProfile");
