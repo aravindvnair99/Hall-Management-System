@@ -46,7 +46,7 @@ app.get('/login', function (req, res) {
 });
 app.get('/dashboard', function (req, res) {
     if(req.session.user){
-        res.render("dashboard", {res: req.session.user});
+        res.render("dashboard", {res: req.session.user}, {res1: req.session.book});
     } else{
         res.redirect('/login');
     }
@@ -70,6 +70,20 @@ app.post('/onLogin', function (req, res) {
             if (rows.length > 0) {
                 if (password === rows[0].password) {
                     req.session.user=rows[0];
+                    con.query("select * from booking where id='" + req.session.user.id + ";", function(err,rows1){
+                        if (!err){
+                            if(rows1.length > 0){
+                                console.log(req.session.book );
+                                req.session.book = rows1[0];
+                            }
+                            else{
+                                console.log("No booking");
+                            }
+                        }
+                        else{
+                            console.log("I don't know");
+                        }
+                    });
                     res.redirect("/getUserProfile");
                 } else {
                     console.log("Password is Wrong Buddy!");
