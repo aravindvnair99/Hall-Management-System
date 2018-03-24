@@ -10,11 +10,14 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
-  <style> 
-       table, th, td {
-    border: 1px solid black;
+  <style>
+    table,
+    th,
+    td {
+      border: 1px solid black;
     }
-  td.random{
+
+    td.random {
       background-color: red;
     }
   </style>
@@ -26,36 +29,31 @@
       <a id="logo-container" href="#" class="brand-logo">ASE-B Hall Booking</a>
     </div>
   </nav>
-  
   <div class="container">
-    <div class="row"><%= profile.name %></div>
-    <div class="row"><%= profile.department %></div>
-  </div>
-  <div class="container">
-    <center><h1>My Requests</h1></center>
-    Amriteshwari Hall<br>
-    I/O week talk<br>
-    3rd March,2018,3:30-4:20<br>
-    Rajesh <br>
-    Status:Accept 
+    <center>
+      <h1>My Requests</h1>
+    </center>
+    Amriteshwari Hall
+    <br> I/O week talk
+    <br> 3rd March,2018,3:30-4:20
+    <br> Rajesh
+    <br> Status:Accept
     <button onclick="location.href = 'www.yoursite.com';">Edit</button>
     <button onclick="location.href = 'www.yoursite.com';">Accept</button>
     <button onclick="location.href = 'www.yoursite.com';">Reject</button>
-    <br>
-    Sudhamani Hall<br>
-    Maardhani event<br>
-    4th March,2018,3:30-4:20<br>
-    Sreevidya <br>
-    Status:Accept 
+    <br> Sudhamani Hall
+    <br> Maardhani event
+    <br> 4th March,2018,3:30-4:20
+    <br> Sreevidya
+    <br> Status:Accept
     <button onclick="location.href = 'www.yoursite.com';">Edit</button>
     <button onclick="location.href = 'www.yoursite.com';">Accept</button>
     <button onclick="location.href = 'www.yoursite.com';">Reject</button>
-    <br>
-    Vyasa Hall<br>
-    Narthana<br>
-    23rd March,2018,3:30-4:20<br>
-    Praveen <br>
-    Status:Accept 
+    <br> Vyasa Hall
+    <br> Narthana
+    <br> 23rd March,2018,3:30-4:20
+    <br> Praveen
+    <br> Status:Accept
     <button onclick="location.href = 'www.yoursite.com';">Edit</button>
     <button onclick="location.href = 'www.yoursite.com';">Accept</button>
     <button onclick="location.href = 'www.yoursite.com';">Reject</button>
@@ -65,9 +63,9 @@
   <!--
   <%- include calendarview.ejs %>
 <div class="container"> -->
-  <div style= "padding-left: 15%; padding-top: 2% ">
-    <button onclick="location.href = '/request'" >Request Form</button>
-</div>
+  <div style="padding-left: 15%; padding-top: 2% ">
+    <button onclick="location.href = '/request'">Request Form</button>
+  </div>
   <!--
   <div class="container" >
       <button onclick="location.href = 'www.yoursite.com';">Create Request</button>
