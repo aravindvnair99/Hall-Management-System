@@ -51,18 +51,18 @@ footer.page-footer {
 
 /* label color */
 .input-field label {
-  color: #066437 !important;
+  color: #26a69a !important;
 }
 
 /* label underline focus color */
 .input-field input[type=text]:focus {
-  border-bottom: 1px solid #066437 !important;
-  box-shadow: 0 1px 0 0 #066437 !important;
+  border-bottom: 1px solid #26a69a !important;
+  box-shadow: 0 1px 0 0 #26a69a !important;
 }
 /* valid color */
 .input-field input[type=text].valid {
-  border-bottom: 1px solid #066437 !important;
-  box-shadow: 0 1px 0 0 #066437!important;
+  border-bottom: 1px solid #26a69a !important;
+  box-shadow: 0 1px 0 0 #26a69a!important;
 }
 /* invalid color */
 .input-field input[type=text].invalid {
@@ -71,7 +71,7 @@ footer.page-footer {
 }
 /* icon prefix focus color */
 .input-field .prefix.active {
-  color: #066437 !important;
+  color: #000000 !important;
 }
   
 #aaa{
