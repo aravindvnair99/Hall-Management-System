@@ -126,10 +126,8 @@ app.get('/getCalendar', function (req, res) {
     res.send('Need to add. Contact Aravind.');
 });
 app.post('/makeRequest', function (req, res) {
-    let reqobj = [
-        date_wanted = req.body.date_wanted,
-        date_
-    ]
+    var a = req.session.count;
+    console.log(a);
 });
 app.post('/updateRequest', function (req, res) {
     console.log("updateRequest");
