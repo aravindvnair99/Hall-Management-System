@@ -31,7 +31,7 @@ con.connect(function (error) {
     }
 });
 
-var name;
+var dbname;
 
 app.get('/', function (req, res) {
     res.render('index');
@@ -73,7 +73,8 @@ app.get('/getUserProfile', function (req, res) {
     con.query("select * from users where id='1'", function (err, rows) {
         if (!err) {
             if (rows.length > 0) {
-                name = rows[0].name;
+                dbname = rows[0].name;
+                sessionStorage.setItem('name' , dbname);
                 res.redirect('/getUserRequest');
             }
         } else {
