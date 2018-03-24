@@ -82,7 +82,8 @@ app.post('/onLogin', function (req, res) {
                             }
                         }
                         else{
-                            console.log("I don't know");
+
+                            console.log(err);
                         }
                     });
                     res.redirect("/getUserProfile");
