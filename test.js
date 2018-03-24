@@ -46,7 +46,7 @@ app.get('/login', function (req, res) {
 });
 app.get('/dashboard', function (req, res) {
     if(req.session.user){
-        res.render("dashboard", {res: req.session.user.name});
+        res.render("dashboard", {res: req.session.user});
     } else{
         res.redirect('/login');
     }
@@ -154,7 +154,7 @@ app.post('/makeRequest', function (req, res) {
     con.query('insert into booking set ?', obj, function (err, result) {
         if (!err) {
             console.log("success");
-            res.render("dashboard", { res: req.session.user.name});
+            res.render("dashboard", { res: req.session.user});
         } else {
             console.log(err);
             res.render("error", { message: "Not working." });
