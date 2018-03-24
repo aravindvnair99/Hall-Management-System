@@ -8,7 +8,6 @@ var express = require("express"),
 app.use(cookieSession({
     name: 'session',
     keys: ['ahms'],
-    
     // Cookie Options
     maxAge: 24 * 60 * 60 * 1000 // 24 hours
     }))
@@ -53,10 +52,15 @@ app.get('/dashboard', function (req, res) {
     }
 });
 app.get('/request', function (req, res) {
-    res.render('request');
+    if(req.session.user){
+        res.render('request');
+    } else{
+        res.redirect('/login');
+    }
 });
 app.get('/logout', function (req, res) {
-    res.render('logout');
+    res.clearCookie('session', {path: '/'});
+    res.redirect('/login');
 });
 app.post('/onLogin', function (req, res) {
     var username = req.body.username;
@@ -126,10 +130,36 @@ app.get('/getCalendar', function (req, res) {
     res.send('Need to add. Contact Aravind.');
 });
 app.post('/makeRequest', function (req, res) {
-    let reqobj = [
-        date_wanted = req.body.date_wanted,
-        date_
-    ]
+    var date_wanted = req.body.date_wanted;
+    var slot = "1";
+    var hall = "1";
+    var club = req.body.club_name;
+    var details = req.body.desc;
+    var title = req.body.event_name;
+    var requir = req.body.requir;
+    var status = "0";
+    var obj = {
+        date_wanted: date_wanted,
+        slot: slot,
+        hall: hall,
+        title: title,
+        club: club,
+        req: requir,
+        details: details,
+        status: status
+    };
+    console.log(obj.club);
+    console.log(obj.slot);
+    console.log(obj.title);
+    con.query('insert into booking set ?', obj, function (err, result) {
+        if (!err) {
+            console.log("success");
+            res.render("dashboard", { res: req.session.user.name});
+        } else {
+            console.log(err);
+            res.render("error", { message: "Not working." });
+        }
+    });
 });
 app.post('/updateRequest', function (req, res) {
     console.log("updateRequest");
@@ -137,10 +167,6 @@ app.post('/updateRequest', function (req, res) {
 });
 app.post('/deleteRequest', function (req, res) {
     console.log("deleteRequest");
-    res.send('Need to add. Contact Aravind.');
-});
-app.get('/submitRequest', function (req, res) {
-    console.log("submitRequest");
     res.send('Need to add. Contact Aravind.');
 });
 app.get('*', function(req, res) {
