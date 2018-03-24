@@ -25,9 +25,12 @@
     <nav class="white" role="navigation">
         <div class="nav-wrapper container">
             <a id="logo-container" href="/dashboard" class="brand-logo">ASE-B Hall Booking</a>
-            <span style="color:black">Welcome! <%= res %></span>
+            <span style="color:black">Welcome! <%= res.name %></span>
         </div>
     </nav>
+    <div style="padding-left: 15%; padding-top: 2%">
+        Hall name: <%= res.hall %>
+    </div>
     <div style="padding-left: 15%; padding-top: 2%">
         <button onclick="location.href = '/request'">Request Form</button>
     </div>
