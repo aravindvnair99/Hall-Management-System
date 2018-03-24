@@ -126,7 +126,9 @@ app.get('/getCalendar', function (req, res) {
     res.send('Need to add. Contact Aravind.');
 });
 app.post('/makeRequest', function (req, res) {
-    
+    let reqobj = [
+        
+    ]
 });
 app.post('/updateRequest', function (req, res) {
     console.log("updateRequest");
