@@ -46,7 +46,7 @@ app.get('/login', function (req, res) {
 });
 app.get('/dashboard', function (req, res) {
     if(req.session.user){
-        res.render("dashboard", {res: req.session.user}, {res1: req.session.book});
+        res.render("dashboard", {res: req.session.user , res1: req.session.book});
     } else{
         res.redirect('/login');
     }
