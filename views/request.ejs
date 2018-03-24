@@ -14,11 +14,14 @@
         table,
         th,
         td {
-            border: 1px solid black;
+            border: 1px solid rgb(0, 0, 0);
         }
 
         .colour {
-            background-color: red;
+            background-color: rgb(255, 49, 49);
+        }
+        td:hover {
+            background-color: rgb(15, 151, 3);
         }
     </style>
 </head>
@@ -63,7 +66,7 @@
                                         <th>5:30-6:30</th>
                                     </tr>
                                     <tr>
-                                        <td style="background-color: rgb(0, 4, 216)">Amriteswari Hall</td>
+                                        <td style="background-color: rgb(57, 0, 214); color: #FFFFFF">Amriteswari Hall</td>
                                         <td id="1a"></td>
                                         <td id="2a"></td>
                                         <td id="3a"></td>
@@ -75,7 +78,7 @@
                                         <td id="9a"></td>
                                     </tr>
                                     <tr>
-                                        <td style="background-color: rgb(0, 4, 216)">Sudhamani Hall</td>
+                                        <td style="background-color: rgb(57, 0, 214); color: #FFFFFF">Sudhamani Hall</td>
                                         <td id="1s"></td>
                                         <td id="2s"></td>
                                         <td id="3s"></td>
@@ -87,7 +90,7 @@
                                         <td id="9s"></td>
                                     </tr>
                                     <tr>
-                                        <td style="background-color: rgb(0, 4, 216)">Rama Hall</td>
+                                        <td style="background-color: rgb(57, 0, 214); color: #FFFFFF">Rama Hall</td>
                                         <td id="1r"></td>
                                         <td id="2r"></td>
                                         <td id="3r"></td>
@@ -99,7 +102,7 @@
                                         <td id="9r"></td>
                                     </tr>
                                     <tr>
-                                        <td style="background-color: rgb(0, 4, 216)">Vyasa Hall</td>
+                                        <td style="background-color: rgb(57, 0, 214); color: #FFFFFF">Vyasa Hall</td>
                                         <td id="1v"></td>
                                         <td id="2v"></td>
                                         <td id="3v"></td>
@@ -111,7 +114,7 @@
                                         <td id="9v"></td>
                                     </tr>
                                     <tr>
-                                        <td style="background-color: rgb(0, 4, 216)">Krishna Hall</td>
+                                        <td style="background-color: rgb(57, 0, 214); color: #FFFFFF">Krishna Hall</td>
                                         <td id="1k"></td>
                                         <td id="2k"></td>
                                         <td id="3k"></td>
@@ -123,7 +126,7 @@
                                         <td id="9k"></td>
                                     </tr>
                                     <tr>
-                                        <td style="background-color: rgb(0, 4, 216)">E-learning Hall</td>
+                                        <td style="background-color: rgb(57, 0, 214); color: #FFFFFF">E-learning Hall</td>
                                         <td id="1e"></td>
                                         <td id="2e"></td>
                                         <td id="3e"></td>
@@ -156,11 +159,16 @@
                                 </div>
                             </div>
                             <div class="row container">
+                                <div class="input-field col s12">
+                                    <input id="req" type="text" name="req">
+                                    <label for="req">Requirements</label>
+                                </div>
+                                </div>
+                            <div class="row container" align="center">
                                 <button class="btn waves-effect waves-light" type="submit">Submit
                                     <i class="material-icons right">send</i>
                                 </button>
-                                <input class="btn waves-effect waves-light" action="action" onclick="window.history.go(-1); return false;" type="button"
-                                    value="Back" />
+                                <input class="btn waves-effect waves-light" action="action" onclick="window.history.go(-1); return false;" type="button" value="Back"/>
                             </div>
                         </form>
                     </div>
