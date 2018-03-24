@@ -99,7 +99,6 @@ app.post('/onLogin', function (req, res) {
     console.log("Before Login");
     var username = req.body.username;
     var password = req.body.password;
-
     con.query("select * from users where username='" + username + "' and role='1';", function (err, rows) {
         if (!err) {
             if (rows.length > 0) {
