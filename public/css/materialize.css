@@ -2534,7 +2534,7 @@ table {
 
 td,
 th {
-  vertical-align: -webkit-baseline-middle
+  vertical-align: -webkit-baseline-middle;
   
   padding: 0;
 }
