@@ -10,7 +10,7 @@ app.use(cookieSession({
     keys: ['ahms'],
     // Cookie Options
     maxAge: 24 * 60 * 60 * 1000 // 24 hours
-    }))
+    }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
@@ -53,7 +53,7 @@ app.get('/dashboard', function (req, res) {
 });
 app.get('/dashboard_tab', function (req, res) {
     if(req.session.user){
-        res.render("dashboard_tab", {res: req.session.user});
+        res.render("dashboard_tab", {res: req.session.user, book: req.book.user});
     } else{
         res.redirect('/login');
     }
@@ -77,7 +77,7 @@ app.post('/onLogin', function (req, res) {
             if (rows.length > 0) {
                 if (password === rows[0].password) {
                     req.session.user=rows[0];
-                    res.redirect("/getUserProfile");
+                        res.redirect("/dashboard");
                 } else {
                     console.log("Password is Wrong Buddy!");
                     res.render("error", { message: "Password is Wrong Buddy!"});
