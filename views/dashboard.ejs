@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>ASE-B Hall Booking</title>
+    <title><b>ASE-B Hall Booking</b></title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
@@ -25,42 +25,53 @@
     <nav class="white" role="navigation">
         <div class="nav-wrapper container">
             <a id="logo-container" href="/dashboard" class="brand-logo">ASE-B Hall Booking</a>
-                <button style="margin-left: 75%" onclick="location.href = '/logout'">Logout</button>
+            <button style="margin-left: 50%;margin-top: 2%;margin-bottom: 2%;background-color: #35377c" class="btn waves-effect waves-light onclick="location.href = '/request'>Request Form</button>
+            &nbsp;
+                <button style="margin-left: 10%;margin-top: 2%;margin-bottom: 2%;background-color: #35377c;" class="btn waves-effect waves-light" onclick="location.href = '/logout'">Logout</button>
     </nav>
     <div>
         <br><br>
-        <span style="color:black;padding-left: 15%;font-size: 23px">Welcome! <%= res.name %> </span>
-        <button onclick="location.href = '/request'">Request Form</button>
+       <b> <i style="padding-left: 15%" class="medium small material-icons prefix ">account_box</i> 
+        <span style="color:black;font-size: 30px">Welcome <%= res.name %>! </span></b>
+       
     </div>
     <br>
     <% for(var i=0; i<data.length; i++) {%>
+        <br><br> <hr>
         <div class="row">
             <div class="container">
-                Booking ID: <%= data[i].id %>
+                <br><br>
+               <b> Booking ID: <%= data[i].id %></b>
                 <br>
-                Date requested: <%= data[i].date_req %>
+               <b> Date requested:</b> <%= data[i].date_req %>
                 <br>
-                Date wanted: <%= data[i].date_wanted %>
+                <b>Date wanted:</b> <%= data[i].date_wanted %>
                 <br>
-                Slot: <%= data[i].slot %>
+                <b>Slot:</b> <%= data[i].slot %>
                 <br>
-                Hall: <%= data[i].hall %>
+                <b>Hall:</b> <%= data[i].hall %>
                 <br>
-                Title: <%= data[i].title %>
+                <b>Title:</b> <%= data[i].title %>
                 <br>
-                Club: <%= data[i].club %>
+                <b>Club:</b> <%= data[i].club %>
                 <br>
-                Requirements: <%= data[i].req %>
+                <b> Requirements:</b> <%= data[i].req %>
                 <br>
-                Details: <%= data[i].details %>
+                <b>Details:</b> <%= data[i].details %>
                 <br>
-                Status: <%= data[i].id %>
+                <b> Status:</b> <%= data[i].id %>
+                
             </div>
-        </div>
+            
+        
     <% } %>
+    <br><br>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="js/materialize.js"></script>
     <script src="js/init.js"></script>
+</div>
+<hr>
+
 </body>
 
 </html>
