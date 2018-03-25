@@ -36,7 +36,7 @@
         <span style="color:black;font-size: 30px">Welcome <%= res.name %>! </span></b>
        
     </div>
-    <% for(var i=0; i<data.length; i++) {%>
+    <% for(var i=(data.length-1); i>=0; i--) {%>
         <br><br> <hr>
         <div class="row">
             <div class="container">
@@ -69,19 +69,24 @@
                         Rejected
                      <% } %>
                 <br><br>
-                <form action="" method="post"></form>
-                <button name="bt<%= data[i].id %>" style="background-color: #006416 " class="btn waves-effect waves-light" onclick="location.href = '/approve'">Approve
-                <i class="material-icons right">send</i>
-                </button>
-                &nbsp;&nbsp;
-                <button name="bt<%= data[i].id %>" style="background-color: #c5002b " class="btn waves-effect waves-light" onclick="location.href = '/reject'">Reject
-                    <i class="material-icons right">send</i>
+                <form action="" type="post">
+                    <button name="app" value="<%= data[i].id %>" style="background-color: #006416 " class="btn waves-effect waves-light" onclick="localStorage.setItem('Approve', '<%= data[i].id %>');">Approve
+                        <i class="material-icons right">send</i>
                     </button>
+                    &nbsp;&nbsp;
+                    <button name="rej" value="<%= data[i].id %>" style="background-color: #c5002b " class="btn waves-effect waves-light" onclick="localStorage.setItem('Reject', '<%= data[i].id %>');">Reject
+                        <i class="material-icons right">send</i>
+                    </button>
+                </form>
             </div>
-    <% } %>
+        </div>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="js/materialize.js"></script>
     <script src="js/init.js"></script>
+    <script>
+        myStorage = window.localStorage;
+    </script>
+    <% } %>
 </body>
 
 </html>
