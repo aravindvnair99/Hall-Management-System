@@ -172,8 +172,10 @@ app.post('/makeRequest', function (req, res) {
         if (!err) {
             console.log("success");
             con.query("select * from booking where user_id='" + req.session.user.id + "';", function (err, data) {
-                console.log(data);
-                res.render("dashboard", {res: req.session.user, data});
+                if (req.session.user.role == 1)
+                    res.redirect("/dashboard_dean");
+                else
+                    res.render("dashboard", {res: req.session.user, data});
             });
         } else {
             console.log(err);
