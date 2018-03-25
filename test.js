@@ -67,7 +67,6 @@ app.get('/dashboard_tab', function (req, res) {
 app.get('/dashboard_dean', function (req, res) {
     if(req.session.user) {
         con.query("select * from booking;", function (err, data) {
-            console.log(data);
             res.render("dashboard_dean", {res: req.session.user, data});
         });
     } else{
@@ -148,10 +147,6 @@ app.get('/getUserProfile', function (req, res) {
 app.get('/getUserRequest', function (req, res) {
     res.redirect('/dashboard');
 });
-app.get('/getCalendar', function (req, res) {
-    console.log("getCalendar");
-    res.send('Need to add. Contact Aravind.');
-});
 app.post('/makeRequest', function (req, res) {
     var user_id = req.session.user.id;
     var date_wanted = req.body.date_wanted;
@@ -195,16 +190,22 @@ app.post('/deleteRequest', function (req, res) {
     res.send('Need to add. Contact Aravind.');
 });
 app.post('/approve', function (req, res) {
-    var query = "update booking set status='1' where id ='" + name + "';";
-    console.log(query);
+    var temp = localStorage.getItem("Approve");
+    var query = "update booking set status='1' where id ='" + temp + "';";
+    console.log("Approved is" + temp);
     con.query(query, function (err, result) {
-        console.log("ash")
-        res.render("dashboardDean", { message: "Cool" });
+        console.log("app")
+        res.redirect("/dashboard_dean");
     });
 });
 app.post('/reject', function (req, res) {
-    console.log("deleteRequest");
-    res.send('Need to add. Contact Aravind.');
+    var temp = localStorage.getItem("Reject");
+    var query = "update booking set status='2' where id ='" + temp + "';";
+    console.log("Rejected is" + temp);
+    con.query(query, function (err, result) {
+        console.log("rej")
+        res.redirect("/dashboard_dean");
+    });
 });
 app.get('*', function(req, res) {
     console.log("404");
