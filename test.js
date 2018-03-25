@@ -55,8 +55,21 @@ app.get('/dashboard', function (req, res) {
     }
 });
 app.get('/dashboard_tab', function (req, res) {
-    if(req.session.user){
-        res.render("dashboard_tab", {res: req.session.user, book: req.book.user});
+    if(req.session.user) {
+        con.query("select * from booking where user_id='" + req.session.user.id + "';", function (err, data) {
+            console.log(data);
+            res.render("dashboard_tab", {res: req.session.user, data});
+        });
+    } else{
+        res.redirect('/login');
+    }
+});
+app.get('/dashboard_dean', function (req, res) {
+    if(req.session.user) {
+        con.query("select * from booking;", function (err, data) {
+            console.log(data);
+            res.render("dashboard_dean", {res: req.session.user, data});
+        });
     } else{
         res.redirect('/login');
     }
@@ -80,7 +93,7 @@ app.post('/onLogin', function (req, res) {
             if (rows.length > 0) {
                 if (password === rows[0].password) {
                     req.session.user=rows[0];
-                        res.redirect("/dashboard");
+                        res.redirect("/dashboard_dean");
                 } else {
                     console.log("Password is Wrong Buddy!");
                     res.render("error", { message: "Password is Wrong Buddy!"});
@@ -102,7 +115,7 @@ app.post('/onLogin', function (req, res) {
                                     if (rows.length > 0) {
                                         if (password === rows[0].password) {
                                             req.session.user=rows[0];
-                                            res.redirect("/getUserProfile");
+                                            res.redirect("/dashboard_tab");
                                         } else {
                                             console.log("Password is Wrong Buddy!");
                                             res.render("error", { message: "Password is Wrong Buddy!"});
@@ -178,6 +191,18 @@ app.post('/updateRequest', function (req, res) {
     res.send('Need to add. Contact Aravind.');
 });
 app.post('/deleteRequest', function (req, res) {
+    console.log("deleteRequest");
+    res.send('Need to add. Contact Aravind.');
+});
+app.post('/approve', function (req, res) {
+    var query = "update booking set status='1' where id ='" + name + "';";
+    console.log(query);
+    con.query(query, function (err, result) {
+        console.log("ash")
+        res.render("dashboardDean", { message: "Cool" });
+    });
+});
+app.post('/reject', function (req, res) {
     console.log("deleteRequest");
     res.send('Need to add. Contact Aravind.');
 });

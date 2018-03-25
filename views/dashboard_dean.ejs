@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title><b>ASE-B Hall Booking</b></title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+
+        td.random {
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body bgcolor="darkslateblue">
+    <nav class="white" role="navigation">
+        <div class="nav-wrapper container">
+            <a id="logo-container" href="/dashboard" class="brand-logo">ASE-B Hall Booking</a>
+            <button style="margin-left: 50%; margin-top: 2%; margin-bottom: 2%;background-color: #35377c" class="btn waves-effect waves-light" onclick="location.href = '/request'">Request Form</button>
+            &nbsp;
+                <button style="margin-left: 10%;margin-top: 2%;margin-bottom: 2%;background-color: #35377c;" class="btn waves-effect waves-light" onclick="location.href = '/logout'">Logout</button>
+        </div>
+    </nav>
+    <div>
+        <br><br>
+       <b> <i style="padding-left: 15%" class="medium small material-icons prefix ">account_box</i> 
+        <span style="color:black;font-size: 30px">Welcome <%= res.name %>! </span></b>
+       
+    </div>
+    <% for(var i=0; i<data.length; i++) {%>
+        <br><br> <hr>
+        <div class="row">
+            <div class="container">
+                <br><br>
+                <b>Booking ID: <%= data[i].id %></b>
+                <br>
+                <b>User ID:</b> <%= data[i].user_id %>
+                <br>
+                <b>Date requested:</b> <%= data[i].date_req %>
+                <br>
+                <b>Date wanted:</b> <%= data[i].date_wanted %>
+                <br>
+                <b>Slot:</b> <%= data[i].slot %>
+                <br>
+                <b>Hall:</b> <%= data[i].hall %>
+                <br>
+                <b>Title:</b> <%= data[i].title %>
+                <br>
+                <b>Club:</b> <%= data[i].club %>
+                <br>
+                <b>Requirements:</b> <%= data[i].req %>
+                <br>
+                <b>Details:</b> <%= data[i].details %>
+                <br>
+                <b>Status:</b> <% if (data[i].status == 1) { %>
+                    Approved
+                    <% } else if (data[i].status == 0) { %>  
+                        Pending
+                     <% } else { %>  
+                        Rejected
+                     <% } %>
+                <br><br>
+                <form action="" method="post"></form>
+                <button name="bt<%= data[i].id %>" style="background-color: #006416 " class="btn waves-effect waves-light" onclick="location.href = '/approve'">Approve
+                <i class="material-icons right">send</i>
+                </button>
+                &nbsp;&nbsp;
+                <button name="bt<%= data[i].id %>" style="background-color: #c5002b " class="btn waves-effect waves-light" onclick="location.href = '/reject'">Reject
+                    <i class="material-icons right">send</i>
+                    </button>
+            </div>
+    <% } %>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="js/materialize.js"></script>
+    <script src="js/init.js"></script>
+</body>
+
+</html>
