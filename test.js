@@ -45,8 +45,11 @@ app.get('/login', function (req, res) {
     res.render('login');
 });
 app.get('/dashboard', function (req, res) {
-    if(req.session.user){
-        res.render("dashboard", {res: req.session.user});
+    if(req.session.user) {
+        con.query("select * from booking where user_id='" + req.session.user.id + "';", function (err, data) {
+            console.log(data);
+            res.render("dashboard", {res: req.session.user, data});
+        });
     } else{
         res.redirect('/login');
     }
@@ -137,6 +140,7 @@ app.get('/getCalendar', function (req, res) {
     res.send('Need to add. Contact Aravind.');
 });
 app.post('/makeRequest', function (req, res) {
+    var user_id = req.session.user.id;
     var date_wanted = req.body.date_wanted;
     var slot = "1";
     var hall = "1";
@@ -146,6 +150,7 @@ app.post('/makeRequest', function (req, res) {
     var requir = req.body.requir;
     var status = "0";
     var obj = {
+        user_id: user_id,
         date_wanted: date_wanted,
         slot: slot,
         hall: hall,
@@ -155,13 +160,13 @@ app.post('/makeRequest', function (req, res) {
         details: details,
         status: status
     };
-    console.log(obj.club);
-    console.log(obj.slot);
-    console.log(obj.title);
     con.query('insert into booking set ?', obj, function (err, result) {
         if (!err) {
             console.log("success");
-            res.render("dashboard", { res: req.session.user});
+            con.query("select * from booking where user_id='" + req.session.user.id + "';", function (err, data) {
+                console.log(data);
+                res.render("dashboard", {res: req.session.user, data});
+            });
         } else {
             console.log(err);
             res.render("error", { message: "Not working." });
