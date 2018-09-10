@@ -11,7 +11,7 @@ Please read [CONTRIBUTING.md](https://github.com/aravindvnair99/Hall-Management-
 
 This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details.
 
-# :octocat: Team
+# :family: Team
 
 * **Rajesh Madathil** - *Mentor*
 * **Sreevidya Balakrishnan** - *Mentor*
