@@ -26,6 +26,10 @@ See the full list of [contributors](https://github.com/aravindvnair99/Hall-Manag
 
 Please read [Prerequisite](Prerequisite.md) file for details.
 
+# :tag: Releases
+
+View all versions [here](https://github.com/aravindvnair99/Hall-Management-System/releases).
+
 # :scroll: Changelog
 
 Check the [changelog here](https://github.com/aravindvnair99/Hall-Management-System/commits/master).
