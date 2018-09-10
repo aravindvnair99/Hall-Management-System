@@ -1,7 +1,7 @@
-# Hall-Management-System
+# :office: Hall-Management-System
 A Hall Management System made originally for Amrita University based on HTML, CSS, JS, Node.js
 
-# :octocat: How to contribute?
+# :computer: How to contribute?
 
 All contributions are welcome! Code, documentation, graphics or even design suggestions are welcome; use GitHub to its fullest. Submit pull requests, contribute tutorials or other wiki content -- whatever you have to offer, it would be appreciated!
 
@@ -26,7 +26,7 @@ See the full list of [contributors](https://github.com/aravindvnair99/Hall-Manag
 
 Please read [Prerequisite](Prerequisite.md) file for details.
 
-# :tag: Releases
+# :bookmark: Releases
 
 View all versions [here](https://github.com/aravindvnair99/Hall-Management-System/releases).
 
@@ -34,7 +34,7 @@ View all versions [here](https://github.com/aravindvnair99/Hall-Management-Syste
 
 Check the [changelog here](https://github.com/aravindvnair99/Hall-Management-System/commits/master).
 
-# :scroll: I found some bugs or issues. Where do I report?
+# :memo: I found some bugs or issues. Where do I report?
 
 Report [here](https://github.com/aravindvnair99/Hall-Management-System/issues/new) in detail answering these questions:
 
@@ -44,18 +44,18 @@ Report [here](https://github.com/aravindvnair99/Hall-Management-System/issues/ne
 * Have you tried any troubleshooting steps such as a reboot for example?
 * Have you followed the prescribed prerequisites?
 
-# :scroll: How do I contact the team?
+# :envelope: How do I contact the team?
 
 Check [here](https://github.com/aravindvnair99/Hall-Management-System/graphs/contributors) for the list of contributors. Contact one of them through their profiles.
 
-# :scroll: Faculty role:
+# :book: Faculty role:
 
 * Print individual request.
 * Should be able to send request for booking a hall.
 * Should be able to cancel the request.
 * Should be able to modify the request.
 
-# :scroll: Dean role:
+# :book: Dean role:
 
 * Should be able to accept the request.
 * Should be able to reject the request. 
@@ -63,7 +63,7 @@ Check [here](https://github.com/aravindvnair99/Hall-Management-System/graphs/con
 * Should be able to modify the request.
 * Print all requests.
 
-# :scroll: Facility Department role:
+# :book: Facility Department role:
 
 * View all the requests.
 * Print all requests.
