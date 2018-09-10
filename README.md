@@ -16,9 +16,9 @@ This project is licensed under the GNU General Public License v3.0 - see the [LI
 * **Rajesh Madathil** - *Mentor*
 * **Sreevidya Balakrishnan** - *Mentor*
 * **Renzil DSouza** - *Mentor* - [renzil](https://github.com/renzil)
-* **Ashwini Nayak** - *Base HTML, CSS and JS - Frontend* - [Ashnayak](https://github.com/Ashnayak)
+* **Ashwini Nayak** - *Base HTML, CSS - Frontend* - [Ashnayak](https://github.com/Ashnayak)
 * **Abhishek Sai** - *Main HTML, CSS and JS - Frontend* - [Abhishek-Sai](https://github.com/Abhishek-Sai)
-* **Aravind V. Nair** - *Backend, Database, refactoring, bug fixes and security* - [AravindVNair99](https://github.com/aravindvnair99)
+* **Aravind V. Nair** - *Frontend, Backend, Database, refactoring, bug fixes and security* - [AravindVNair99](https://github.com/aravindvnair99)
 
 See the full list of [contributors](https://github.com/aravindvnair99/Hall-Management-System/graphs/contributors) who participated in this project and statistics.
 
