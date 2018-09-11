@@ -2533,15 +2533,12 @@ table {
 }
 
 td,
-<<<<<<< HEAD
-=======
 th {
   vertical-align: -webkit-baseline-middle;
   
   padding: 0;
 }
 
->>>>>>> 3502e3cca8557369c63180e958153752925d27b4
 html {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
