@@ -94,15 +94,12 @@
             </div>
         </div>
     </div>
-
-
-    <!--  Scripts-->
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="js/materialize.js"></script>
     <script src="js/init.js"></script>
     <script>
         $(document).ready(function () {
-            $('select').material_select();
+            $('select').formSelect();
         });
     </script>
     <script>
@@ -111,7 +108,7 @@
         });
     </script>
     <script>
-        $('.datepicker').pickadate({
+        $('.datepicker').datepicker({
             selectMonths: true, // Creates a dropdown to control month
             selectYears: 15, // Creates a dropdown of 15 years to control year,
             today: 'Today',
@@ -120,10 +117,6 @@
             closeOnSelect: false, // Close upon selecting a date,
             format: 'yyyy/mm/dd'
         }); 
-    </script>
-    <script>
-        var count = document.getElementsByClassName('colour').length;
-        req.session.user.count = count;
     </script>
 </body>
 
