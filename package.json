@@ -40,10 +40,10 @@
   },
   "homepage": "https://github.com/aravindvnair99/Hall-Management-System",
   "dependencies": {
-    "body-parser": "^1.18.3",
-    "cookie-session": "^2.0.0-beta.3",
-    "ejs": "^2.6.1",
-    "express": "^4.16.4",
-    "mysql": "^2.16.0"
+    "body-parser": "^1.19.0",
+    "cookie-session": "^1.3.3",
+    "ejs": "^2.6.2",
+    "express": "^4.17.1",
+    "mysql": "^2.17.1"
   }
 }
