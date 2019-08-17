@@ -1,4 +1,4 @@
-var express = require('express'),
+const express = require('express'),
 	app = express(),
 	path = __dirname + '/views/',
 	bodyParser = require('body-parser'),
@@ -26,7 +26,7 @@ app.set('view engine', 'ejs');
 app.listen(app.get('port'), function() {
 	console.log('Node app is running on port', app.get('port'));
 });
-var con = mysql.createConnection({
+const con = mysql.createConnection({
 	host: 'localhost',
 	user: 'root',
 	password: '',
