@@ -3,9 +3,9 @@ const express = require('express'),
 	app = express(),
 	path = __dirname + '/views/',
 	bodyParser = require('body-parser'),
-	router = express.Router(),
 	cookieSession = require('cookie-session'),
-	mysql = require('mysql');
+	mysql = require('mysql'),
+	AES = require('mysql-aes');
 dotenv.config();
 app.use(
 	cookieSession({
@@ -104,11 +104,14 @@ app.post('/onLogin', function(req, res) {
 	var username = req.body.username;
 	var password = req.body.password;
 	con.query(
-		"select * from users where username='" + username + "' and role='1';",
+		"select * from users where username='" + username + "' and role='dean';",
 		function(err, rows) {
 			if (!err) {
 				if (rows.length > 0) {
-					if (password === rows[0].password) {
+					if (
+						password ===
+						AES.decrypt(rows[0].password, `${process.env.aes_key}`)
+					) {
 						req.session.user = rows[0];
 						res.redirect('/dashboard_dean');
 					} else {
@@ -121,11 +124,17 @@ app.post('/onLogin', function(req, res) {
 					con.query(
 						"select * from users where username='" +
 							username +
-							"' and role='2';",
+							"' and role='teacher';",
 						function(err, rows) {
 							if (!err) {
 								if (rows.length > 0) {
-									if (password === rows[0].password) {
+									if (
+										password ===
+										AES.decrypt(
+											rows[0].password,
+											`${process.env.aes_key}`
+										)
+									) {
 										req.session.user = rows[0];
 										res.redirect('/getUserProfile');
 									} else {
@@ -138,13 +147,16 @@ app.post('/onLogin', function(req, res) {
 									con.query(
 										"select * from users where username='" +
 											username +
-											"' and role='3';",
+											"' and role='facility';",
 										function(err, rows) {
 											if (!err) {
 												if (rows.length > 0) {
 													if (
 														password ===
-														rows[0].password
+														AES.decrypt(
+															rows[0].password,
+															`${process.env.aes_key}`
+														)
 													) {
 														req.session.user =
 															rows[0];
