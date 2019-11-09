@@ -21,7 +21,7 @@ app.use(
 		extended: false
 	})
 );
-app.set('port', process.env.PORT || 8000);
+app.set('port', process.env.port);
 app.use(express.static(__dirname + '/public'));
 app.set('views', path);
 app.set('view engine', 'ejs');
