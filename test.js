@@ -1,10 +1,12 @@
 const express = require('express'),
+	dotenv = require('dotenv'),
 	app = express(),
 	path = __dirname + '/views/',
 	bodyParser = require('body-parser'),
 	router = express.Router(),
 	cookieSession = require('cookie-session'),
 	mysql = require('mysql');
+dotenv.config();
 app.use(
 	cookieSession({
 		name: 'session',
@@ -27,10 +29,10 @@ app.listen(app.get('port'), function() {
 	console.log('Node app is running on port', app.get('port'));
 });
 const con = mysql.createConnection({
-	host: 'localhost',
-	user: 'root',
-	password: '',
-	database: 'ahms',
+	host: `${process.env.host}`,
+	user: `${process.env.user}`,
+	password: `${process.env.password}`,
+	database: `${process.env.database}`,
 	multipleStatements: true
 });
 con.connect(function(error) {
