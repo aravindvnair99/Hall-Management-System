@@ -104,7 +104,9 @@ app.post('/onLogin', function(req, res) {
 	var username = req.body.username;
 	var password = req.body.password;
 	con.query(
-		"select * from users where username='" + username + "' and role='dean';",
+		"select * from users where username='" +
+			username +
+			"' and role='dean';",
 		function(err, rows) {
 			if (!err) {
 				if (rows.length > 0) {
@@ -216,39 +218,168 @@ app.get('/getUserRequest', function(req, res) {
 app.post('/makeRequest', function(req, res) {
 	var user_id = req.session.user.id;
 	var date_wanted = req.body.date_wanted;
-	var slot = '1';
-	var hall = '1';
+	var slot_id = '1';
+	var hall_id = '1';
 	var club = req.body.club_name;
 	var details = req.body.desc;
 	var title = req.body.event_name;
-	var requir = req.body.requir;
-	var status = '0';
-	var obj = {
-		user_id: user_id,
-		date_wanted: date_wanted,
-		slot: slot,
-		hall: hall,
+	var requirements = req.body.requirements;
+	var status = '3';
+	// var user_id = '2';
+	// var date_wanted = '2019-11-10';
+	// var slot_id = '1';
+	// var hall_id = '1';
+	// var club = 'FACE';
+	// var details = "Here's a desc";
+	// var title = "Title";
+	// var requirements = "Req";
+	// var status = 'pending';
+	var event_obj = {
 		title: title,
 		club: club,
-		req: requir,
+		requirements: requirements,
 		details: details,
-		status: status
+		date_wanted: date_wanted,
+		user_id: user_id
 	};
-	con.query('insert into booking set ?', obj, function(err, result) {
+	con.query('insert into events set ?', event_obj, function(err, result) {
 		if (!err) {
 			console.log('success');
 			con.query(
-				"select * from booking where user_id='" +
+				"select id from events WHERE user_id='" +
 					req.session.user.id +
-					"';",
-				function(err, data) {
-					if (req.session.user.role == 1)
-						res.redirect('/dashboard_dean');
-					else
-						res.render('dashboard', {
-							res: req.session.user,
-							data
+					"' ORDER BY id DESC LIMIT 1;",
+				function(err, event_id) {
+					if (!err) {
+						console.log(event_id[0].id)
+						var booking_obj = {
+							user_id: user_id,
+							status_id: status,
+							event_id: event_id[0].id
+						};
+						con.query(
+							'insert into booking set ?',
+							booking_obj,
+							function(err, result) {
+								if (!err) {
+									console.log('success');
+									con.query(
+										"select id from booking WHERE user_id='" +
+											req.session.user.id +
+											"' ORDER BY id DESC LIMIT 1;",
+										function(err, booking_id) {
+											if (!err) {
+												var slot_schedule_obj = {
+													slot_id: slot_id,
+													booking_id: booking_id[0].id
+												};
+												var hall_schedule_obj = {
+													hall_id: hall_id,
+													booking_id: booking_id[0].id
+												};
+												con.query(
+													'insert into slot_schedule set ?',
+													slot_schedule_obj,
+													function(err, result) {
+														if (!err) {
+															console.log(
+																'Inserted into slot_schedule.'
+															);
+															con.query(
+																'insert into hall_schedule set ?',
+																hall_schedule_obj,
+																function(
+																	err,
+																	result
+																) {
+																	if (!err) {
+																		console.log(
+																			'Inserted into hall_schedule'
+																		);
+																		con.query(
+																			"select * from booking where user_id='" +
+																				req
+																					.session
+																					.user
+																					.id +
+																				"';",
+																			function(
+																				err,
+																				data
+																			) {
+																				if (
+																					req
+																						.session
+																						.user
+																						.role ==
+																					'dean'
+																				)
+																					res.redirect(
+																						'/dashboard_dean'
+																					);
+																				else
+																					res.render(
+																						'dashboard',
+																						{
+																							res:
+																								req
+																									.session
+																									.user,
+																							data
+																						}
+																					);
+																			}
+																		);
+																	} else {
+																		console.log(
+																			err
+																		);
+																		res.render(
+																			'error',
+																			{
+																				message:
+																					'Inserting into hall_schedule failed.'
+																			}
+																		);
+																	}
+																}
+															);
+														} else {
+															console.log(err);
+															res.render(
+																'error',
+																{
+																	message:
+																		'Inserting into slot_schedule failed.'
+																}
+															);
+														}
+													}
+												);
+											} else {
+												console.log(err);
+												res.render('error', {
+													message:
+														'Retrieving event_id failed'
+												});
+											}
+										}
+									);
+								} else {
+									console.log(err);
+									res.render('error', {
+										message:
+											'Inserting into booking failed.'
+									});
+								}
+							}
+						);
+					} else {
+						console.log(err);
+						res.render('error', {
+							message: 'Retrieving event_id failed'
 						});
+					}
 				}
 			);
 		} else {
