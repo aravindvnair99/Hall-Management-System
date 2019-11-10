@@ -16,10 +16,14 @@ app.use(morgan("dev"));
 	cookieSession = require('cookie-session'),
 	mysql = require('mysql'),
 	AES = require('mysql-aes'),
-	logger = require('morgan');
+	morgan = require('morgan');
 dotenv.config();
+<<<<<<< HEAD
 app.use(logger('dev'));
 >>>>>>> Add logger
+=======
+app.use(morgan('dev'));
+>>>>>>> Update logger
 app.use(
 	cookieSession({
 <<<<<<< HEAD
