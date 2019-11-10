@@ -37,36 +37,36 @@
        
     </div>
     <br>
-    <% for(var i=(data.length-1); i>=0; i--) {%>
+    <% for(var i=(booking_data.length-1); i>=0; i--) {%>
         <br><br> <hr>
         <div class="row">
             <div class="container">
                 <br><br>
-                <b>Booking ID: <%= data[i].id %></b>
+                <b>Booking ID: <%= booking_data[i].id %></b>
                 <br>
-                <b>User ID:</b> <%= data[i].user_id %>
+                <b>User ID:</b> <%= booking_data[i].user_id %>
                 <br>
-                <b>Date requested:</b> <%= data[i].date_req %>
+                <b>Date requested:</b> <%= booking_data[i].date_req %>
                 <br>
-                <b>Date wanted:</b> <%= data[i].date_wanted %>
+                <b>Date wanted:</b> <%= events_data[i].date_wanted %>
                 <br>
-                <b>Slot:</b> <%= data[i].slot %>
+                <b>Slot:</b> <%= slot_schedule_data[i].slot %>
                 <br>
-                <b>Hall:</b> <%= data[i].hall %>
+                <b>Hall:</b> <%= hall_schedule_data[i].hall %>
                 <br>
-                <b>Title:</b> <%= data[i].title %>
+                <b>Title:</b> <%= events_data[i].title %>
                 <br>
-                <b>Club:</b> <%= data[i].club %>
+                <b>Club:</b> <%= events_data[i].club %>
                 <br>
-                <b>Requirements:</b> <%= data[i].req %>
+                <b>Requirements:</b> <%= events_data[i].req %>
                 <br>
-                <b>Details:</b> <%= data[i].details %>
+                <b>Details:</b> <%= events_data[i].details %>
                 <br>
-                <b>Status:</b> <% if (data[i].status_id == 1) { %>
+                <b>Status:</b> <% if (booking_data[i].status_id == 1) { %>
                     Approved
-                    <% } else if (data[i].status_id == 3) { %>  
+                    <% } else if (booking_data[i].status_id == 3) { %>  
                         Pending
-                    <% } else if (data[i].status_id == 2) { %>  
+                    <% } else if (booking_data[i].status_id == 2) { %>  
                         Rejected
                     <% } else { %>  
                         Unknown

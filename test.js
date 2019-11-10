@@ -56,9 +56,21 @@ app.get('/dashboard', function(req, res) {
 			"select * from booking where user_id='" +
 				req.session.user.id +
 				"';",
-			function(err, data) {
-				console.log(data);
-				res.render('dashboard', { res: req.session.user, data });
+			function(err, booking_data) {
+				console.log(booking_data);
+				con.query(
+					"select * from events where user_id='" +
+						req.session.user.id +
+						"';",
+					function(err, events_data) {
+						console.log(events_data);
+						res.render('dashboard', {
+							res: req.session.user,
+							booking_data,
+							events_data
+						});
+					}
+				);
 			}
 		);
 	} else {
@@ -207,7 +219,7 @@ app.get('/getUserProfile', function(req, res) {
 			}
 		} else {
 			res.render('error', {
-				message: "Dont Poke Your Nose where you don't Belong!"
+				message: "Don't Poke Your Nose where you don't Belong!"
 			});
 		}
 	});
