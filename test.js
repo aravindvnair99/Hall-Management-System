@@ -118,9 +118,7 @@ app.post('/onLogin', function(req, res) {
 	var username = req.body.username;
 	var password = req.body.password;
 	con.query(
-		"select * from users where username='" +
-			username +
-			"' and role='dean';",
+		"select * from users where username='" + username + "';",
 		function(err, rows) {
 			if (!err) {
 				if (rows.length > 0) {
@@ -137,74 +135,16 @@ app.post('/onLogin', function(req, res) {
 						});
 					}
 				} else {
-					con.query(
-						"select * from users where username='" +
-							username +
-							"' and role='teacher';",
-						function(err, rows) {
-							if (!err) {
-								if (rows.length > 0) {
-									if (
-										password ===
-										AES.decrypt(
-											rows[0].password,
-											`${process.env.AES_key}`
-										)
-									) {
-										req.session.user = rows[0];
-										res.redirect('/getUserProfile');
-									} else {
-										console.log('Password is Wrong Buddy!');
-										res.render('error', {
-											message: 'Password is Wrong Buddy!'
-										});
-									}
-								} else {
-									con.query(
-										"select * from users where username='" +
-											username +
-											"' and role='facility';",
-										function(err, rows) {
-											if (!err) {
-												if (rows.length > 0) {
-													if (
-														password ===
-														AES.decrypt(
-															rows[0].password,
-															`${process.env.AES_key}`
-														)
-													) {
-														req.session.user =
-															rows[0];
-														res.redirect(
-															'/dashboard_tab'
-														);
-													} else {
-														console.log(
-															'Password is Wrong Buddy!'
-														);
-														res.render('error', {
-															message:
-																'Password is Wrong Buddy!'
-														});
-													}
-												} else {
-													console.log(
-														'Username Not Found!'
-													);
-													res.render('error', {
-														message:
-															'Username Not Found!'
-													});
-												}
-											}
-										}
-									);
-								}
-							}
-						}
-					);
+					console.log('Username Not Found!');
+					res.render('error', {
+						message: 'Username Not Found!'
+					});
 				}
+			} else {
+				console.log('Username Not Found!');
+				res.render('error', {
+					message: 'Username Not Found!'
+				});
 			}
 		}
 	);
