@@ -5,8 +5,10 @@ const express = require('express'),
 	bodyParser = require('body-parser'),
 	cookieSession = require('cookie-session'),
 	mysql = require('mysql'),
-	AES = require('mysql-aes');
+	AES = require('mysql-aes'),
+	logger = require('morgan');
 dotenv.config();
+app.use(logger('dev'));
 app.use(
 	cookieSession({
 		name: 'session',
