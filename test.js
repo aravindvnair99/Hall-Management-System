@@ -214,8 +214,14 @@ app.get('/getUserProfile', function(req, res) {
 		rows
 	) {
 		if (!err) {
-			if (rows.length > 0) {
-				res.redirect('/getUserRequest');
+			if (rows[0].role === 'teacher') {
+				res.redirect('/dashboard');
+			} else if (rows[0].role === 'dean') {
+				res.redirect('/dashboard_dean');
+			} else if (rows[0].role === 'facility') {
+				res.redirect('/dashboard_tab');
+			} else {
+				res.redirect('/login');
 			}
 		} else {
 			res.render('error', {
@@ -223,9 +229,6 @@ app.get('/getUserProfile', function(req, res) {
 			});
 		}
 	});
-});
-app.get('/getUserRequest', function(req, res) {
-	res.redirect('/dashboard');
 });
 app.post('/makeRequest', function(req, res) {
 	var user_id = req.session.user.id;
@@ -263,7 +266,7 @@ app.post('/makeRequest', function(req, res) {
 					"' ORDER BY id DESC LIMIT 1;",
 				function(err, event_id) {
 					if (!err) {
-						console.log(event_id[0].id)
+						console.log(event_id[0].id);
 						var booking_obj = {
 							user_id: user_id,
 							status_id: status,
