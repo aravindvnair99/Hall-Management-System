@@ -52,27 +52,47 @@ app.get('/login', function(req, res) {
 });
 app.get('/dashboard', function(req, res) {
 	if (req.session.user) {
-		con.query(
-			"select * from booking where user_id='" +
-				req.session.user.id +
-				"';",
-			function(err, booking_data) {
-				console.log(booking_data);
-				con.query(
-					"select * from events where user_id='" +
-						req.session.user.id +
-						"';",
-					function(err, events_data) {
-						console.log(events_data);
-						res.render('dashboard', {
-							res: req.session.user,
-							booking_data,
-							events_data
-						});
-					}
-				);
+		var id = req.session.user.id;
+		con.query("select * from users where id='" + id + "';", function(
+			err,
+			rows
+		) {
+			if (!err) {
+				if (rows[0].role === 'teacher') {
+					con.query(
+						"select * from booking where user_id='" +
+							req.session.user.id +
+							"';",
+						function(err, booking_data) {
+							console.log(booking_data);
+							con.query(
+								"select * from events where user_id='" +
+									req.session.user.id +
+									"';",
+								function(err, events_data) {
+									console.log(events_data);
+									res.render('dashboard', {
+										res: req.session.user,
+										booking_data,
+										events_data
+									});
+								}
+							);
+						}
+					);
+				} else if (rows[0].role === 'dean') {
+					res.redirect('/dashboard_dean');
+				} else if (rows[0].role === 'facility') {
+					res.redirect('/dashboard_tab');
+				} else {
+					res.redirect('/login');
+				}
+			} else {
+				res.render('error', {
+					message: "Don't Poke Your Nose where you don't Belong!"
+				});
 			}
-		);
+		});
 	} else {
 		res.redirect('/login');
 	}
