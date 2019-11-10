@@ -151,14 +151,31 @@ app.post('/onLogin', (req, res) => {
 		}
 	);
 });
+<<<<<<< HEAD
 app.post('/checkHallAvailability', (req, res) => {
 	var query = `select hall_id from hall_schedule where booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='${req.body.date_wanted}')) and slot_id='10')`;
+=======
+app.post('/checkHallAvailability', function(req, res) {
+	var query =
+		"select hall_id from hall_schedule where booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='" +
+		req.body.date_wanted +
+		"')) and slot_id='10')";
+>>>>>>> Fix HTTP status codes and error messages
 	con.query(query, function(err, result) {
 		res.send(result);
 	});
 });
+<<<<<<< HEAD
 app.post('/checkSlotAvailability', (req, res) => {
 	var query = `SELECT hall_id FROM hall_schedule WHERE booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='${req.body.date_wanted}')) and slot_id='${req.body.slot_id}')`;
+=======
+app.post('/checkSlotAvailability', function(req, res) {
+	var slot_id = req.body.slot_id;
+	var query =
+		"select hall_id from hall_schedule where booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='" +
+		req.body.date_wanted +
+		"')) and slot_id='10')";
+>>>>>>> Fix HTTP status codes and error messages
 	con.query(query, function(err, result) {
 		res.send(result);
 	});
