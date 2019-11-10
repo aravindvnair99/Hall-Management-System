@@ -37,10 +37,9 @@
        
     </div>
     <br>
+    <div class="row">
     <% for(var i=(booking_data.length-1); i>=0; i--) {%>
-        <br><br> <hr>
-        <div class="row">
-            <div class="col s12 m6">
+            <div class="col s12 m6 l3">
               <div class="card blue-grey darken-1">
                 <div class="card-content white-text">
                   <span class="card-title"><%= events_data[i].title %></span>
@@ -68,7 +67,7 @@
                 </div>
               </div>
             </div>
-          </div>
+
         <!-- <div class="row">
             <div class="container">
                 <br><br>
@@ -79,10 +78,6 @@
                 <b>Date requested:</b> <%= booking_data[i].date_req %>
                 <br>
                 <b>Date wanted:</b> <%= events_data[i].date_wanted %>
-                <br>
-                <b>Slot:</b> <%= slot_schedule_data[i].slot %>
-                <br>
-                <b>Hall:</b> <%= hall_schedule_data[i].hall %>
                 <br>
                 <b>Title:</b> <%= events_data[i].title %>
                 <br>
@@ -103,6 +98,7 @@
                     <% } %>
             </div>         -->
     <% } %>
+     </div>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="js/materialize.js"></script>
     <script src="js/init.js"></script>
