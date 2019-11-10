@@ -94,9 +94,7 @@ app.get('/dashboard', function(req, res) {
 						});
 					} else if (user_data[0].role === 'facility') {
 						con.query(
-							"select * from booking where user_id='" +
-								req.session.user.id +
-								"';",
+							"select * from booking;",
 							function(err, booking_data) {
 								res.render('dashboard_facility', {
 									res: req.session.user,
