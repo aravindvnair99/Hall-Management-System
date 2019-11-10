@@ -32,6 +32,7 @@
 		</style>
 	</head>
 
+<<<<<<< HEAD
 	<body style="background-color: darkslateblue;">
 		<nav class="white" role="navigation">
 			<div class="nav-wrapper container">
@@ -105,3 +106,100 @@
 		</script>
 	</body>
 </html>
+=======
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ASE-B Hall Booking</title>
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid #000000;
+        }
+
+        
+        .timewidth{
+            width:10%;
+        }
+
+    </style>
+</head>
+
+<body bgcolor="darkslateblue">
+        <nav class="white" role="navigation">
+                <div class="nav-wrapper container">
+                    <a id="logo-container" href="/dashboard" class="brand-logo">ASE-B Hall Booking</a>
+                    <button style="background-color: #35377c; margin-left: 80%;" class="btn waves-effect waves-light" onclick="location.href = '/logout'">Logout</button>
+                </div>
+            </nav>
+    <div class="row">
+        <div class="col s12 m8 l8 offset-l2 offset-m2">
+            <div class="card">
+                <div>
+                    <div class="row"></div>
+                    <div class="row"></div>
+                    <div class="row"></div>
+                    <div class="row">
+                        <form class="col s12" action="/makeRequest" method="post">
+                            <div class="row">
+                                <h3 class="center">Status of Halls</h3>
+                            </div>
+                            <div>
+                                <div class="row container">
+                                    <div class="input-field col s12">
+                                        <input id="date_wanted" type="text" class="datepicker" name="date_wanted">
+                                        <label>Choose a date</label>
+                                    </div>
+                                </div>
+                                <%- include calendarview.ejs %>
+                            </div>
+                            </div>
+                            <br>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--  Scripts-->
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="js/materialize.js"></script>
+    <script src="js/init.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('select').material_select();
+        });
+    </script>
+    <script>
+        $('td').click(function () {
+            $(this).toggleClass("colour");
+        });
+    </script>
+    <script>
+       $('.datepicker').datepicker({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15, // Creates a dropdown of 15 years to control year,
+            today: 'Today',
+            clear: 'Clear',
+            close: 'Ok',
+            closeOnSelect: false, // Close upon selecting a date,
+            format: 'yyyy/mm/dd'
+        }); 
+         
+    </script>
+    <script>
+        var count = document.getElementsByClassName('colour').length;
+        req.session.user.count = count;
+    </script>
+</body>
+
+</html>
+>>>>>>> dashboard_facility datepicker fixed
