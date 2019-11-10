@@ -362,6 +362,7 @@ app.post("/onLogin", (req, res) => {
 		}
 	);
 });
+<<<<<<< HEAD
 app.post("/checkHallAvailability", (req, res) => {
 	var query = `select hall_id from hall_schedule where booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='${req.body.date_wanted}')) and slot_id='10')`;
 	con.query(query, function(err, result) {
@@ -375,6 +376,9 @@ app.post("/checkSlotAvailability", (req, res) => {
 	});
 });
 app.post("/makeRequest", (req, res) => {
+=======
+app.post('/makeRequest', function(req, res) {
+>>>>>>> Remove unwanted routes
 	var user_id = req.session.user.id;
 	var date_wanted = req.body.date_wanted;
 	var slot_id = parseCookies(req).slot_id;
