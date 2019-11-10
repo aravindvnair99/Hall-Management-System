@@ -1,8 +1,14 @@
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	"title": "Hall Management System",
 	"name": "hall-management-system",
 	"version": "1.0.1",
+=======
+	"title": "Hall Management System",
+	"name": "hall-management-system",
+	"version": "1.0.0",
+>>>>>>> Refactor
 	"description": "",
 	"main": "app.js",
 	"keywords": [
@@ -50,6 +56,7 @@
 		"mysql": "^2.17.1",
 		"mysql-aes": "0.0.1"
 	}
+<<<<<<< HEAD
 =======
   "title": "Hall Management System",
   "name": "hall-management-system",
@@ -102,4 +109,6 @@
     "mysql-aes": "0.0.1"
   }
 >>>>>>> Add logger
+=======
+>>>>>>> Refactor
 }
