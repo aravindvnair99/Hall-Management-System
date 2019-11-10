@@ -5,8 +5,6 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title>ASE-B Hall Booking</title>
-
-	<!-- CSS  -->
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection" />
 	<link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
@@ -19,14 +17,13 @@
 		</div>
 	</nav>
 	<div class="row">
-		<h1><%= res.error_message %></h1>
+		<h1><%= error_message %></h1>
 	</div>
 	<div class="row"></div>
 	<div class="row">
 		<input class="btn waves-effect waves-light" action="action" onclick="window.history.go(-1); return false;" type="button"
 		 value="Back" />
 	</div>
-	<!--  Scripts-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 	<script src="js/init.js"></script>
