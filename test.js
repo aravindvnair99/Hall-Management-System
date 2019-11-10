@@ -360,7 +360,7 @@ app.post('/makeRequest', function(req, res) {
 												console.log(err);
 												res.render('error', {
 													message:
-														'Retrieving event_id failed'
+														'Retrieving booking_id failed'
 												});
 											}
 										}
@@ -384,7 +384,7 @@ app.post('/makeRequest', function(req, res) {
 			);
 		} else {
 			console.log(err);
-			res.render('error', { message: 'Not working.' });
+			res.render('error', { message: 'Inserting into event failed.' });
 		}
 	});
 });
