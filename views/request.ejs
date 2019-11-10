@@ -33,8 +33,8 @@
 				background-color: #62dd52;
 			}
 			.not_available {
-                background-color: red;
-                cursor: not-allowed;
+				background-color: red;
+				cursor: not-allowed;
 			}
 			td:hover {
 				background-color: #ffcf8b;
@@ -137,7 +137,10 @@
 										>
 									</div>
 								</div>
-								<div class="container" style="text-align: center;">
+								<div
+									class="container"
+									style="text-align: center;"
+								>
 									<button
 										style="background-color: #35377c"
 										class="btn waves-effect waves-light"
@@ -157,8 +160,8 @@
 											>cancel_schedule_send
 										</i>
 									</button>
-                                </div>
-                                <br>
+								</div>
+								<br />
 							</form>
 						</div>
 					</div>
@@ -204,7 +207,7 @@
 								}
 							});
 							not_available.forEach(element => {
-                                $('#' + element).toggleClass('not_available');
+								$('#' + element).toggleClass('not_available');
 							});
 						});
 					})
