@@ -403,26 +403,55 @@ app.post("/onLogin", (req, res) => {
 	);
 });
 <<<<<<< HEAD
+<<<<<<< HEAD
 app.post("/checkHallAvailability", (req, res) => {
 	var query = `select hall_id from hall_schedule where booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='${req.body.date_wanted}')) and slot_id='10')`;
+=======
+app.post('/checkHallAvailability', function(req, res) {
+	var date_wanted = req.body.date_wanted;
+	var hall_id = req.body.hall_id;
+	var query =
+		"select hall_id from hall_schedule where booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='" +
+		date_wanted +
+		"')) and slot_id='10')";
+>>>>>>> Add API for checking hall availability
 	con.query(query, function(err, result) {
 		res.send(result);
 	});
 });
+<<<<<<< HEAD
 app.post("/checkSlotAvailability", (req, res) => {
 	var query = `SELECT hall_id FROM hall_schedule WHERE booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='${req.body.date_wanted}')) and slot_id='${req.body.slot_id}') AND hall_schedule.hall_id = '${req.body.hall_id}'`;
+=======
+app.post('/checkSlotAvailability', function(req, res) {
+	var date_wanted = req.body.date_wanted;
+	var hall_id = req.body.hall_id;
+	var slot_id = req.body.slot_id;
+	var query =
+		"select slot_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='" +
+		date_wanted +
+		"')) and slot_id='10'";
+>>>>>>> Add API for checking hall availability
 	con.query(query, function(err, result) {
 		res.send(result);
 	});
 });
+<<<<<<< HEAD
 app.post("/makeRequest", (req, res) => {
 =======
+=======
+>>>>>>> Add API for checking hall availability
 app.post('/makeRequest', function(req, res) {
 >>>>>>> Remove unwanted routes
 	var user_id = req.session.user.id;
 	var date_wanted = req.body.date_wanted;
+<<<<<<< HEAD
 	var slot_id = parseCookies(req).slot_id;
 	var hall_id = parseCookies(req).hall_id;
+=======
+	var slot_id = '10';
+	var hall_id = '4';
+>>>>>>> Add API for checking hall availability
 	var club = req.body.club_name;
 	var details = req.body.desc;
 	var title = req.body.event_name;
@@ -501,6 +530,7 @@ app.post('/makeRequest', function(req, res) {
 																				data
 																			) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 																				res.redirect(
 																					"/dashboard"
 																				);
@@ -527,6 +557,11 @@ app.post('/makeRequest', function(req, res) {
 																						}
 																					);
 >>>>>>> Fix paths
+=======
+																				res.redirect(
+																					'/dashboard'
+																				);
+>>>>>>> Add API for checking hall availability
 																			}
 																		);
 																	} else {
@@ -620,12 +655,18 @@ app.post('/makeRequest', function(req, res) {
 		} else {
 			console.log(err);
 <<<<<<< HEAD
+<<<<<<< HEAD
 			res.status(500).render("error", {
 				error_message: "Inserting into event failed!"
 			});
 =======
 			res.render('error', { error_message: 'Inserting into event failed.' });
 >>>>>>> Fix error messages
+=======
+			res.render('error', {
+				error_message: 'Inserting into event failed.'
+			});
+>>>>>>> Add API for checking hall availability
 		}
 	});
 });
