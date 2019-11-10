@@ -152,10 +152,14 @@ app.post('/onLogin', (req, res) => {
 	);
 });
 <<<<<<< HEAD
+<<<<<<< HEAD
 app.post('/checkHallAvailability', (req, res) => {
 	var query = `select hall_id from hall_schedule where booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='${req.body.date_wanted}')) and slot_id='10')`;
 =======
 app.post('/checkHallAvailability', function(req, res) {
+=======
+app.post('/checkHallAvailability', (req, res) => {
+>>>>>>> Switch to arrow functions
 	var query =
 		"select hall_id from hall_schedule where booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='" +
 		req.body.date_wanted +
@@ -166,10 +170,14 @@ app.post('/checkHallAvailability', function(req, res) {
 	});
 });
 <<<<<<< HEAD
+<<<<<<< HEAD
 app.post('/checkSlotAvailability', (req, res) => {
 	var query = `SELECT hall_id FROM hall_schedule WHERE booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='${req.body.date_wanted}')) and slot_id='${req.body.slot_id}')`;
 =======
 app.post('/checkSlotAvailability', function(req, res) {
+=======
+app.post('/checkSlotAvailability', (req, res) => {
+>>>>>>> Switch to arrow functions
 	var slot_id = req.body.slot_id;
 	var query =
 		"select hall_id from hall_schedule where booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='" +
