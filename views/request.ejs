@@ -339,21 +339,19 @@
 								<div class="row">
 									<h3 class="center">Request Form</h3>
 								</div>
-								<div>
-									<div class="row container">
-										<div class="input-field col s12">
-											<input
-												id="date_wanted"
-												type="text"
-												class="datepicker"
-												name="date_wanted"
-											/>
-											<label>Choose a date</label>
-										</div>
+								<div class="container">
+									<div class="input-field col s12">
+										<input
+											id="date_wanted"
+											type="text"
+											class="datepicker"
+											name="date_wanted"
+										/>
+										<label>Choose a date</label>
 									</div>
-									<%- include calendarview.ejs %>
 								</div>
-								<div class="row container">
+								<%- include calendarview.ejs %>
+								<div class="container">
 									<div class="input-field col s12">
 										<input
 											id="club_name"
@@ -363,7 +361,7 @@
 										<label for="club_name">Club Name</label>
 									</div>
 								</div>
-								<div class="row container">
+								<div class="container">
 									<div class="input-field col s12">
 										<input
 											id="desc"
@@ -373,7 +371,7 @@
 										<label for="desc">Description</label>
 									</div>
 								</div>
-								<div class="row container">
+								<div class="container">
 									<div class="input-field col s12">
 										<input
 											id="event_name"
@@ -385,7 +383,7 @@
 										>
 									</div>
 								</div>
-								<div class="row container">
+								<div class="container">
 									<div class="input-field col s12">
 										<input
 											id="requirements"
@@ -397,7 +395,7 @@
 										>
 									</div>
 								</div>
-								<div class="row container" align="center">
+								<div class="container" style="text-align: center;">
 									<button
 										style="background-color: #35377c"
 										class="btn waves-effect waves-light"
@@ -406,15 +404,19 @@
 										Submit
 										<i class="material-icons right">send</i>
 									</button>
-									<input
+									<button
 										style="background-color: #35377c"
 										class="btn waves-effect waves-light"
-										action="action"
-										onclick="window.history.go(-1); return false;"
 										type="button"
-										value="Back"
-									/>
-								</div>
+										onclick="window.history.go(-1); return false;"
+									>
+										Back
+										<i class="material-icons right"
+											>cancel_schedule_send
+										</i>
+									</button>
+                                </div>
+                                <br>
 							</form>
 						</div>
 					</div>
@@ -428,7 +430,6 @@
 			$(document).ready(function() {
 				$('select').formSelect();
 			});
-            $('.not_available').attr("disabled", "disabled");
 		</script>
 		<script>
 			$('#date_wanted').change(function() {
@@ -451,7 +452,7 @@
 							return;
 						}
 						response.json().then(function(data) {
-                            $('td').removeClass();
+							$('td').removeClass();
 							var not_available = [];
 							data.forEach(element => {
 								for (var i = 1; i <= 9; i++) {
