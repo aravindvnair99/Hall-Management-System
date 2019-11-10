@@ -52,71 +52,66 @@ app.get('/login', function(req, res) {
 });
 app.get('/dashboard', function(req, res) {
 	if (req.session.user) {
-		var id = req.session.user.id;
-		con.query("select * from users where id='" + id + "';", function(
-			err,
-			rows
-		) {
-			if (!err) {
-				if (rows[0].role === 'teacher') {
-					con.query(
-						"select * from booking where user_id='" +
-							req.session.user.id +
-							"';",
-						function(err, booking_data) {
-							console.log(booking_data);
+		con.query(
+			"select * from users where id='" + req.session.user.id + "';",
+			function(err, user_data) {
+				if (!err) {
+					if (user_data[0].role === 'teacher') {
+						con.query(
+							"select * from booking where user_id='" +
+								req.session.user.id +
+								"';",
+							function(err, booking_data) {
+								con.query(
+									"select * from events where user_id='" +
+										req.session.user.id +
+										"';",
+									function(err, events_data) {
+										res.render('dashboard_teacher', {
+											res: req.session.user,
+											booking_data,
+											events_data
+										});
+									}
+								);
+							}
+						);
+					} else if (user_data[0].role === 'dean') {
+						con.query('select * from booking;', function(
+							err,
+							booking_data
+						) {
 							con.query(
-								"select * from events where user_id='" +
-									req.session.user.id +
-									"';",
+								"select * from events;",
 								function(err, events_data) {
-									console.log(events_data);
-									res.render('dashboard', {
+									res.render('dashboard_dean', {
 										res: req.session.user,
 										booking_data,
 										events_data
 									});
 								}
 							);
-						}
-					);
-				} else if (rows[0].role === 'dean') {
-					res.redirect('/dashboard_dean');
-				} else if (rows[0].role === 'facility') {
-					res.redirect('/dashboard_tab');
+						});
+					} else if (user_data[0].role === 'facility') {
+						con.query(
+							"select * from booking where user_id='" +
+								req.session.user.id +
+								"';",
+							function(err, booking_data) {
+								res.render('dashboard_facility', {
+									res: req.session.user,
+									booking_data
+								});
+							}
+						);
+					} else {
+						res.redirect('/login');
+					}
 				} else {
 					res.redirect('/login');
 				}
-			} else {
-				res.render('error', {
-					message: "Don't Poke Your Nose where you don't Belong!"
-				});
-			}
-		});
-	} else {
-		res.redirect('/login');
-	}
-});
-app.get('/dashboard_tab', function(req, res) {
-	if (req.session.user) {
-		con.query(
-			"select * from booking where user_id='" +
-				req.session.user.id +
-				"';",
-			function(err, data) {
-				console.log(data);
-				res.render('dashboard_tab', { res: req.session.user, data });
 			}
 		);
-	} else {
-		res.redirect('/login');
-	}
-});
-app.get('/dashboard_dean', function(req, res) {
-	if (req.session.user) {
-		con.query('select * from booking;', function(err, data) {
-			res.render('dashboard_dean', { res: req.session.user, data });
-		});
 	} else {
 		res.redirect('/login');
 	}
@@ -147,7 +142,7 @@ app.post('/onLogin', function(req, res) {
 						AES.decrypt(rows[0].password, `${process.env.aes_key}`)
 					) {
 						req.session.user = rows[0];
-						res.redirect('/dashboard_dean');
+						res.redirect('/dashboard');
 					} else {
 						console.log('Password is Wrong Buddy!');
 						res.render('error', {
