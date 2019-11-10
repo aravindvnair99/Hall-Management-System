@@ -62,13 +62,15 @@
                 <br>
                 <b>Details:</b> <%= data[i].details %>
                 <br>
-                <b>Status:</b> <% if (data[i].status == 1) { %>
+                <b>Status:</b> <% if (data[i].status_id == 1) { %>
                     Approved
-                    <% } else if (data[i].status == 0) { %>  
+                    <% } else if (data[i].status_id == 3) { %>  
                         Pending
-                     <% } else { %>  
+                    <% } else if (data[i].status_id == 2) { %>  
                         Rejected
-                     <% } %>
+                    <% } else { %>  
+                        Unknown
+                    <% } %>
             </div>        
     <% } %>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
