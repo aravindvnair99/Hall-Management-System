@@ -95,7 +95,11 @@ app.get('/login', function(req, res) {
 app.get("/dashboard", (req, res) => {
 	if (req.session.user) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (req.session.user.role === "teacher") {
+=======
+		if (req.session.user.role === 'teacher') {
+>>>>>>> Reduce number of database calls for session
 			con.query(
 				"select * from booking where user_id='" +
 					req.session.user.id +
@@ -106,6 +110,7 @@ app.get("/dashboard", (req, res) => {
 							req.session.user.id +
 							"';",
 						function(err, events_data) {
+<<<<<<< HEAD
 							res.render("dashboard_teacher", {
 								res: req.session.user,
 								booking_data,
@@ -160,9 +165,14 @@ app.get("/dashboard", (req, res) => {
 							booking_data
 						) {
 							res.render('dashboard_facility', {
+=======
+							res.render('dashboard_teacher', {
+>>>>>>> Reduce number of database calls for session
 								res: req.session.user,
-								booking_data
+								booking_data,
+								events_data
 							});
+<<<<<<< HEAD
 						});
 					} else {
 						res.redirect('/login');
@@ -176,12 +186,23 @@ app.get("/dashboard", (req, res) => {
 			con.query("select * from booking;", function(err, booking_data) {
 				con.query("select * from events;", function(err, events_data) {
 					res.render("dashboard_dean", {
+=======
+						}
+					);
+				}
+			);
+		} else if (req.session.user.role === 'dean') {
+			con.query('select * from booking;', function(err, booking_data) {
+				con.query('select * from events;', function(err, events_data) {
+					res.render('dashboard_dean', {
+>>>>>>> Reduce number of database calls for session
 						res: req.session.user,
 						booking_data,
 						events_data
 					});
 				});
 			});
+<<<<<<< HEAD
 		} else if (req.session.user.role === "facility") {
 			con.query("select * from booking;", function(err, booking_data) {
 				con.query("select * from events;", function(err, events_data) {
@@ -194,6 +215,17 @@ app.get("/dashboard", (req, res) => {
 			});
 		} else {
 			res.redirect("/login");
+=======
+		} else if (req.session.user.role === 'facility') {
+			con.query('select * from booking;', function(err, booking_data) {
+				res.render('dashboard_facility', {
+					res: req.session.user,
+					booking_data
+				});
+			});
+		} else {
+			res.redirect('/login');
+>>>>>>> Reduce number of database calls for session
 		}
 	} else {
 		res.redirect("/login");
