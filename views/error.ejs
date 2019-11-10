@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>ASE-B Hall Booking</title>
+		<title>Error | AHMS</title>
 		<link
 			href="https://fonts.googleapis.com/icon?family=Material+Icons"
 			rel="stylesheet"
@@ -25,23 +25,44 @@
 	<body style="background-color: darkslateblue;">
 		<nav class="white" role="navigation">
 			<div class="nav-wrapper container">
-				<a id="logo-container" href="#" class="brand-logo"
-					>ASE-B Hall Booking</a
+				<b
+					><a id="logo-container" href="/" class="brand-logo"
+						>ASE-B Hall Booking</a
+					></b
 				>
 			</div>
 		</nav>
-		<div class="row">
-			<h1><%= error_message %></h1>
-		</div>
-		<div class="row"></div>
-		<div class="row">
-			<input
-				class="btn waves-effect waves-light"
-				action="action"
-				onclick="window.history.go(-1); return false;"
-				type="button"
-				value="Back"
-			/>
+
+		<div class="container">
+			<div class="row"></div>
+			<div class="row"></div>
+			<div class="row"></div>
+			<div class="row"></div>
+			<div class="row ">
+				<div class="col s12 m6 l6 offset-l3 offset-m3">
+					<h3 class="white-text center">
+						<b><%= error_message %></b>
+					</h3>
+				</div>
+			</div>
+			<div class="container" style="text-align: center;">
+				<button
+					class="btn waves-effect waves-light"
+					type="button"
+					onclick="location.href = '/'"
+				>
+					Home
+					<i class="material-icons right">home</i></button
+				>&nbsp;&nbsp;&nbsp;&nbsp;
+				<button
+					class="btn waves-effect waves-light"
+					type="button"
+					onclick="window.history.go(-1); return false;"
+				>
+					Back
+					<i class="material-icons right">arrow_back </i>
+				</button>
+			</div>
 		</div>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
