@@ -132,19 +132,19 @@ app.post('/onLogin', function(req, res) {
 						res.redirect('/dashboard');
 					} else {
 						console.log('Invalid password');
-						res.render('error', {
+						res.status(401).render('error', {
 							error_message: 'Authentication error!'
 						});
 					}
 				} else {
 					console.log('Username not found!');
-					res.render('error', {
+					res.status(401).render('error', {
 						error_message: 'Authentication error!'
 					});
 				}
 			} else {
 				console.log('Username not found!');
-				res.render('error', {
+				res.status(401).render('error', {
 					error_message: 'Authentication error!'
 				});
 			}
@@ -152,24 +152,20 @@ app.post('/onLogin', function(req, res) {
 	);
 });
 app.post('/checkHallAvailability', function(req, res) {
-	var date_wanted = req.body.date_wanted;
-	var hall_id = req.body.hall_id;
 	var query =
 		"select hall_id from hall_schedule where booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='" +
-		date_wanted +
+		req.body.date_wanted +
 		"')) and slot_id='10')";
 	con.query(query, function(err, result) {
 		res.send(result);
 	});
 });
 app.post('/checkSlotAvailability', function(req, res) {
-	var date_wanted = req.body.date_wanted;
-	var hall_id = req.body.hall_id;
 	var slot_id = req.body.slot_id;
 	var query =
-		"select slot_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='" +
-		date_wanted +
-		"')) and slot_id='10'";
+		"select hall_id from hall_schedule where booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='" +
+		req.body.date_wanted +
+		"')) and slot_id='10')";
 	con.query(query, function(err, result) {
 		res.send(result);
 	});
@@ -275,11 +271,13 @@ app.post('/makeRequest', function(req, res) {
 																		console.log(
 																			err
 																		);
-																		res.render(
+																		res.status(
+																			500
+																		).render(
 																			'error',
 																			{
 																				error_message:
-																					'Inserting into hall_schedule failed.'
+																					'Inserting into hall_schedule failed!'
 																			}
 																		);
 																	}
@@ -287,57 +285,59 @@ app.post('/makeRequest', function(req, res) {
 															);
 														} else {
 															console.log(err);
-															res.render(
-																'error',
-																{
-																	error_message:
-																		'Inserting into slot_schedule failed.'
-																}
-															);
+															res.status(
+																500
+															).render('error', {
+																error_message:
+																	'Inserting into slot_schedule failed!'
+															});
 														}
 													}
 												);
 											} else {
 												console.log(err);
-												res.render('error', {
-													error_message:
-														'Retrieving booking_id failed'
-												});
+												res.status(500).render(
+													'error',
+													{
+														error_message:
+															'Retrieving booking_id failed!'
+													}
+												);
 											}
 										}
 									);
 								} else {
 									console.log(err);
-									res.render('error', {
+									res.status(500).render('error', {
 										error_message:
-											'Inserting into booking failed.'
+											'Inserting into booking failed!'
 									});
 								}
 							}
 						);
 					} else {
 						console.log(err);
-						res.render('error', {
-							error_message: 'Retrieving event_id failed'
+						res.status(500).render('error', {
+							error_message: 'Retrieving event_id failed!'
 						});
 					}
 				}
 			);
 		} else {
 			console.log(err);
-			res.render('error', {
-				error_message: 'Inserting into event failed.'
+			res.status(500).render('error', {
+				error_message: 'Inserting into event failed!'
 			});
 		}
 	});
 });
 app.post('/updateRequest', function(req, res) {
 	console.log('updateRequest');
-	res.send('Need to add. Contact Aravind.');
+	res.status(500).send('Need to add. Contact Aravind.');
 });
 app.post('/deleteRequest', function(req, res) {
 	console.log('deleteRequest');
-	res.send('Need to add. Contact Aravind.');
+	res.status(500).send('Need to add. Contact Aravind.');
 });
 app.post('/approve', function(req, res) {
 	var temp = localStorage.getItem('Approve');
@@ -357,7 +357,8 @@ app.post('/reject', function(req, res) {
 		res.redirect('/dashboard');
 	});
 });
-app.get('*', function(req, res) {
-	console.log('404');
-	res.status(404).send('Error 404 - Not Found Contact Aravind.');
+app.use((req, res, next) => {
+	res.status(404).render('error', {
+		error_message: '404!'
+	});
 });
