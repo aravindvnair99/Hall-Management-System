@@ -304,7 +304,8 @@
 				closeOnSelect: false,
 =======
 			.not_available {
-				background-color: red;
+                background-color: red;
+                cursor: not-allowed;
 			}
 			td:hover {
 				background-color: #ffcf8b;
@@ -318,18 +319,30 @@
 	<body style="background-color: darkslateblue;">
 		<nav class="white" role="navigation">
 			<div class="nav-wrapper container">
-				<a id="logo-container" href="#" class="brand-logo"
+				<a id="logo-container" href="/" class="brand-logo"
 					>ASE-B Hall Booking</a
 				>
+				<button
+					style="margin-left: 50%; margin-top: 2%; margin-bottom: 2%;background-color: #35377c"
+					class="btn waves-effect waves-light"
+					onclick="location.href = '/request'"
+				>
+					Request Form
+				</button>
+				&nbsp;
+				<button
+					style="margin-left: 10%;margin-top: 2%;margin-bottom: 2%;background-color: #35377c;"
+					class="btn waves-effect waves-light"
+					onclick="location.href = '/logout'"
+				>
+					Logout
+				</button>
 			</div>
 		</nav>
-		<div class="row">
+		<div class="row ">
 			<div class="col s12 m8 l8 offset-l2 offset-m2">
 				<div class="card">
 					<div>
-						<div class="row"></div>
-						<div class="row"></div>
-						<div class="row"></div>
 						<div class="row">
 							<form
 								class="col s12"
