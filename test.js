@@ -49,6 +49,7 @@ function parseCookies(req) {
 	var list = {},
 		rc = req.headers.cookie;
 
+<<<<<<< HEAD
 	rc &&
 		rc.split(";").forEach(cookie => {
 			var parts = cookie.split("=");
@@ -66,6 +67,17 @@ app.get("/login", (req, res) => {
 	if (req.session.user) {
 		res.redirect("/dashboard");
 	} else res.render("login");
+=======
+app.get('/', function(req, res) {
+	if (req.session.user) {
+		res.redirect('/dashboard');
+	} else res.render('index');
+});
+app.get('/login', function(req, res) {
+	if (req.session.user) {
+		res.redirect('/dashboard');
+	} else res.render('login');
+>>>>>>> Send to dashboard if logged in
 });
 app.get("/dashboard", (req, res) => {
 	if (req.session.user) {
@@ -118,27 +130,27 @@ app.get("/dashboard", (req, res) => {
 							err,
 							booking_data
 						) {
-							con.query(
-								"select * from events;",
-								function(err, events_data) {
-									res.render('dashboard_dean', {
-										res: req.session.user,
-										booking_data,
-										events_data
-									});
-								}
-							);
+							con.query('select * from events;', function(
+								err,
+								events_data
+							) {
+								res.render('dashboard_dean', {
+									res: req.session.user,
+									booking_data,
+									events_data
+								});
+							});
 						});
 					} else if (user_data[0].role === 'facility') {
-						con.query(
-							"select * from booking;",
-							function(err, booking_data) {
-								res.render('dashboard_facility', {
-									res: req.session.user,
-									booking_data
-								});
-							}
-						);
+						con.query('select * from booking;', function(
+							err,
+							booking_data
+						) {
+							res.render('dashboard_facility', {
+								res: req.session.user,
+								booking_data
+							});
+						});
 					} else {
 						res.redirect('/login');
 					}
