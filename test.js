@@ -51,8 +51,12 @@ app.use(express.static(__dirname + '/public'));
 app.set('views', path);
 app.set('view engine', 'ejs');
 app.listen(app.get('port'), function() {
+<<<<<<< HEAD
 	console.log('Node app is running on port', app.get('port'));
 >>>>>>> Enhance session security
+=======
+	console.log('App is running on port', app.get('port'));
+>>>>>>> Fix error messages
 });
 const con = mysql.createConnection({
 	host: `${process.env.DB_host}`,
@@ -63,10 +67,17 @@ const con = mysql.createConnection({
 });
 con.connect(function(error) {
 	if (error) {
+<<<<<<< HEAD
 		console.log("Database connection failed");
 		return;
 	} else {
 		console.log("Database connection succeeded");
+=======
+		console.log('Database connection failed');
+		return;
+	} else {
+		console.log('Database connection succeeded');
+>>>>>>> Fix error messages
 	}
 });
 function parseCookies(req) {
@@ -271,6 +282,7 @@ app.post("/onLogin", (req, res) => {
 						req.session.user = rows[0];
 						res.redirect("/dashboard");
 					} else {
+<<<<<<< HEAD
 						console.log("Invalid password");
 						res.status(401).render("error", {
 							error_message: "Authentication error!"
@@ -359,15 +371,28 @@ app.post("/onLogin", (req, res) => {
 					error_message: "Authentication error!"
 =======
 					console.log('Username Not Found!');
+=======
+						console.log('Invalid password');
+						res.render('error', {
+							error_message: 'Authentication error!'
+						});
+					}
+				} else {
+					console.log('Username not found!');
+>>>>>>> Fix error messages
 					res.render('error', {
-						message: 'Username Not Found!'
+						error_message: 'Authentication error!'
 					});
 				}
 			} else {
-				console.log('Username Not Found!');
+				console.log('Username not found!');
 				res.render('error', {
+<<<<<<< HEAD
 					message: 'Username Not Found!'
 >>>>>>> Remove unnecessary DB queries while logging in
+=======
+					error_message: 'Authentication error!'
+>>>>>>> Fix error messages
 				});
 			}
 		}
@@ -510,7 +535,11 @@ app.post('/makeRequest', function(req, res) {
 																			"error",
 																			{
 																				error_message:
+<<<<<<< HEAD
 																					"Inserting into hall_schedule failed!"
+=======
+																					'Inserting into hall_schedule failed.'
+>>>>>>> Fix error messages
 																			}
 																		);
 																	}
@@ -518,17 +547,28 @@ app.post('/makeRequest', function(req, res) {
 															);
 														} else {
 															console.log(err);
+<<<<<<< HEAD
 															res.status(
 																500
 															).render("error", {
 																error_message:
 																	"Inserting into slot_schedule failed!"
 															});
+=======
+															res.render(
+																'error',
+																{
+																	error_message:
+																		'Inserting into slot_schedule failed.'
+																}
+															);
+>>>>>>> Fix error messages
 														}
 													}
 												);
 											} else {
 												console.log(err);
+<<<<<<< HEAD
 												res.status(500).render(
 													"error",
 													{
@@ -536,31 +576,52 @@ app.post('/makeRequest', function(req, res) {
 															"Retrieving booking_id failed!"
 													}
 												);
+=======
+												res.render('error', {
+													error_message:
+														'Retrieving booking_id failed'
+												});
+>>>>>>> Fix error messages
 											}
 										}
 									);
 								} else {
 									console.log(err);
+<<<<<<< HEAD
 									res.status(500).render("error", {
 										error_message:
 											"Inserting into booking failed!"
+=======
+									res.render('error', {
+										error_message:
+											'Inserting into booking failed.'
+>>>>>>> Fix error messages
 									});
 								}
 							}
 						);
 					} else {
 						console.log(err);
+<<<<<<< HEAD
 						res.status(500).render("error", {
 							error_message: "Retrieving event_id failed!"
+=======
+						res.render('error', {
+							error_message: 'Retrieving event_id failed'
+>>>>>>> Fix error messages
 						});
 					}
 				}
 			);
 		} else {
 			console.log(err);
+<<<<<<< HEAD
 			res.status(500).render("error", {
 				error_message: "Inserting into event failed!"
 			});
+=======
+			res.render('error', { error_message: 'Inserting into event failed.' });
+>>>>>>> Fix error messages
 		}
 	});
 });
