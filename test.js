@@ -28,7 +28,7 @@ app.use(express.static(__dirname + '/public'));
 app.set('views', path);
 app.set('view engine', 'ejs');
 app.listen(app.get('port'), function() {
-	console.log('Node app is running on port', app.get('port'));
+	console.log('App is running on port', app.get('port'));
 });
 const con = mysql.createConnection({
 	host: `${process.env.DB_host}`,
@@ -39,10 +39,10 @@ const con = mysql.createConnection({
 });
 con.connect(function(error) {
 	if (error) {
-		console.log('Error Connecting Yo!');
+		console.log('Database connection failed');
 		return;
 	} else {
-		console.log(' Connected Yo!');
+		console.log('Database connection succeeded');
 	}
 });
 
@@ -131,21 +131,21 @@ app.post('/onLogin', function(req, res) {
 						req.session.user = rows[0];
 						res.redirect('/dashboard');
 					} else {
-						console.log('Password is Wrong Buddy!');
+						console.log('Invalid password');
 						res.render('error', {
-							message: 'Password is Wrong Buddy!'
+							error_message: 'Authentication error!'
 						});
 					}
 				} else {
-					console.log('Username Not Found!');
+					console.log('Username not found!');
 					res.render('error', {
-						message: 'Username Not Found!'
+						error_message: 'Authentication error!'
 					});
 				}
 			} else {
-				console.log('Username Not Found!');
+				console.log('Username not found!');
 				res.render('error', {
-					message: 'Username Not Found!'
+					error_message: 'Authentication error!'
 				});
 			}
 		}
@@ -273,7 +273,7 @@ app.post('/makeRequest', function(req, res) {
 																		res.render(
 																			'error',
 																			{
-																				message:
+																				error_message:
 																					'Inserting into hall_schedule failed.'
 																			}
 																		);
@@ -285,7 +285,7 @@ app.post('/makeRequest', function(req, res) {
 															res.render(
 																'error',
 																{
-																	message:
+																	error_message:
 																		'Inserting into slot_schedule failed.'
 																}
 															);
@@ -295,7 +295,7 @@ app.post('/makeRequest', function(req, res) {
 											} else {
 												console.log(err);
 												res.render('error', {
-													message:
+													error_message:
 														'Retrieving booking_id failed'
 												});
 											}
@@ -304,7 +304,7 @@ app.post('/makeRequest', function(req, res) {
 								} else {
 									console.log(err);
 									res.render('error', {
-										message:
+										error_message:
 											'Inserting into booking failed.'
 									});
 								}
@@ -313,14 +313,14 @@ app.post('/makeRequest', function(req, res) {
 					} else {
 						console.log(err);
 						res.render('error', {
-							message: 'Retrieving event_id failed'
+							error_message: 'Retrieving event_id failed'
 						});
 					}
 				}
 			);
 		} else {
 			console.log(err);
-			res.render('error', { message: 'Inserting into event failed.' });
+			res.render('error', { error_message: 'Inserting into event failed.' });
 		}
 	});
 });
