@@ -10,9 +10,9 @@ dotenv.config();
 app.use(
 	cookieSession({
 		name: 'session',
-		keys: ['ahms'],
-		// Cookie Options
-		maxAge: 24 * 60 * 60 * 1000 // 24 hours
+		secret: `${process.env.cookie_secret}`,
+		signed: true,
+		maxAge: 1 * 60 * 60 * 1000 // 1 hour
 	})
 );
 app.use(bodyParser.json());
@@ -21,7 +21,7 @@ app.use(
 		extended: false
 	})
 );
-app.set('port', process.env.port);
+app.set('port', process.env.node_port);
 app.use(express.static(__dirname + '/public'));
 app.set('views', path);
 app.set('view engine', 'ejs');
@@ -29,10 +29,10 @@ app.listen(app.get('port'), function() {
 	console.log('Node app is running on port', app.get('port'));
 });
 const con = mysql.createConnection({
-	host: `${process.env.host}`,
-	user: `${process.env.user}`,
-	password: `${process.env.password}`,
-	database: `${process.env.database}`,
+	host: `${process.env.DB_host}`,
+	user: `${process.env.DB_user}`,
+	password: `${process.env.DB_password}`,
+	database: `${process.env.DB_name}`,
 	multipleStatements: true
 });
 con.connect(function(error) {
@@ -141,7 +141,7 @@ app.post('/onLogin', function(req, res) {
 				if (rows.length > 0) {
 					if (
 						password ===
-						AES.decrypt(rows[0].password, `${process.env.aes_key}`)
+						AES.decrypt(rows[0].password, `${process.env.AES_key}`)
 					) {
 						req.session.user = rows[0];
 						res.redirect('/dashboard');
@@ -163,7 +163,7 @@ app.post('/onLogin', function(req, res) {
 										password ===
 										AES.decrypt(
 											rows[0].password,
-											`${process.env.aes_key}`
+											`${process.env.AES_key}`
 										)
 									) {
 										req.session.user = rows[0];
@@ -186,7 +186,7 @@ app.post('/onLogin', function(req, res) {
 														password ===
 														AES.decrypt(
 															rows[0].password,
-															`${process.env.aes_key}`
+															`${process.env.AES_key}`
 														)
 													) {
 														req.session.user =
