@@ -46,17 +46,17 @@ con.connect(function(error) {
 	}
 });
 
-app.get('/', function(req, res) {
+app.get('/', (req, res) => {
 	if (req.session.user) {
 		res.redirect('/dashboard');
 	} else res.render('index');
 });
-app.get('/login', function(req, res) {
+app.get('/login', (req, res) => {
 	if (req.session.user) {
 		res.redirect('/dashboard');
 	} else res.render('login');
 });
-app.get('/dashboard', function(req, res) {
+app.get('/dashboard', (req, res) => {
 	if (req.session.user) {
 		if (req.session.user.role === 'teacher') {
 			con.query(
@@ -105,18 +105,18 @@ app.get('/dashboard', function(req, res) {
 		res.redirect('/login');
 	}
 });
-app.get('/request', function(req, res) {
+app.get('/request', (req, res) => {
 	if (req.session.user) {
 		res.render('request');
 	} else {
 		res.redirect('/login');
 	}
 });
-app.get('/logout', function(req, res) {
+app.get('/logout', (req, res) => {
 	res.clearCookie('session', { path: '/' });
 	res.redirect('/login');
 });
-app.post('/onLogin', function(req, res) {
+app.post('/onLogin', (req, res) => {
 	var username = req.body.username;
 	var password = req.body.password;
 	con.query(
@@ -151,7 +151,7 @@ app.post('/onLogin', function(req, res) {
 		}
 	);
 });
-app.post('/checkHallAvailability', function(req, res) {
+app.post('/checkHallAvailability', (req, res) => {
 	var query =
 		"select hall_id from hall_schedule where booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='" +
 		req.body.date_wanted +
@@ -160,7 +160,7 @@ app.post('/checkHallAvailability', function(req, res) {
 		res.send(result);
 	});
 });
-app.post('/checkSlotAvailability', function(req, res) {
+app.post('/checkSlotAvailability', (req, res) => {
 	var slot_id = req.body.slot_id;
 	var query =
 		"select hall_id from hall_schedule where booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='" +
@@ -170,7 +170,7 @@ app.post('/checkSlotAvailability', function(req, res) {
 		res.send(result);
 	});
 });
-app.post('/makeRequest', function(req, res) {
+app.post('/makeRequest', (req, res) => {
 	var user_id = req.session.user.id;
 	var date_wanted = req.body.date_wanted;
 	var slot_id = '10';
@@ -331,15 +331,15 @@ app.post('/makeRequest', function(req, res) {
 		}
 	});
 });
-app.post('/updateRequest', function(req, res) {
+app.post('/updateRequest', (req, res) => {
 	console.log('updateRequest');
 	res.status(500).send('Need to add. Contact Aravind.');
 });
-app.post('/deleteRequest', function(req, res) {
+app.post('/deleteRequest', (req, res) => {
 	console.log('deleteRequest');
 	res.status(500).send('Need to add. Contact Aravind.');
 });
-app.post('/approve', function(req, res) {
+app.post('/approve', (req, res) => {
 	var temp = localStorage.getItem('Approve');
 	var query = "update booking set status='1' where id ='" + temp + "';";
 	console.log('Approved is' + temp);
@@ -348,7 +348,7 @@ app.post('/approve', function(req, res) {
 		res.redirect('/dashboard');
 	});
 });
-app.post('/reject', function(req, res) {
+app.post('/reject', (req, res) => {
 	var temp = localStorage.getItem('Reject');
 	var query = "update booking set status='2' where id ='" + temp + "';";
 	console.log('Rejected is' + temp);
