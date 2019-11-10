@@ -11,7 +11,11 @@ dotenv.config();
 app.use(morgan("dev"));
 app.use(
 	cookieSession({
+<<<<<<< HEAD
 		name: "session",
+=======
+		name: 'session',
+>>>>>>> Enhance session security
 		secret: `${process.env.cookie_secret}`,
 		signed: true,
 		maxAge: 1 * 60 * 60 * 1000 // 1 hour
@@ -23,12 +27,21 @@ app.use(
 		extended: false
 	})
 );
+<<<<<<< HEAD
 app.set("port", process.env.node_port);
 app.use(express.static(__dirname + "/public"));
 app.set("views", path);
 app.set("view engine", "ejs");
 app.listen(app.get("port"), function() {
 	console.log("App is running on port", app.get("port"));
+=======
+app.set('port', process.env.node_port);
+app.use(express.static(__dirname + '/public'));
+app.set('views', path);
+app.set('view engine', 'ejs');
+app.listen(app.get('port'), function() {
+	console.log('Node app is running on port', app.get('port'));
+>>>>>>> Enhance session security
 });
 const con = mysql.createConnection({
 	host: `${process.env.DB_host}`,
@@ -218,10 +231,80 @@ app.post("/onLogin", (req, res) => {
 						});
 					}
 				} else {
+<<<<<<< HEAD
 					console.log("Username not found!");
 					res.status(401).render("error", {
 						error_message: "Authentication error!"
 					});
+=======
+					con.query(
+						"select * from users where username='" +
+							username +
+							"' and role='teacher';",
+						function(err, rows) {
+							if (!err) {
+								if (rows.length > 0) {
+									if (
+										password ===
+										AES.decrypt(
+											rows[0].password,
+											`${process.env.AES_key}`
+										)
+									) {
+										req.session.user = rows[0];
+										res.redirect('/getUserProfile');
+									} else {
+										console.log('Password is Wrong Buddy!');
+										res.render('error', {
+											message: 'Password is Wrong Buddy!'
+										});
+									}
+								} else {
+									con.query(
+										"select * from users where username='" +
+											username +
+											"' and role='facility';",
+										function(err, rows) {
+											if (!err) {
+												if (rows.length > 0) {
+													if (
+														password ===
+														AES.decrypt(
+															rows[0].password,
+															`${process.env.AES_key}`
+														)
+													) {
+														req.session.user =
+															rows[0];
+														res.redirect(
+															'/dashboard_tab'
+														);
+													} else {
+														console.log(
+															'Password is Wrong Buddy!'
+														);
+														res.render('error', {
+															message:
+																'Password is Wrong Buddy!'
+														});
+													}
+												} else {
+													console.log(
+														'Username Not Found!'
+													);
+													res.render('error', {
+														message:
+															'Username Not Found!'
+													});
+												}
+											}
+										}
+									);
+								}
+							}
+						}
+					);
+>>>>>>> Enhance session security
 				}
 			} else {
 				console.log("Username not found!");
