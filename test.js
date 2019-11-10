@@ -88,9 +88,12 @@ app.get('/dashboard', function(req, res) {
 			});
 		} else if (req.session.user.role === 'facility') {
 			con.query('select * from booking;', function(err, booking_data) {
-				res.render('dashboard_facility', {
-					res: req.session.user,
-					booking_data
+				con.query('select * from events;', function(err, events_data) {
+					res.render('dashboard_facility', {
+						res: req.session.user,
+						booking_data,
+						events_data
+					});
 				});
 			});
 		} else {
