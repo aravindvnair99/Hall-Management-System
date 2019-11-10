@@ -460,9 +460,33 @@ app.post('/makeRequest', function(req, res) {
 																				err,
 																				data
 																			) {
+<<<<<<< HEAD
 																				res.redirect(
 																					"/dashboard"
 																				);
+=======
+																				if (
+																					req
+																						.session
+																						.user
+																						.role ==
+																					'dean'
+																				)
+																					res.redirect(
+																						'/dashboard'
+																					);
+																				else
+																					res.render(
+																						'dashboard',
+																						{
+																							res:
+																								req
+																									.session
+																									.user,
+																							data
+																						}
+																					);
+>>>>>>> Fix paths
 																			}
 																		);
 																	} else {
@@ -542,8 +566,13 @@ app.post("/approve", (req, res) => {
 	var query = "update booking set status='1' where id ='" + temp + "';";
 	console.log("Approved is" + temp);
 	con.query(query, function(err, result) {
+<<<<<<< HEAD
 		console.log("app");
 		res.redirect("/dashboard");
+=======
+		console.log('app');
+		res.redirect('/dashboard');
+>>>>>>> Fix paths
 	});
 });
 app.post("/reject", (req, res) => {
@@ -551,8 +580,13 @@ app.post("/reject", (req, res) => {
 	var query = "update booking set status='2' where id ='" + temp + "';";
 	console.log("Rejected is" + temp);
 	con.query(query, function(err, result) {
+<<<<<<< HEAD
 		console.log("rej");
 		res.redirect("/dashboard");
+=======
+		console.log('rej');
+		res.redirect('/dashboard');
+>>>>>>> Fix paths
 	});
 });
 app.use((req, res, next) => {
