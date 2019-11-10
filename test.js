@@ -45,10 +45,14 @@ con.connect(function(error) {
 });
 
 app.get('/', function(req, res) {
-	res.render('index');
+	if (req.session.user) {
+		res.redirect('/dashboard');
+	} else res.render('index');
 });
 app.get('/login', function(req, res) {
-	res.render('login');
+	if (req.session.user) {
+		res.redirect('/dashboard');
+	} else res.render('login');
 });
 app.get('/dashboard', function(req, res) {
 	if (req.session.user) {
@@ -81,27 +85,27 @@ app.get('/dashboard', function(req, res) {
 							err,
 							booking_data
 						) {
-							con.query(
-								"select * from events;",
-								function(err, events_data) {
-									res.render('dashboard_dean', {
-										res: req.session.user,
-										booking_data,
-										events_data
-									});
-								}
-							);
+							con.query('select * from events;', function(
+								err,
+								events_data
+							) {
+								res.render('dashboard_dean', {
+									res: req.session.user,
+									booking_data,
+									events_data
+								});
+							});
 						});
 					} else if (user_data[0].role === 'facility') {
-						con.query(
-							"select * from booking;",
-							function(err, booking_data) {
-								res.render('dashboard_facility', {
-									res: req.session.user,
-									booking_data
-								});
-							}
-						);
+						con.query('select * from booking;', function(
+							err,
+							booking_data
+						) {
+							res.render('dashboard_facility', {
+								res: req.session.user,
+								booking_data
+							});
+						});
 					} else {
 						res.redirect('/login');
 					}
