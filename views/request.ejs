@@ -191,7 +191,7 @@
 								}
 							});
 							not_available.forEach(element => {
-								$('#' + element).toggleClass('not_available');
+                                $('#' + element).toggleClass('not_available');
 							});
 						});
 					})
@@ -221,8 +221,6 @@
 							);
 							return;
 						}
-
-						// Examine the text in the response
 						response.json().then(function(data) {
 							console.log(data);
 						});
@@ -231,19 +229,15 @@
 						console.log('Fetch Error :-S', err);
 					});
 			});
-			// $('td').click(function () {
-			//     $(this).toggleClass("colour");
-			//     alert($(this).attr("id"));
-			// });
 		</script>
 		<script>
 			$('.datepicker').datepicker({
-				selectMonths: true, // Creates a dropdown to control month
-				selectYears: 15, // Creates a dropdown of 15 years to control year,
+				selectMonths: true,
+				selectYears: 15,
 				today: 'Today',
 				clear: 'Clear',
 				close: 'Ok',
-				closeOnSelect: false, // Close upon selecting a date,
+				closeOnSelect: false,
 				format: 'yyyy/mm/dd'
 			});
 		</script>
