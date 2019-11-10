@@ -1,6 +1,7 @@
 const express = require("express"),
 	dotenv = require("dotenv"),
 	app = express(),
+<<<<<<< HEAD
 	path = __dirname + "/views/",
 	bodyParser = require("body-parser"),
 	cookieSession = require("cookie-session"),
@@ -9,6 +10,16 @@ const express = require("express"),
 	morgan = require("morgan");
 dotenv.config();
 app.use(morgan("dev"));
+=======
+	path = __dirname + '/views/',
+	bodyParser = require('body-parser'),
+	cookieSession = require('cookie-session'),
+	mysql = require('mysql'),
+	AES = require('mysql-aes'),
+	logger = require('morgan');
+dotenv.config();
+app.use(logger('dev'));
+>>>>>>> Add logger
 app.use(
 	cookieSession({
 <<<<<<< HEAD

@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
 	"title": "Hall Management System",
 	"name": "hall-management-system",
 	"version": "1.0.1",
@@ -49,4 +50,56 @@
 		"mysql": "^2.17.1",
 		"mysql-aes": "0.0.1"
 	}
+=======
+  "title": "Hall Management System",
+  "name": "hall-management-system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "keywords": [
+    "Amrita",
+    "BookMyHall",
+    "Hall",
+    "Booking",
+    "System",
+    "Management"
+  ],
+  "man": [
+    "./README.MD"
+  ],
+  "scripts": {
+    "test": "node test.js",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aravindvnair99/Hall-Management-System.git"
+  },
+  "author": "Contributors",
+  "contributors": [
+    {
+      "name": "Aravind V Nair",
+      "url": "https://aravindvnair1999.blogspot.com"
+    },
+    {
+      "name": "Abhishek Sai",
+      "url": "https://github.com/Abhishek-Sai"
+    }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aravindvnair99/Hall-Management-System/issues"
+  },
+  "homepage": "https://github.com/aravindvnair99/Hall-Management-System",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cookie-session": "^1.3.3",
+    "dotenv": "^8.2.0",
+    "ejs": "^2.6.2",
+    "express": "^4.17.1",
+    "morgan": "^1.9.1",
+    "mysql": "^2.17.1",
+    "mysql-aes": "0.0.1"
+  }
+>>>>>>> Add logger
 }
