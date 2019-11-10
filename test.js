@@ -149,29 +149,6 @@ app.post('/onLogin', function(req, res) {
 		}
 	);
 });
-app.get('/getUserProfile', function(req, res) {
-	var id = req.session.user.id;
-	con.query("select * from users where id='" + id + "';", function(
-		err,
-		rows
-	) {
-		if (!err) {
-			if (rows[0].role === 'teacher') {
-				res.redirect('/dashboard');
-			} else if (rows[0].role === 'dean') {
-				res.redirect('/dashboard_dean');
-			} else if (rows[0].role === 'facility') {
-				res.redirect('/dashboard_tab');
-			} else {
-				res.redirect('/login');
-			}
-		} else {
-			res.render('error', {
-				message: "Don't Poke Your Nose where you don't Belong!"
-			});
-		}
-	});
-});
 app.post('/makeRequest', function(req, res) {
 	var user_id = req.session.user.id;
 	var date_wanted = req.body.date_wanted;
