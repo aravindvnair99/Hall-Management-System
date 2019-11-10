@@ -267,6 +267,7 @@ app.post("/onLogin", (req, res) => {
 					}
 				} else {
 <<<<<<< HEAD
+<<<<<<< HEAD
 					console.log("Username not found!");
 					res.status(401).render("error", {
 						error_message: "Authentication error!"
@@ -345,6 +346,17 @@ app.post("/onLogin", (req, res) => {
 				console.log("Username not found!");
 				res.status(401).render("error", {
 					error_message: "Authentication error!"
+=======
+					console.log('Username Not Found!');
+					res.render('error', {
+						message: 'Username Not Found!'
+					});
+				}
+			} else {
+				console.log('Username Not Found!');
+				res.render('error', {
+					message: 'Username Not Found!'
+>>>>>>> Remove unnecessary DB queries while logging in
 				});
 			}
 		}
