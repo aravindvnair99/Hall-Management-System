@@ -151,11 +151,34 @@ app.post('/onLogin', function(req, res) {
 		}
 	);
 });
+app.post('/checkHallAvailability', function(req, res) {
+	var date_wanted = req.body.date_wanted;
+	var hall_id = req.body.hall_id;
+	var query =
+		"select hall_id from hall_schedule where booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='" +
+		date_wanted +
+		"')) and slot_id='10')";
+	con.query(query, function(err, result) {
+		res.send(result);
+	});
+});
+app.post('/checkSlotAvailability', function(req, res) {
+	var date_wanted = req.body.date_wanted;
+	var hall_id = req.body.hall_id;
+	var slot_id = req.body.slot_id;
+	var query =
+		"select slot_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='" +
+		date_wanted +
+		"')) and slot_id='10'";
+	con.query(query, function(err, result) {
+		res.send(result);
+	});
+});
 app.post('/makeRequest', function(req, res) {
 	var user_id = req.session.user.id;
 	var date_wanted = req.body.date_wanted;
-	var slot_id = '1';
-	var hall_id = '1';
+	var slot_id = '10';
+	var hall_id = '4';
 	var club = req.body.club_name;
 	var details = req.body.desc;
 	var title = req.body.event_name;
@@ -243,27 +266,9 @@ app.post('/makeRequest', function(req, res) {
 																				err,
 																				data
 																			) {
-																				if (
-																					req
-																						.session
-																						.user
-																						.role ==
-																					'dean'
-																				)
-																					res.redirect(
-																						'/dashboard'
-																					);
-																				else
-																					res.render(
-																						'dashboard',
-																						{
-																							res:
-																								req
-																									.session
-																									.user,
-																							data
-																						}
-																					);
+																				res.redirect(
+																					'/dashboard'
+																				);
 																			}
 																		);
 																	} else {
@@ -320,7 +325,9 @@ app.post('/makeRequest', function(req, res) {
 			);
 		} else {
 			console.log(err);
-			res.render('error', { error_message: 'Inserting into event failed.' });
+			res.render('error', {
+				error_message: 'Inserting into event failed.'
+			});
 		}
 	});
 });
