@@ -89,6 +89,7 @@ function parseCookies(req) {
 		rc = req.headers.cookie;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	rc &&
 		rc.split(";").forEach(cookie => {
 			var parts = cookie.split("=");
@@ -108,17 +109,24 @@ app.get("/login", (req, res) => {
 	} else res.render("login");
 =======
 app.get('/', function(req, res) {
+=======
+app.get('/', (req, res) => {
+>>>>>>> Switch to arrow functions
 	if (req.session.user) {
 		res.redirect('/dashboard');
 	} else res.render('index');
 });
-app.get('/login', function(req, res) {
+app.get('/login', (req, res) => {
 	if (req.session.user) {
 		res.redirect('/dashboard');
 	} else res.render('login');
 >>>>>>> Send to dashboard if logged in
 });
+<<<<<<< HEAD
 app.get("/dashboard", (req, res) => {
+=======
+app.get('/dashboard', (req, res) => {
+>>>>>>> Switch to arrow functions
 	if (req.session.user) {
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -260,18 +268,30 @@ app.get("/dashboard", (req, res) => {
 		res.redirect("/login");
 	}
 });
+<<<<<<< HEAD
 app.get("/request", (req, res) => {
+=======
+app.get('/request', (req, res) => {
+>>>>>>> Switch to arrow functions
 	if (req.session.user) {
 		res.render("request");
 	} else {
 		res.redirect("/login");
 	}
 });
+<<<<<<< HEAD
 app.get("/logout", (req, res) => {
 	res.clearCookie("session", { path: "/" });
 	res.redirect("/login");
 });
 app.post("/onLogin", (req, res) => {
+=======
+app.get('/logout', (req, res) => {
+	res.clearCookie('session', { path: '/' });
+	res.redirect('/login');
+});
+app.post('/onLogin', (req, res) => {
+>>>>>>> Switch to arrow functions
 	var username = req.body.username;
 	var password = req.body.password;
 	con.query(
@@ -412,10 +432,14 @@ app.post("/onLogin", (req, res) => {
 });
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 app.post("/checkHallAvailability", (req, res) => {
 	var query = `select hall_id from hall_schedule where booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='${req.body.date_wanted}')) and slot_id='10')`;
 =======
 app.post('/checkHallAvailability', function(req, res) {
+=======
+app.post('/checkHallAvailability', (req, res) => {
+>>>>>>> Switch to arrow functions
 	var query =
 		"select hall_id from hall_schedule where booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='" +
 		req.body.date_wanted +
@@ -426,10 +450,14 @@ app.post('/checkHallAvailability', function(req, res) {
 	});
 });
 <<<<<<< HEAD
+<<<<<<< HEAD
 app.post("/checkSlotAvailability", (req, res) => {
 	var query = `SELECT hall_id FROM hall_schedule WHERE booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='${req.body.date_wanted}')) and slot_id='${req.body.slot_id}') AND hall_schedule.hall_id = '${req.body.hall_id}'`;
 =======
 app.post('/checkSlotAvailability', function(req, res) {
+=======
+app.post('/checkSlotAvailability', (req, res) => {
+>>>>>>> Switch to arrow functions
 	var slot_id = req.body.slot_id;
 	var query =
 <<<<<<< HEAD
@@ -447,12 +475,16 @@ app.post('/checkSlotAvailability', function(req, res) {
 	});
 });
 <<<<<<< HEAD
+<<<<<<< HEAD
 app.post("/makeRequest", (req, res) => {
 =======
 =======
 >>>>>>> Add API for checking hall availability
 app.post('/makeRequest', function(req, res) {
 >>>>>>> Remove unwanted routes
+=======
+app.post('/makeRequest', (req, res) => {
+>>>>>>> Switch to arrow functions
 	var user_id = req.session.user.id;
 	var date_wanted = req.body.date_wanted;
 <<<<<<< HEAD
@@ -723,6 +755,7 @@ app.post('/makeRequest', function(req, res) {
 	});
 });
 <<<<<<< HEAD
+<<<<<<< HEAD
 app.post("/updateRequest", (req, res) => {
 	console.log("updateRequest");
 	res.status(500).send("Need to add. Contact Aravind.");
@@ -732,16 +765,24 @@ app.post("/deleteRequest", (req, res) => {
 	res.status(500).send("Need to add. Contact Aravind.");
 =======
 app.post('/updateRequest', function(req, res) {
+=======
+app.post('/updateRequest', (req, res) => {
+>>>>>>> Switch to arrow functions
 	console.log('updateRequest');
 	res.status(500).send('Need to add. Contact Aravind.');
 });
-app.post('/deleteRequest', function(req, res) {
+app.post('/deleteRequest', (req, res) => {
 	console.log('deleteRequest');
 	res.status(500).send('Need to add. Contact Aravind.');
 >>>>>>> Fix HTTP status codes and error messages
 });
+<<<<<<< HEAD
 app.post("/approve", (req, res) => {
 	var temp = localStorage.getItem("Approve");
+=======
+app.post('/approve', (req, res) => {
+	var temp = localStorage.getItem('Approve');
+>>>>>>> Switch to arrow functions
 	var query = "update booking set status='1' where id ='" + temp + "';";
 	console.log("Approved is" + temp);
 	con.query(query, function(err, result) {
@@ -754,8 +795,13 @@ app.post("/approve", (req, res) => {
 >>>>>>> Fix paths
 	});
 });
+<<<<<<< HEAD
 app.post("/reject", (req, res) => {
 	var temp = localStorage.getItem("Reject");
+=======
+app.post('/reject', (req, res) => {
+	var temp = localStorage.getItem('Reject');
+>>>>>>> Switch to arrow functions
 	var query = "update booking set status='2' where id ='" + temp + "';";
 	console.log("Rejected is" + temp);
 	con.query(query, function(err, result) {
