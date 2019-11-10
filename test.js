@@ -249,7 +249,7 @@ app.post('/makeRequest', function(req, res) {
 																					'dean'
 																				)
 																					res.redirect(
-																						'/dashboard_dean'
+																						'/dashboard'
 																					);
 																				else
 																					res.render(
@@ -336,7 +336,7 @@ app.post('/approve', function(req, res) {
 	console.log('Approved is' + temp);
 	con.query(query, function(err, result) {
 		console.log('app');
-		res.redirect('/dashboard_dean');
+		res.redirect('/dashboard');
 	});
 });
 app.post('/reject', function(req, res) {
@@ -345,7 +345,7 @@ app.post('/reject', function(req, res) {
 	console.log('Rejected is' + temp);
 	con.query(query, function(err, result) {
 		console.log('rej');
-		res.redirect('/dashboard_dean');
+		res.redirect('/dashboard');
 	});
 });
 app.get('*', function(req, res) {
