@@ -377,24 +377,32 @@ app.post("/onLogin", (req, res) => {
 					console.log('Username Not Found!');
 =======
 						console.log('Invalid password');
-						res.render('error', {
+						res.status(401).render('error', {
 							error_message: 'Authentication error!'
 						});
 					}
 				} else {
 					console.log('Username not found!');
+<<<<<<< HEAD
 >>>>>>> Fix error messages
 					res.render('error', {
+=======
+					res.status(401).render('error', {
+>>>>>>> Fix HTTP status codes and error messages
 						error_message: 'Authentication error!'
 					});
 				}
 			} else {
 				console.log('Username not found!');
+<<<<<<< HEAD
 				res.render('error', {
 <<<<<<< HEAD
 					message: 'Username Not Found!'
 >>>>>>> Remove unnecessary DB queries while logging in
 =======
+=======
+				res.status(401).render('error', {
+>>>>>>> Fix HTTP status codes and error messages
 					error_message: 'Authentication error!'
 >>>>>>> Fix error messages
 				});
@@ -408,11 +416,9 @@ app.post("/checkHallAvailability", (req, res) => {
 	var query = `select hall_id from hall_schedule where booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='${req.body.date_wanted}')) and slot_id='10')`;
 =======
 app.post('/checkHallAvailability', function(req, res) {
-	var date_wanted = req.body.date_wanted;
-	var hall_id = req.body.hall_id;
 	var query =
 		"select hall_id from hall_schedule where booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='" +
-		date_wanted +
+		req.body.date_wanted +
 		"')) and slot_id='10')";
 >>>>>>> Add API for checking hall availability
 	con.query(query, function(err, result) {
@@ -424,14 +430,18 @@ app.post("/checkSlotAvailability", (req, res) => {
 	var query = `SELECT hall_id FROM hall_schedule WHERE booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='${req.body.date_wanted}')) and slot_id='${req.body.slot_id}') AND hall_schedule.hall_id = '${req.body.hall_id}'`;
 =======
 app.post('/checkSlotAvailability', function(req, res) {
-	var date_wanted = req.body.date_wanted;
-	var hall_id = req.body.hall_id;
 	var slot_id = req.body.slot_id;
 	var query =
+<<<<<<< HEAD
 		"select slot_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='" +
 		date_wanted +
 		"')) and slot_id='10'";
 >>>>>>> Add API for checking hall availability
+=======
+		"select hall_id from hall_schedule where booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='" +
+		req.body.date_wanted +
+		"')) and slot_id='10')";
+>>>>>>> Fix HTTP status codes and error messages
 	con.query(query, function(err, result) {
 		res.send(result);
 	});
@@ -571,6 +581,7 @@ app.post('/makeRequest', function(req, res) {
 																		res.status(
 																			500
 																		).render(
+<<<<<<< HEAD
 																			"error",
 																			{
 																				error_message:
@@ -579,6 +590,12 @@ app.post('/makeRequest', function(req, res) {
 =======
 																					'Inserting into hall_schedule failed.'
 >>>>>>> Fix error messages
+=======
+																			'error',
+																			{
+																				error_message:
+																					'Inserting into hall_schedule failed!'
+>>>>>>> Fix HTTP status codes and error messages
 																			}
 																		);
 																	}
@@ -586,6 +603,7 @@ app.post('/makeRequest', function(req, res) {
 															);
 														} else {
 															console.log(err);
+<<<<<<< HEAD
 <<<<<<< HEAD
 															res.status(
 																500
@@ -602,11 +620,20 @@ app.post('/makeRequest', function(req, res) {
 																}
 															);
 >>>>>>> Fix error messages
+=======
+															res.status(
+																500
+															).render('error', {
+																error_message:
+																	'Inserting into slot_schedule failed!'
+															});
+>>>>>>> Fix HTTP status codes and error messages
 														}
 													}
 												);
 											} else {
 												console.log(err);
+<<<<<<< HEAD
 <<<<<<< HEAD
 												res.status(500).render(
 													"error",
@@ -621,11 +648,21 @@ app.post('/makeRequest', function(req, res) {
 														'Retrieving booking_id failed'
 												});
 >>>>>>> Fix error messages
+=======
+												res.status(500).render(
+													'error',
+													{
+														error_message:
+															'Retrieving booking_id failed!'
+													}
+												);
+>>>>>>> Fix HTTP status codes and error messages
 											}
 										}
 									);
 								} else {
 									console.log(err);
+<<<<<<< HEAD
 <<<<<<< HEAD
 									res.status(500).render("error", {
 										error_message:
@@ -635,6 +672,11 @@ app.post('/makeRequest', function(req, res) {
 										error_message:
 											'Inserting into booking failed.'
 >>>>>>> Fix error messages
+=======
+									res.status(500).render('error', {
+										error_message:
+											'Inserting into booking failed!'
+>>>>>>> Fix HTTP status codes and error messages
 									});
 								}
 							}
@@ -642,18 +684,24 @@ app.post('/makeRequest', function(req, res) {
 					} else {
 						console.log(err);
 <<<<<<< HEAD
+<<<<<<< HEAD
 						res.status(500).render("error", {
 							error_message: "Retrieving event_id failed!"
 =======
 						res.render('error', {
 							error_message: 'Retrieving event_id failed'
 >>>>>>> Fix error messages
+=======
+						res.status(500).render('error', {
+							error_message: 'Retrieving event_id failed!'
+>>>>>>> Fix HTTP status codes and error messages
 						});
 					}
 				}
 			);
 		} else {
 			console.log(err);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 			res.status(500).render("error", {
@@ -665,11 +713,16 @@ app.post('/makeRequest', function(req, res) {
 =======
 			res.render('error', {
 				error_message: 'Inserting into event failed.'
+=======
+			res.status(500).render('error', {
+				error_message: 'Inserting into event failed!'
+>>>>>>> Fix HTTP status codes and error messages
 			});
 >>>>>>> Add API for checking hall availability
 		}
 	});
 });
+<<<<<<< HEAD
 app.post("/updateRequest", (req, res) => {
 	console.log("updateRequest");
 	res.status(500).send("Need to add. Contact Aravind.");
@@ -677,6 +730,15 @@ app.post("/updateRequest", (req, res) => {
 app.post("/deleteRequest", (req, res) => {
 	console.log("deleteRequest");
 	res.status(500).send("Need to add. Contact Aravind.");
+=======
+app.post('/updateRequest', function(req, res) {
+	console.log('updateRequest');
+	res.status(500).send('Need to add. Contact Aravind.');
+});
+app.post('/deleteRequest', function(req, res) {
+	console.log('deleteRequest');
+	res.status(500).send('Need to add. Contact Aravind.');
+>>>>>>> Fix HTTP status codes and error messages
 });
 app.post("/approve", (req, res) => {
 	var temp = localStorage.getItem("Approve");
@@ -707,7 +769,12 @@ app.post("/reject", (req, res) => {
 	});
 });
 app.use((req, res, next) => {
+<<<<<<< HEAD
 	res.status(404).render("error", {
 		error_message: "404!"
+=======
+	res.status(404).render('error', {
+		error_message: '404!'
+>>>>>>> Fix HTTP status codes and error messages
 	});
 });
