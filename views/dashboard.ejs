@@ -42,7 +42,7 @@
             <div class="col s12 m6 l3">
               <div class="card blue-grey darken-1">
                 <div class="card-content white-text">
-                  <span class="card-title"><%= events_data[i].title %></span>
+                  <span class="card-title" href="#modal"><%= events_data[i].title %></span>
                   <div>
                     <b>Booking ID: <%= booking_data[i].id %></b>
                     <br>  
@@ -64,6 +64,40 @@
                 <div class="card-action">
                   <a href="#">This is a link</a>
                   <a href="#">This is a link</a>
+                </div>
+              </div>
+              <div id="modal" class="modal">
+                <div class="modal-content">
+                    <b>Booking ID: <%= booking_data[i].id %></b>
+                    <br>
+                    <b>User ID:</b> <%= booking_data[i].user_id %>
+                    <br>
+                    <b>Date requested:</b> <%= booking_data[i].date_req %>
+                    <br>
+                    <b>Date wanted:</b> <%= events_data[i].date_wanted %>
+                    <br>
+                    <b>Title:</b> <%= events_data[i].title %>
+                    <br>
+                    <b>Club:</b> <%= events_data[i].club %>
+                    <br>
+                    <b>Requirements:</b> <%= events_data[i].req %>
+                    <br>
+                    <b>Details:</b> <%= events_data[i].details %>
+                    <br>
+                    <b>Status:</b> <% if (booking_data[i].status_id == 1) { %>
+                        Approved
+                        <% } else if (booking_data[i].status_id == 3) { %>  
+                            Pending
+                        <% } else if (booking_data[i].status_id == 2) { %>  
+                            Rejected
+                        <% } else { %>  
+                            Unknown
+                        <% } %>
+                </div>
+                <div class="modal-footer">
+                  <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+                  <a href="#!" class="modal-close waves-effect waves-green btn-flat">Disagree</a>
+                  <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
                 </div>
               </div>
             </div>
