@@ -69,6 +69,7 @@ app.get("/login", (req, res) => {
 });
 app.get("/dashboard", (req, res) => {
 	if (req.session.user) {
+<<<<<<< HEAD
 		if (req.session.user.role === "teacher") {
 			con.query(
 				"select * from booking where user_id='" +
@@ -87,6 +88,63 @@ app.get("/dashboard", (req, res) => {
 							});
 						}
 					);
+=======
+		con.query(
+			"select * from users where id='" + req.session.user.id + "';",
+			function(err, user_data) {
+				if (!err) {
+					if (user_data[0].role === 'teacher') {
+						con.query(
+							"select * from booking where user_id='" +
+								req.session.user.id +
+								"';",
+							function(err, booking_data) {
+								con.query(
+									"select * from events where user_id='" +
+										req.session.user.id +
+										"';",
+									function(err, events_data) {
+										res.render('dashboard_teacher', {
+											res: req.session.user,
+											booking_data,
+											events_data
+										});
+									}
+								);
+							}
+						);
+					} else if (user_data[0].role === 'dean') {
+						con.query('select * from booking;', function(
+							err,
+							booking_data
+						) {
+							con.query(
+								"select * from events;",
+								function(err, events_data) {
+									res.render('dashboard_dean', {
+										res: req.session.user,
+										booking_data,
+										events_data
+									});
+								}
+							);
+						});
+					} else if (user_data[0].role === 'facility') {
+						con.query(
+							"select * from booking;",
+							function(err, booking_data) {
+								res.render('dashboard_facility', {
+									res: req.session.user,
+									booking_data
+								});
+							}
+						);
+					} else {
+						res.redirect('/login');
+					}
+				} else {
+					res.redirect('/login');
+>>>>>>> Fix retrieval of data
 				}
 			);
 		} else if (req.session.user.role === "dean") {
