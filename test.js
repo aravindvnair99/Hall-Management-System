@@ -6,9 +6,9 @@ const express = require('express'),
 	cookieSession = require('cookie-session'),
 	mysql = require('mysql'),
 	AES = require('mysql-aes'),
-	logger = require('morgan');
+	morgan = require('morgan');
 dotenv.config();
-app.use(logger('dev'));
+app.use(morgan('dev'));
 app.use(
 	cookieSession({
 		name: 'session',
