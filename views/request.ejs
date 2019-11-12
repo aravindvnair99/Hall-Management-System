@@ -768,6 +768,7 @@
 				if ($(this).attr('disabled') == 'disabled') {
 					alert('Slot not available! Try another date or venue!');
 				} else {
+					var identifier = $(this).attr('id');
 					var payload = {
 						date_wanted: document.getElementById('date_wanted')
 							.value,
@@ -795,6 +796,39 @@
 							}
 							response.json().then(function(data) {
 								console.log(data);
+								try {
+									console.log(Object.entries(data).length);
+									if (
+										Object.entries(data).length != 0
+									) {
+										console.log(payload.hall_id);
+										if (
+											data[0].hall_id == payload.hall_id
+										) {
+											console.log('Step 2');
+											$('#' + identifier).toggleClass(
+												'not_available'
+											);
+											$('.not_available').attr(
+												'disabled',
+												'disabled'
+											);
+										} else {
+											console.log('Step 3');
+											$('#' + identifier).toggleClass(
+												'colour'
+											);
+										}
+									} else {
+										console.log('Step 3');
+										$('#' + identifier).toggleClass(
+											'colour'
+										);
+									}
+								} catch (error) {
+									console.error('Error is: ', error);
+									$('#' + identifier).toggleClass('colour');
+								}
 							});
 						})
 						.catch(function(err) {
