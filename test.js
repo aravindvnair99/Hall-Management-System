@@ -161,11 +161,10 @@ app.post('/checkHallAvailability', (req, res) => {
 	});
 });
 app.post('/checkSlotAvailability', (req, res) => {
-	var slot_id = req.body.slot_id;
 	var query =
-		"select hall_id from hall_schedule where booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='" +
+		"select slot_id from slot_schedule where booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='" +
 		req.body.date_wanted +
-		"')) and slot_id='10')";
+		"')) and slot_id='" + req.body.slot_id + "')";
 	con.query(query, function(err, result) {
 		res.send(result);
 	});
