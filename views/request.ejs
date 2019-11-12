@@ -178,8 +178,6 @@
 			$(document).ready(function() {
 				$('select').formSelect();
 			});
-		</script>
-		<script>
 			$('#date_wanted').change(function() {
 				var payload = {
 					date_wanted: document.getElementById('date_wanted').value,
@@ -193,7 +191,7 @@
 				})
 					.then(function(response) {
 						if (response.status !== 200) {
-							console.log(
+							alert(
 								'Looks like there was a problem. Status Code: ' +
 									response.status
 							);
@@ -217,7 +215,7 @@
 						});
 					})
 					.catch(function(err) {
-						console.log('Fetch Error :-S', err);
+						alert('Fetch Error :-S', err);
 					});
 			});
 			$('td').click(function() {
@@ -250,57 +248,57 @@
 =======
 						.then(function(response) {
 							if (response.status !== 200) {
-								console.log(
+								alert(
 									'Looks like there was a problem. Status Code: ' +
 										response.status
 								);
 								return;
 							}
 							response.json().then(function(data) {
-								console.log(data);
 								try {
-									console.log(Object.entries(data).length);
-									if (
-										Object.entries(data).length != 0
-									) {
-										console.log(payload.hall_id);
-										if (
-											data[0].hall_id == payload.hall_id
-										) {
-											console.log('Step 2');
-											$('#' + identifier).toggleClass(
-												'not_available'
-											);
-											$('.not_available').attr(
-												'disabled',
-												'disabled'
-											);
-										} else {
-											console.log('Step 3');
+									if (Object.entries(data).length != 0) {
+										var i = 0;
+										data.forEach(element => {
+											if (
+												element.hall_id ==
+												payload.hall_id
+											) {
+												$('#' + identifier).toggleClass(
+													'not_available'
+												);
+												$('.not_available').attr(
+													'disabled',
+													'disabled'
+												);
+												i++;
+											} else {
+												$('#' + identifier).toggleClass(
+													'colour'
+												);
+											}
+										});
+										if (i != Object.entries(data).length) {
 											$('#' + identifier).toggleClass(
 												'colour'
 											);
 										}
 									} else {
-										console.log('Step 3');
 										$('#' + identifier).toggleClass(
 											'colour'
 										);
 									}
 								} catch (error) {
-									console.error('Error is: ', error);
+									alert('Error is: ', error);
 									$('#' + identifier).toggleClass('colour');
 								}
 							});
 						})
 						.catch(function(err) {
-							console.log('Fetch Error :-S', err);
+							alert('Fetch Error :-S', err);
 						});
 				}
 >>>>>>> Fix request
 			});
-		</script>
-		<script>
 			$('.datepicker').datepicker({
 				selectMonths: true,
 				selectYears: 15,
