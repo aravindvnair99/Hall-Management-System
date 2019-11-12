@@ -8,4 +8,8 @@ select hall_id from hall_schedule where booking_id in (select booking_id from sl
 
 -- To retrieve available slots for a particular hall
 
+<<<<<<< HEAD
 SELECT hall_id FROM hall_schedule WHERE booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='2019-11-11')) and slot_id='9')
+=======
+select slot_id from slot_schedule where booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='2019-11-11')) and slot_id='1')
+>>>>>>> Add SQL for slot checking
