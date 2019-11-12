@@ -200,7 +200,7 @@
 							return;
 						}
 						response.json().then(function(data) {
-							$('#11').on();
+							$('.not_available').removeAttr('disabled');
 							$('td').removeClass();
 							var not_available = [];
 							data.forEach(element => {
