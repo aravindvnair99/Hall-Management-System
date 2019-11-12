@@ -649,13 +649,6 @@
 		$(document).ready(function () {
 			$('select').formSelect();
 		});
-		// $("#date_wanted").change(function () {
-		// 	alert("hey");
-		// });
-		$("table").click(function () {
-			$(".not_available").off();
-		});
-		$( "table" ).trigger( "click" );
 	</script>
 	<script>
 		$('#date_wanted').change(function () {
@@ -690,6 +683,7 @@
 						not_available.forEach(element => {
 							$('#' + element).toggleClass('not_available');
 						});
+						$(".not_available").off();
 					});
 				})
 				.catch(function (err) {
