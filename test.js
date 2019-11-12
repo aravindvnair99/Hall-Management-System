@@ -180,15 +180,6 @@ app.post('/makeRequest', (req, res) => {
 	var title = req.body.event_name;
 	var requirements = req.body.requirements;
 	var status = '3';
-	// var user_id = '2';
-	// var date_wanted = '2019-11-10';
-	// var slot_id = '1';
-	// var hall_id = '1';
-	// var club = 'FACE';
-	// var details = "Here's a desc";
-	// var title = "Title";
-	// var requirements = "Req";
-	// var status = 'pending';
 	var event_obj = {
 		title: title,
 		club: club,
