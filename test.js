@@ -177,13 +177,20 @@ app.post('/checkSlotAvailability', (req, res) => {
 app.post('/checkSlotAvailability', function(req, res) {
 =======
 app.post('/checkSlotAvailability', (req, res) => {
+<<<<<<< HEAD
 >>>>>>> Switch to arrow functions
 	var slot_id = req.body.slot_id;
+=======
+>>>>>>> Add slot checking
 	var query =
-		"select hall_id from hall_schedule where booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='" +
+		"select slot_id from slot_schedule where booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='" +
 		req.body.date_wanted +
+<<<<<<< HEAD
 		"')) and slot_id='10')";
 >>>>>>> Fix HTTP status codes and error messages
+=======
+		"')) and slot_id='" + req.body.slot_id + "')";
+>>>>>>> Add slot checking
 	con.query(query, function(err, result) {
 		res.send(result);
 	});
