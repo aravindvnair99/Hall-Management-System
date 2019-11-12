@@ -744,6 +744,7 @@
 							return;
 						}
 						response.json().then(function(data) {
+							$('#11').on();
 							$('td').removeClass();
 							var not_available = [];
 							data.forEach(element => {
@@ -756,7 +757,7 @@
 							not_available.forEach(element => {
 								$('#' + element).toggleClass('not_available');
 							});
-							$('.not_available').off();
+							$('.not_available').attr('disabled', 'disabled');
 						});
 					})
 					.catch(function(err) {
@@ -764,38 +765,42 @@
 					});
 			});
 			$('td').click(function() {
-				var payload = {
-					date_wanted: document.getElementById('date_wanted').value,
-					slot_id: $(this)
-						.attr('id')
-						.charAt(0),
-					hall_id: $(this)
-						.attr('id')
-						.charAt(1)
-				};
-				fetch('/checkHallAvailability', {
-					method: 'POST',
-					body: new URLSearchParams($.param(payload))
-				})
-					.then(function(response) {
-						if (response.status !== 200) {
-							console.log(
-								'Looks like there was a problem. Status Code: ' +
-									response.status
-							);
-							return;
-						}
-						response.json().then(function(data) {
-							console.log(data);
-						});
+				if ($(this).attr('disabled') == 'disabled') {
+					alert('Slot not available! Try another date or venue!');
+				} else {
+					var payload = {
+						date_wanted: document.getElementById('date_wanted')
+							.value,
+						slot_id: $(this)
+							.attr('id')
+							.charAt(0),
+						hall_id: $(this)
+							.attr('id')
+							.charAt(1)
+					};
+					fetch('/checkSlotAvailability', {
+						method: 'POST',
+						body: new URLSearchParams($.param(payload))
 					})
 					.catch(function(err) {
 						console.log('Fetch Error :-S', err);
 					});
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> Refactor
+						.then(function(response) {
+							if (response.status !== 200) {
+								console.log(
+									'Looks like there was a problem. Status Code: ' +
+										response.status
+								);
+								return;
+							}
+							response.json().then(function(data) {
+								console.log(data);
+							});
+						})
+						.catch(function(err) {
+							console.log('Fetch Error :-S', err);
+						});
+				}
 			});
 		</script>
 		<script>
@@ -810,6 +815,7 @@
 			});
 		</script>
 	</body>
+<<<<<<< HEAD
 </html>
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -845,3 +851,6 @@
 =======
 >>>>>>> Refactor
 >>>>>>> Refactor
+=======
+</html>
+>>>>>>> Fix request
