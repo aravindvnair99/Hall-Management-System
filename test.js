@@ -11,7 +11,7 @@ dotenv.config();
 app.use(morgan('dev'));
 app.use(
 	cookieSession({
-		name: 'ahms',
+		name: 'session',
 		secret: `${process.env.cookie_secret}`,
 		signed: true,
 		maxAge: 1 * 60 * 60 * 1000 // 1 hour
@@ -45,7 +45,18 @@ con.connect(function(error) {
 		console.log('Database connection succeeded');
 	}
 });
+function parseCookies(req) {
+	var list = {},
+		rc = req.headers.cookie;
 
+	rc &&
+		rc.split(';').forEach(cookie => {
+			var parts = cookie.split('=');
+			list[parts.shift().trim()] = decodeURI(parts.join('='));
+		});
+
+	return list;
+}
 app.get('/', (req, res) => {
 	if (req.session.user) {
 		res.redirect('/dashboard');
@@ -113,7 +124,7 @@ app.get('/request', (req, res) => {
 	}
 });
 app.get('/logout', (req, res) => {
-	res.clearCookie('ahms', { path: '/' });
+	res.clearCookie('session', { path: '/' });
 	res.redirect('/login');
 });
 app.post('/onLogin', (req, res) => {
@@ -205,8 +216,8 @@ app.post('/checkSlotAvailability', (req, res) => {
 app.post('/makeRequest', (req, res) => {
 	var user_id = req.session.user.id;
 	var date_wanted = req.body.date_wanted;
-	var slot_id = '10';
-	var hall_id = '4';
+	var slot_id = parseCookies(req).slot_id;
+	var hall_id = parseCookies(req).hall_id;
 	var club = req.body.club_name;
 	var details = req.body.desc;
 	var title = req.body.event_name;
