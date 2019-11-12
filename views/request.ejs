@@ -1,11 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>ASE-B Hall Booking</title>
 
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title>ASE-B Hall Booking</title>
+		<!-- CSS  -->
+		<link
+			href="https://fonts.googleapis.com/icon?family=Material+Icons"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+			type="text/css"
+			rel="stylesheet"
+			media="screen,projection"
+		/>
+		<link
+			href="css/style.css"
+			type="text/css"
+			rel="stylesheet"
+			media="screen,projection"
+		/>
+		<style>
+			table,
+			th,
+			td {
+				border: 1px solid #000000;
+			}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -547,175 +571,231 @@
 			border: 1px solid #000000;
 		}
 >>>>>>> Fixed CSS
+=======
+			.colour {
+				background-color: #62dd52;
+			}
+>>>>>>> Refactor
 
-		.colour {
-			background-color: #62dd52;
-		}
+			.not_available {
+				background-color: red;
+				cursor: not-allowed;
+			}
 
-		.not_available {
-			background-color: red;
-			cursor: not-allowed;
-		}
+			td:hover {
+				background-color: #ffcf8b;
+			}
 
-		td:hover {
-			background-color: #ffcf8b;
-		}
+			.timewidth {
+				width: 10%;
+			}
+		</style>
+	</head>
 
-		.timewidth {
-			width: 10%;
-		}
-	</style>
-</head>
-
-<body style="background-color: darkslateblue;">
-	<nav class="white" role="navigation">
-		<div class="nav-wrapper container">
-			<a id="logo-container" href="/" class="brand-logo">ASE-B Hall Booking</a>
-			<button style="margin-left: 50%; margin-top: 2%; margin-bottom: 2%;background-color: #35377c"
-				class="btn waves-effect waves-light" onclick="location.href = '/request'">
-				Request Form
-			</button>
-			&nbsp;
-			<button style="margin-left: 10%;margin-top: 2%;margin-bottom: 2%;background-color: #35377c;"
-				class="btn waves-effect waves-light" onclick="location.href = '/logout'">
-				Logout
-			</button>
-		</div>
-	</nav>
-	<div class="row ">
-		<div class="col s12 m8 l8 offset-l2 offset-m2">
-			<div class="card">
-				<div>
-					<div class="row">
-						<form class="col s12" action="/makeRequest" method="post">
-							<div class="row">
-								<h3 class="center">Request Form</h3>
-							</div>
-							<div class="container">
-								<div class="input-field col s12">
-									<input id="date_wanted" type="text" class="datepicker" name="date_wanted" />
-									<label>Choose a date</label>
+	<body style="background-color: darkslateblue;">
+		<nav class="white" role="navigation">
+			<div class="nav-wrapper container">
+				<a id="logo-container" href="/" class="brand-logo"
+					>ASE-B Hall Booking</a
+				>
+				<button
+					style="margin-left: 50%; margin-top: 2%; margin-bottom: 2%;background-color: #35377c"
+					class="btn waves-effect waves-light"
+					onclick="location.href = '/request'"
+				>
+					Request Form
+				</button>
+				&nbsp;
+				<button
+					style="margin-left: 10%;margin-top: 2%;margin-bottom: 2%;background-color: #35377c;"
+					class="btn waves-effect waves-light"
+					onclick="location.href = '/logout'"
+				>
+					Logout
+				</button>
+			</div>
+		</nav>
+		<div class="row ">
+			<div class="col s12 m8 l8 offset-l2 offset-m2">
+				<div class="card">
+					<div>
+						<div class="row">
+							<form
+								class="col s12"
+								action="/makeRequest"
+								method="post"
+							>
+								<div class="row">
+									<h3 class="center">Request Form</h3>
 								</div>
-							</div>
-							<%- include calendarview.ejs %>
-							<div class="container">
-								<div class="input-field col s12">
-									<input id="club_name" name="club_name" type="text" />
-									<label for="club_name">Club Name</label>
+								<div class="container">
+									<div class="input-field col s12">
+										<input
+											id="date_wanted"
+											type="text"
+											class="datepicker"
+											name="date_wanted"
+										/>
+										<label>Choose a date</label>
+									</div>
 								</div>
-							</div>
-							<div class="container">
-								<div class="input-field col s12">
-									<input id="desc" type="text" name="desc" />
-									<label for="desc">Description</label>
+								<%- include calendarview.ejs %>
+								<div class="container">
+									<div class="input-field col s12">
+										<input
+											id="club_name"
+											name="club_name"
+											type="text"
+										/>
+										<label for="club_name">Club Name</label>
+									</div>
 								</div>
-							</div>
-							<div class="container">
-								<div class="input-field col s12">
-									<input id="event_name" type="text" name="event_name" />
-									<label for="event_name">Event Name</label>
+								<div class="container">
+									<div class="input-field col s12">
+										<input
+											id="desc"
+											type="text"
+											name="desc"
+										/>
+										<label for="desc">Description</label>
+									</div>
 								</div>
-							</div>
-							<div class="container">
-								<div class="input-field col s12">
-									<input id="requirements" type="text" name="requirements" />
-									<label for="requirements">Requirements</label>
+								<div class="container">
+									<div class="input-field col s12">
+										<input
+											id="event_name"
+											type="text"
+											name="event_name"
+										/>
+										<label for="event_name"
+											>Event Name</label
+										>
+									</div>
 								</div>
-							</div>
-							<div class="container" style="text-align: center;">
-								<button style="background-color: #35377c" class="btn waves-effect waves-light"
-									type="submit">
-									Submit
-									<i class="material-icons right">send</i>
-								</button>
-								<button style="background-color: #35377c" class="btn waves-effect waves-light"
-									type="button" onclick="window.history.go(-1); return false;">
-									Back
-									<i class="material-icons right">cancel_schedule_send
-									</i>
-								</button>
-							</div>
-							<br />
-						</form>
+								<div class="container">
+									<div class="input-field col s12">
+										<input
+											id="requirements"
+											type="text"
+											name="requirements"
+										/>
+										<label for="requirements"
+											>Requirements</label
+										>
+									</div>
+								</div>
+								<div
+									class="container"
+									style="text-align: center;"
+								>
+									<button
+										style="background-color: #35377c"
+										class="btn waves-effect waves-light"
+										type="submit"
+									>
+										Submit
+										<i class="material-icons right">send</i>
+									</button>
+									<button
+										style="background-color: #35377c"
+										class="btn waves-effect waves-light"
+										type="button"
+										onclick="window.history.go(-1); return false;"
+									>
+										Back
+										<i class="material-icons right"
+											>cancel_schedule_send
+										</i>
+									</button>
+								</div>
+								<br />
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-	<script src="js/init.js"></script>
-	<script>
-		$(document).ready(function () {
-			$('select').formSelect();
-		});
-	</script>
-	<script>
-		$('#date_wanted').change(function () {
-			var payload = {
-				date_wanted: document.getElementById('date_wanted').value,
-				slot_id: $(this)
-					.attr('id')
-					.charAt(0)
-			};
-			fetch('/checkHallAvailability', {
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+		<script src="js/init.js"></script>
+		<script>
+			$(document).ready(function() {
+				$('select').formSelect();
+			});
+		</script>
+		<script>
+			$('#date_wanted').change(function() {
+				var payload = {
+					date_wanted: document.getElementById('date_wanted').value,
+					slot_id: $(this)
+						.attr('id')
+						.charAt(0)
+				};
+				fetch('/checkHallAvailability', {
 					method: 'POST',
 					body: new URLSearchParams($.param(payload))
 				})
-				.then(function (response) {
-					if (response.status !== 200) {
-						console.log(
-							'Looks like there was a problem. Status Code: ' +
-							response.status
-						);
-						return;
-					}
-					response.json().then(function (data) {
-						$('td').removeClass();
-						var not_available = [];
-						data.forEach(element => {
-							for (var i = 1; i <= 9; i++) {
-								not_available.push(
-									i.toString() + element.hall_id
-								);
-							}
+					.then(function(response) {
+						if (response.status !== 200) {
+							console.log(
+								'Looks like there was a problem. Status Code: ' +
+									response.status
+							);
+							return;
+						}
+						response.json().then(function(data) {
+							$('td').removeClass();
+							var not_available = [];
+							data.forEach(element => {
+								for (var i = 1; i <= 9; i++) {
+									not_available.push(
+										i.toString() + element.hall_id
+									);
+								}
+							});
+							not_available.forEach(element => {
+								$('#' + element).toggleClass('not_available');
+							});
+							$('.not_available').off();
 						});
-						not_available.forEach(element => {
-							$('#' + element).toggleClass('not_available');
-						});
-						$(".not_available").off();
+					})
+					.catch(function(err) {
+						console.log('Fetch Error :-S', err);
 					});
-				})
-				.catch(function (err) {
-					console.log('Fetch Error :-S', err);
-				});
-		});
-		$('td').click(function () {
-			var payload = {
-				date_wanted: document.getElementById('date_wanted').value,
-				slot_id: $(this)
-					.attr('id')
-					.charAt(0),
-				hall_id: $(this)
-					.attr('id')
-					.charAt(1)
-			};
-			fetch('/checkHallAvailability', {
+			});
+			$('td').click(function() {
+				var payload = {
+					date_wanted: document.getElementById('date_wanted').value,
+					slot_id: $(this)
+						.attr('id')
+						.charAt(0),
+					hall_id: $(this)
+						.attr('id')
+						.charAt(1)
+				};
+				fetch('/checkHallAvailability', {
 					method: 'POST',
 					body: new URLSearchParams($.param(payload))
 				})
-				.then(function (response) {
-					if (response.status !== 200) {
-						console.log(
-							'Looks like there was a problem. Status Code: ' +
-							response.status
-						);
-						return;
-					}
-					response.json().then(function (data) {
-						console.log(data);
+					.then(function(response) {
+						if (response.status !== 200) {
+							console.log(
+								'Looks like there was a problem. Status Code: ' +
+									response.status
+							);
+							return;
+						}
+						response.json().then(function(data) {
+							console.log(data);
+						});
+					})
+					.catch(function(err) {
+						console.log('Fetch Error :-S', err);
 					});
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Refactor
 			});
 		</script>
 		<script>
@@ -732,8 +812,11 @@
 	</body>
 </html>
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> Refactor
 =======
+=======
+>>>>>>> Refactor
 =======
 				})
 				.catch(function (err) {
@@ -756,4 +839,9 @@
 
 </html>
 >>>>>>> Fixed CSS
+<<<<<<< HEAD
 >>>>>>> Fixed CSS
+=======
+=======
+>>>>>>> Refactor
+>>>>>>> Refactor
