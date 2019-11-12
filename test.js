@@ -11,7 +11,7 @@ dotenv.config();
 app.use(morgan('dev'));
 app.use(
 	cookieSession({
-		name: 'session',
+		name: 'ahms',
 		secret: `${process.env.cookie_secret}`,
 		signed: true,
 		maxAge: 1 * 60 * 60 * 1000 // 1 hour
@@ -113,7 +113,7 @@ app.get('/request', (req, res) => {
 	}
 });
 app.get('/logout', (req, res) => {
-	res.clearCookie('session', { path: '/' });
+	res.clearCookie('ahms', { path: '/' });
 	res.redirect('/login');
 });
 app.post('/onLogin', (req, res) => {
@@ -229,7 +229,6 @@ app.post('/makeRequest', (req, res) => {
 					"' ORDER BY id DESC LIMIT 1;",
 				function(err, event_id) {
 					if (!err) {
-						console.log(event_id[0].id);
 						var booking_obj = {
 							user_id: user_id,
 							status_id: status,
