@@ -179,16 +179,16 @@ app.post("/checkAvailability", (req, res) => {
 app.post("/makeRequest", (req, res) => {
 	var user_id = req.session.user.id;
 	var date_wanted = req.body.date_wanted;
-	var hall_id = "";
-	var slot_id = "";
+	var halls = "";
+	var slots = "";
 	for (var i = 1; i <= 7; i++)
 		for (var j = 1; j <= 9; j++) {
 			if (req.body[`cell${j}${i}`]) {
-				slot_id = slot_id + j;
-				hall_id = hall_id + j;
+				slots += j;
+				halls += i;
 			}
 		}
-	console.log({ slot_id }, { hall_id });
+	console.log({ slots }, { halls });
 	var club = req.body.club_name;
 	var details = req.body.desc;
 	var title = req.body.event_name;
@@ -226,87 +226,7 @@ app.post("/makeRequest", (req, res) => {
 									console.log(
 										`Inserted event with id ${booking_obj.event_id} into booking.`
 									);
-									con.query(
-										"select id from booking WHERE user_id='" +
-											req.session.user.id +
-											"' ORDER BY id DESC LIMIT 1;",
-										function(err, booking_id) {
-											if (!err) {
-												hall_id.forEach(element => {
-													var hall_schedule_obj = {
-														hall_id: element,
-														booking_id:
-															booking_id[0].id
-													};
-													con.query(
-														"insert into hall_schedule set ?",
-														hall_schedule_obj,
-														function(err, result) {
-															if (!err) {
-																console.log(
-																	`hall_schedule updates: ${hall_schedule_obj.booking_id} has taken ${hall_schedule_obj.hall_id}`
-																);
-															} else {
-																console.log(
-																	err
-																);
-																res.status(
-																	500
-																).render(
-																	"error",
-																	{
-																		error_message:
-																			"Inserting into hall_schedule failed!"
-																	}
-																);
-															}
-														}
-													);
-												});
-												slot_id.forEach(element => {
-													var slot_schedule_obj = {
-														slot_id: element,
-														booking_id:
-															booking_id[0].id
-													};
-													con.query(
-														"insert into slot_schedule set ?",
-														slot_schedule_obj,
-														function(err, result) {
-															if (!err) {
-																console.log(
-																	`slot_schedule updates: ${slot_schedule_obj.booking_id} has taken ${slot_schedule_obj.slot_id}`
-																);
-															} else {
-																console.log(
-																	err
-																);
-																res.status(
-																	500
-																).render(
-																	"error",
-																	{
-																		error_message:
-																			"Inserting into slot_schedule failed!"
-																	}
-																);
-															}
-														}
-													);
-												});
-												res.redirect("/dashboard");
-											} else {
-												console.log(err);
-												res.status(500).render(
-													"error",
-													{
-														error_message:
-															"Retrieving booking_id failed!"
-													}
-												);
-											}
-										}
-									);
+									res.redirect("/dashboard");
 								} else {
 									console.log(err);
 									res.status(500).render("error", {
