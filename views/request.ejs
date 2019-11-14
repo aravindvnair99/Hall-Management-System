@@ -781,11 +781,7 @@
 					fetch('/checkSlotAvailability', {
 						method: 'POST',
 						body: new URLSearchParams($.param(payload))
-					})
-					.catch(function(err) {
-						console.log('Fetch Error :-S', err);
-					});
-						.then(function(response) {
+					}).then(function(response) {
 							if (response.status !== 200) {
 								alert(
 									'Looks like there was a problem. Status Code: ' +
