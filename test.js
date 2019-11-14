@@ -169,7 +169,7 @@ app.post("/checkHallAvailability", (req, res) => {
 	});
 });
 app.post("/checkSlotAvailability", (req, res) => {
-	var query = `SELECT hall_id FROM hall_schedule WHERE booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='${req.body.date_wanted}')) and slot_id='${req.body.slot_id}') AND hall_schedule.hall_id = '${req.body.hall_id}'`;
+	var query = `SELECT hall_id FROM hall_schedule WHERE booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='${req.body.date_wanted}')) and slot_id='${req.body.slot_id}') AND hall_id = '${req.body.hall_id}'`;
 	con.query(query, function(err, result) {
 		res.send(result);
 	});
