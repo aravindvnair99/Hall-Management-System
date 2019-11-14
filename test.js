@@ -45,18 +45,19 @@ con.connect(function(error) {
 		console.log("Database connection succeeded");
 	}
 });
-function parseCookies(req) {
-	var list = {},
-		rc = req.headers.cookie;
+// function parseCookies(req) {
+// 	var list = {},
+// 		rc = req.headers.cookie;
 
-	rc &&
-		rc.split(";").forEach(cookie => {
-			var parts = cookie.split("=");
-			list[parts.shift().trim()] = decodeURI(parts.join("="));
-		});
+// 	rc &&
+// 		rc.split(";").forEach(cookie => {
+// 			var parts = cookie.split("=");
+// 			list[parts.shift().trim()] = decodeURI(parts.join("="));
+// 		});
 
-	return list;
-}
+// 	return list;
+// }
+// var hall_id = parseCookies(req).hall_id;
 app.get("/", (req, res) => {
 	if (req.session.user) {
 		res.redirect("/dashboard");
@@ -177,8 +178,16 @@ app.post("/checkSlotAvailability", (req, res) => {
 app.post("/makeRequest", (req, res) => {
 	var user_id = req.session.user.id;
 	var date_wanted = req.body.date_wanted;
-	var slot_id = parseCookies(req).slot_id;
-	var hall_id = parseCookies(req).hall_id;
+	var hall_id = [];
+	var slot_id = [];
+	for (var i = 1; i <= 7; i++)
+		for (var j = 1; j <= 9; j++) {
+			if (req.body[`cell${j}${i}`]) {
+				slot_id.push(j);
+				hall_id.push(i);
+			}
+		}
+	console.log("Collection", { slot_id }, { hall_id });
 	var club = req.body.club_name;
 	var details = req.body.desc;
 	var title = req.body.event_name;
@@ -194,7 +203,7 @@ app.post("/makeRequest", (req, res) => {
 	};
 	con.query("insert into events set ?", event_obj, function(err, result) {
 		if (!err) {
-			console.log("success");
+			console.log("Inserted into events.");
 			con.query(
 				"select id from events WHERE user_id='" +
 					req.session.user.id +
@@ -211,83 +220,76 @@ app.post("/makeRequest", (req, res) => {
 							booking_obj,
 							function(err, result) {
 								if (!err) {
-									console.log("success");
+									console.log("Inserted into booking.");
 									con.query(
 										"select id from booking WHERE user_id='" +
 											req.session.user.id +
 											"' ORDER BY id DESC LIMIT 1;",
 										function(err, booking_id) {
 											if (!err) {
-												var slot_schedule_obj = {
-													slot_id: slot_id,
-													booking_id: booking_id[0].id
-												};
-												var hall_schedule_obj = {
-													hall_id: hall_id,
-													booking_id: booking_id[0].id
-												};
-												con.query(
-													"insert into slot_schedule set ?",
-													slot_schedule_obj,
-													function(err, result) {
-														if (!err) {
-															console.log(
-																"Inserted into slot_schedule."
-															);
-															con.query(
-																"insert into hall_schedule set ?",
-																hall_schedule_obj,
-																function(
-																	err,
-																	result
-																) {
-																	if (!err) {
-																		console.log(
-																			"Inserted into hall_schedule"
-																		);
-																		con.query(
-																			"select * from booking where user_id='" +
-																				req
-																					.session
-																					.user
-																					.id +
-																				"';",
-																			function(
-																				err,
-																				data
-																			) {
-																				res.redirect(
-																					"/dashboard"
-																				);
-																			}
-																		);
-																	} else {
-																		console.log(
-																			err
-																		);
-																		res.status(
-																			500
-																		).render(
-																			"error",
-																			{
-																				error_message:
-																					"Inserting into hall_schedule failed!"
-																			}
-																		);
+												hall_id.forEach(element => {
+													var hall_schedule_obj = {
+														hall_id: element,
+														booking_id:
+															booking_id[0].id
+													};
+													con.query(
+														"insert into hall_schedule set ?",
+														hall_schedule_obj,
+														function(err, result) {
+															if (!err) {
+																console.log(
+																	`Inserted ${hall_schedule_obj} into hall_schedule`
+																);
+															} else {
+																console.log(
+																	err
+																);
+																res.status(
+																	500
+																).render(
+																	"error",
+																	{
+																		error_message:
+																			"Inserting into hall_schedule failed!"
 																	}
-																}
-															);
-														} else {
-															console.log(err);
-															res.status(
-																500
-															).render("error", {
-																error_message:
-																	"Inserting into slot_schedule failed!"
-															});
+																);
+															}
 														}
-													}
-												);
+													);
+												});
+												slot_id.forEach(element => {
+													var slot_schedule_obj = {
+														slot_id: element,
+														booking_id:
+															booking_id[0].id
+													};
+													con.query(
+														"insert into slot_schedule set ?",
+														slot_schedule_obj,
+														function(err, result) {
+															if (!err) {
+																console.log(
+																	`Inserted ${slot_schedule_obj} into slot_schedule`
+																);
+															} else {
+																console.log(
+																	err
+																);
+																res.status(
+																	500
+																).render(
+																	"error",
+																	{
+																		error_message:
+																			"Inserting into slot_schedule failed!"
+																	}
+																);
+															}
+														}
+													);
+												});
+												res.redirect("/dashboard");
 											} else {
 												console.log(err);
 												res.status(500).render(
