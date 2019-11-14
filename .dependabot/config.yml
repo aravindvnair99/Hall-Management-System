@@ -1,15 +1,7 @@
 version: 1
 update_configs:
   - package_manager: "javascript"
-<<<<<<< HEAD
-<<<<<<< HEAD
     directory: "/"
-=======
-    directory: "/functions"
->>>>>>> Add Dependabot
-=======
-    directory: "/"
->>>>>>> Fixes #13
     update_schedule: "live"
     default_reviewers:
       - "AravindVNair99"
