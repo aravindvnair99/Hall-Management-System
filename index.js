@@ -214,7 +214,9 @@ app.post("/makeRequest", (req, res) => {
 						var booking_obj = {
 							user_id: user_id,
 							status_id: status,
-							event_id: event_id[0].id
+							event_id: event_id[0].id,
+							halls: halls,
+							slots: slots
 						};
 						con.query(
 							"insert into booking set ?",
