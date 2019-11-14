@@ -253,6 +253,7 @@
 					fetch('/checkSlotAvailability', {
 						method: 'POST',
 						body: new URLSearchParams($.param(payload))
+<<<<<<< HEAD
 					})
 <<<<<<< HEAD
 					.catch(function(err) {
@@ -264,6 +265,9 @@
 >>>>>>> Refactor
 =======
 						.then(function(response) {
+=======
+					}).then(function(response) {
+>>>>>>> Updates
 							if (response.status !== 200) {
 								alert(
 									'Looks like there was a problem. Status Code: ' +
@@ -292,6 +296,7 @@
 												$('#' + identifier).toggleClass(
 													'colour'
 												);
+												i++;
 											}
 										});
 										if (i != Object.entries(data).length) {
@@ -327,6 +332,7 @@
 			});
 		</script>
 	</body>
+<<<<<<< HEAD
 </html>
 <<<<<<< HEAD
 >>>>>>> Refactor
@@ -883,3 +889,6 @@
 =======
 </html>
 >>>>>>> Fix request
+=======
+</html>
+>>>>>>> Updates
