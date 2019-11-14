@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>ASE-B Hall Booking</title>
+		<title>Request Form | AHMS</title>
 
 		<!-- CSS  -->
 		<link
@@ -32,13 +32,16 @@
 			.colour {
 				background-color: #62dd52;
 			}
+
 			.not_available {
 				background-color: red;
 				cursor: not-allowed;
 			}
+
 			td:hover {
 				background-color: #ffcf8b;
 			}
+
 			.timewidth {
 				width: 10%;
 			}
@@ -173,31 +176,30 @@
 		<script src="js/init.js"></script>
 		<script>
 			$(document).ready(function() {
-				$('select').formSelect();
+				$("select").formSelect();
 			});
-		</script>
-		<script>
-			$('#date_wanted').change(function() {
+			$("#date_wanted").change(function() {
 				var payload = {
-					date_wanted: document.getElementById('date_wanted').value,
+					date_wanted: document.getElementById("date_wanted").value,
 					slot_id: $(this)
-						.attr('id')
+						.attr("id")
 						.charAt(0)
 				};
-				fetch('/checkHallAvailability', {
-					method: 'POST',
+				fetch("/checkHallAvailability", {
+					method: "POST",
 					body: new URLSearchParams($.param(payload))
 				})
 					.then(function(response) {
 						if (response.status !== 200) {
-							console.log(
-								'Looks like there was a problem. Status Code: ' +
+							alert(
+								"Looks like there was a problem. Status Code: " +
 									response.status
 							);
 							return;
 						}
 						response.json().then(function(data) {
-							$('td').removeClass();
+							$(".not_available").removeAttr("disabled");
+							$("td").removeClass();
 							var not_available = [];
 							data.forEach(element => {
 								for (var i = 1; i <= 9; i++) {
@@ -207,54 +209,72 @@
 								}
 							});
 							not_available.forEach(element => {
-								$('#' + element).toggleClass('not_available');
+								$("#" + element).toggleClass("not_available");
 							});
+							$(".not_available").attr("disabled", "disabled");
 						});
 					})
 					.catch(function(err) {
-						console.log('Fetch Error :-S', err);
+						alert("Fetch Error :-S", err);
 					});
 			});
-			$('td').click(function() {
-				var payload = {
-					date_wanted: document.getElementById('date_wanted').value,
-					slot_id: $(this)
-						.attr('id')
-						.charAt(0),
-					hall_id: $(this)
-						.attr('id')
-						.charAt(1)
-				};
-				fetch('/checkHallAvailability', {
-					method: 'POST',
-					body: new URLSearchParams($.param(payload))
-				})
-					.then(function(response) {
-						if (response.status !== 200) {
-							console.log(
-								'Looks like there was a problem. Status Code: ' +
-									response.status
-							);
-							return;
-						}
-						response.json().then(function(data) {
-							console.log(data);
-						});
+			$("td").click(function() {
+				if ($(this).attr("disabled") == "disabled") {
+					alert("Slot not available! Try another date or venue!");
+				} else {
+					var identifier = $(this).attr("id");
+					var payload = {
+						date_wanted: document.getElementById("date_wanted")
+							.value,
+						slot_id: $(this)
+							.attr("id")
+							.charAt(0),
+						hall_id: $(this)
+							.attr("id")
+							.charAt(1)
+					};
+					fetch("/checkSlotAvailability", {
+						method: "POST",
+						body: new URLSearchParams($.param(payload))
 					})
-					.catch(function(err) {
-						console.log('Fetch Error :-S', err);
-					});
+						.then(function(response) {
+							if (response.status !== 200) {
+								alert(
+									"Looks like there was a problem. Status Code: " +
+										response.status
+								);
+								return;
+							}
+							response.json().then(function(data) {
+								console.log({ data });
+								if (Object.entries(data).length != 0) {
+									if (data[0].hall_id == payload.hall_id) {
+										$("#" + identifier).toggleClass(
+											"not_available"
+										);
+										$(".not_available").attr(
+											"disabled",
+											"disabled"
+										);
+									}
+								} else {
+									$("#" + identifier).toggleClass("colour");
+								}
+							});
+						})
+						.catch(function(err) {
+							alert("Fetch Error :-S", err);
+						});
+				}
 			});
-		</script>
-		<script>
-			$('.datepicker').datepicker({
+			$(".datepicker").datepicker({
 				selectMonths: true,
 				selectYears: 15,
-				today: 'Today',
-				clear: 'Clear',
-				close: 'Ok',
+				today: "Today",
+				clear: "Clear",
+				close: "Ok",
 				closeOnSelect: false,
-				format: 'yyyy/mm/dd'
+				format: "yyyy/mm/dd"
 			});
 		</script>
 	</body>
