@@ -164,7 +164,7 @@ app.post("/onLogin", (req, res) => {
 	);
 });
 app.post("/checkHallAvailability", (req, res) => {
-	var query = `select hall_id from hall_schedule where booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='${req.body.date_wanted}')) and slot_id='10')`;
+	var query = `SELECT halls FROM booking WHERE event_id IN (SELECT id FROM events WHERE date_wanted = '${req.body.date_wanted}') AND slots = '123456789'`;
 	con.query(query, function(err, result) {
 		res.send(result);
 	});
@@ -178,15 +178,16 @@ app.post("/checkSlotAvailability", (req, res) => {
 app.post("/makeRequest", (req, res) => {
 	var user_id = req.session.user.id;
 	var date_wanted = req.body.date_wanted;
-	var hall_id = [];
-	var slot_id = [];
+	var hall_id = "";
+	var slot_id = "";
 	for (var i = 1; i <= 7; i++)
 		for (var j = 1; j <= 9; j++) {
 			if (req.body[`cell${j}${i}`]) {
-				slot_id.push(j);
-				hall_id.push(i);
+				slot_id = slot_id + j;
+				hall_id = hall_id + j;
 			}
 		}
+	console.log({ slot_id }, { hall_id });
 	var club = req.body.club_name;
 	var details = req.body.desc;
 	var title = req.body.event_name;
@@ -271,7 +272,7 @@ app.post("/makeRequest", (req, res) => {
 														function(err, result) {
 															if (!err) {
 																console.log(
-																	`slot_schedule updates: ${slot_schedule_obj.booking_id} has taken ${slot_schedule_obj.hall_id}`
+																	`slot_schedule updates: ${slot_schedule_obj.booking_id} has taken ${slot_schedule_obj.slot_id}`
 																);
 															} else {
 																console.log(

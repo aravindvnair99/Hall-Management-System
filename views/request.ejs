@@ -211,13 +211,12 @@
 							$(".not_available").removeAttr("disabled");
 							$("td").removeClass();
 							var not_available = [];
-							data.forEach(element => {
-								for (var i = 1; i <= 9; i++) {
-									not_available.push(
-										i.toString() + element.hall_id
-									);
+							for (let c of data[0].halls.toString()) {
+								for (let j = 1; j <= 9; j++) {
+									not_available.push(j.toString() + c);
 								}
-							});
+							}
+							console.log(not_available);
 							not_available.forEach(element => {
 								$("#" + element).toggleClass("not_available");
 							});
@@ -243,6 +242,7 @@
 							.attr("id")
 							.charAt(1)
 					};
+					console.log({ payload });
 					fetch("/checkSlotAvailability", {
 						method: "POST",
 						body: new URLSearchParams($.param(payload))
