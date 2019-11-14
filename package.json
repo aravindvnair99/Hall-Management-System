@@ -16,8 +16,7 @@
 		"./README.MD"
 	],
 	"scripts": {
-		"test": "node test.js",
-		"start": "node app.js"
+		"start": "node index.js"
 	},
 	"repository": {
 		"type": "git",
