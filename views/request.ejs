@@ -195,7 +195,7 @@
 						.attr("id")
 						.charAt(0)
 				};
-				fetch("/checkHallAvailability", {
+				fetch("/checkAvailability", {
 					method: "POST",
 					body: new URLSearchParams($.param(payload))
 				})
@@ -211,12 +211,13 @@
 							$(".not_available").removeAttr("disabled");
 							$("td").removeClass();
 							var not_available = [];
-							for (let c of data[0].halls.toString()) {
-								for (let j = 1; j <= 9; j++) {
-									not_available.push(j.toString() + c);
+							data.forEach(element => {
+								for (let h of element.halls.toString()) {
+									for (let s of element.slots.toString()) {
+										not_available.push(s + h);
+									}
 								}
-							}
-							console.log(not_available);
+							});
 							not_available.forEach(element => {
 								$("#" + element).toggleClass("not_available");
 							});
@@ -232,18 +233,17 @@
 					alert("Slot not available! Try another date or venue!");
 				} else {
 					var identifier = $(this).attr("id");
+					var slot_id = $(this)
+						.attr("id")
+						.charAt(0);
+					var hall_id = $(this)
+						.attr("id")
+						.charAt(1);
 					var payload = {
 						date_wanted: document.getElementById("date_wanted")
-							.value,
-						slot_id: $(this)
-							.attr("id")
-							.charAt(0),
-						hall_id: $(this)
-							.attr("id")
-							.charAt(1)
+							.value
 					};
-					console.log({ payload });
-					fetch("/checkSlotAvailability", {
+					fetch("/checkAvailability", {
 						method: "POST",
 						body: new URLSearchParams($.param(payload))
 					})
@@ -256,20 +256,42 @@
 								return;
 							}
 							response.json().then(function(data) {
-								console.log({ data });
-								if (Object.entries(data).length != 0) {
-									if (data[0].hall_id == payload.hall_id) {
-										$("#" + identifier).toggleClass(
-											"not_available"
-										);
-										$(".not_available").attr(
-											"disabled",
-											"disabled"
-										);
-									}
-								} else {
-									$("#" + identifier).toggleClass("colour");
-								}
+								console.log(data);
+								var not_available = [];
+								data.forEach(element => {
+									for (let h of element.halls.toString())
+										if (hall_id == h)
+											for (let s of element.slots.toString())
+												if (slot_id == s) {
+													console.log(
+														"Got s and h",
+														s + h
+													);
+													$(
+														"#" + identifier
+													).toggleClass(
+														"not_available"
+													);
+													$(".not_available").attr(
+														"disabled",
+														"disabled"
+													);
+												} else {
+													console.log(
+														"Got h but not s",
+														s + h
+													);
+													$(
+														"#" + identifier
+													).toggleClass("colour");
+												}
+										else {
+											console.log("Neither s nor h");
+											$("#" + identifier).toggleClass(
+												"colour"
+											);
+										}
+								});
 							});
 						})
 						.catch(function(err) {
@@ -280,13 +302,12 @@
 			$("#request_form").submit(function(eventObj) {
 				for (var i = 1; i <= 7; i++)
 					for (var j = 1; j <= 9; j++)
-						if ($("#" + j + i).hasClass("colour")) {
+						if ($("#" + j + i).hasClass("colour"))
 							$("<input />")
 								.attr("type", "hidden")
 								.attr("name", "cell" + j + i)
 								.attr("value", j.toString() + i.toString())
 								.appendTo("#request_form");
-						}
 				return true;
 			});
 		</script>
