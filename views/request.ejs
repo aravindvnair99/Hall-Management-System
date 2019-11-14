@@ -254,12 +254,28 @@
 								return;
 							}
 							response.json().then(function(data) {
-								var not_available = [];
-								data.forEach(element => {
-									for (let h of element.halls.toString())
-										if (hall_id == h)
-											for (let s of element.slots.toString())
-												if (slot_id == s) {
+								if (Object.entries(data).length != 0) {
+									data.forEach(element => {
+										for (
+											let i = 0;
+											i < element.halls.toString().length;
+											i++
+										) {
+											for (
+												let j = 0;
+												j <
+												element.slots.toString().length;
+												j++
+											) {
+												if (
+													identifier ==
+													element.slots
+														.toString()
+														.charAt(j) +
+														element.halls
+															.toString()
+															.charAt(i)
+												) {
 													$(
 														"#" + identifier
 													).toggleClass(
@@ -274,12 +290,10 @@
 														"#" + identifier
 													).toggleClass("colour");
 												}
-										else {
-											$("#" + identifier).toggleClass(
-												"colour"
-											);
+											}
 										}
-								});
+									});
+								} else $("#" + identifier).toggleClass("colour");
 							});
 						})
 						.catch(function(err) {
