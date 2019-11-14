@@ -254,6 +254,8 @@
 								return;
 							}
 							response.json().then(function(data) {
+								console.log(data);
+								var list = [];
 								if (Object.entries(data).length != 0) {
 									data.forEach(element => {
 										for (
@@ -267,32 +269,33 @@
 												element.slots.toString().length;
 												j++
 											) {
-												if (
-													identifier ==
+												list.push(
 													element.slots
 														.toString()
 														.charAt(j) +
 														element.halls
 															.toString()
 															.charAt(i)
-												) {
-													$(
-														"#" + identifier
-													).toggleClass(
-														"not_available"
-													);
-													$(".not_available").attr(
-														"disabled",
-														"disabled"
-													);
-												} else {
-													$(
-														"#" + identifier
-													).toggleClass("colour");
-												}
+												);
 											}
 										}
 									});
+									console.log(list.length, ' ha ha', list);
+									if (list.includes(identifier)) {
+										alert("Entered if");
+										$("#" + identifier).toggleClass(
+											"not_available"
+										);
+										$(".not_available").attr(
+											"disabled",
+											"disabled"
+										);
+									} else {
+										alert("Entered else");
+										$("#" + identifier).toggleClass(
+											"colour"
+										);
+									}
 								} else $("#" + identifier).toggleClass("colour");
 							});
 						})
