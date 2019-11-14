@@ -187,7 +187,6 @@ app.post("/makeRequest", (req, res) => {
 				hall_id.push(i);
 			}
 		}
-	console.log("Collection", { slot_id }, { hall_id });
 	var club = req.body.club_name;
 	var details = req.body.desc;
 	var title = req.body.event_name;
@@ -203,7 +202,7 @@ app.post("/makeRequest", (req, res) => {
 	};
 	con.query("insert into events set ?", event_obj, function(err, result) {
 		if (!err) {
-			console.log("Inserted into events.");
+			console.log(`Inserted ${event_obj.title} into events.`);
 			con.query(
 				"select id from events WHERE user_id='" +
 					req.session.user.id +
@@ -220,7 +219,9 @@ app.post("/makeRequest", (req, res) => {
 							booking_obj,
 							function(err, result) {
 								if (!err) {
-									console.log("Inserted into booking.");
+									console.log(
+										`Inserted event with id ${booking_obj.event_id} into booking.`
+									);
 									con.query(
 										"select id from booking WHERE user_id='" +
 											req.session.user.id +
@@ -239,7 +240,7 @@ app.post("/makeRequest", (req, res) => {
 														function(err, result) {
 															if (!err) {
 																console.log(
-																	`Inserted ${hall_schedule_obj} into hall_schedule`
+																	`hall_schedule updates: ${hall_schedule_obj.booking_id} has taken ${hall_schedule_obj.hall_id}`
 																);
 															} else {
 																console.log(
@@ -270,7 +271,7 @@ app.post("/makeRequest", (req, res) => {
 														function(err, result) {
 															if (!err) {
 																console.log(
-																	`Inserted ${slot_schedule_obj} into slot_schedule`
+																	`slot_schedule updates: ${slot_schedule_obj.booking_id} has taken ${slot_schedule_obj.hall_id}`
 																);
 															} else {
 																console.log(
