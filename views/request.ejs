@@ -4,8 +4,6 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>Request Form | AHMS</title>
-
-		<!-- CSS  -->
 		<link
 			href="https://fonts.googleapis.com/icon?family=Material+Icons"
 			rel="stylesheet"
@@ -256,17 +254,12 @@
 								return;
 							}
 							response.json().then(function(data) {
-								console.log(data);
 								var not_available = [];
 								data.forEach(element => {
 									for (let h of element.halls.toString())
 										if (hall_id == h)
 											for (let s of element.slots.toString())
 												if (slot_id == s) {
-													console.log(
-														"Got s and h",
-														s + h
-													);
 													$(
 														"#" + identifier
 													).toggleClass(
@@ -277,16 +270,11 @@
 														"disabled"
 													);
 												} else {
-													console.log(
-														"Got h but not s",
-														s + h
-													);
 													$(
 														"#" + identifier
 													).toggleClass("colour");
 												}
 										else {
-											console.log("Neither s nor h");
 											$("#" + identifier).toggleClass(
 												"colour"
 											);
