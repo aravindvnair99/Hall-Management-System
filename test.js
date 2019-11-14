@@ -1,7 +1,6 @@
 const express = require("express"),
 	dotenv = require("dotenv"),
 	app = express(),
-<<<<<<< HEAD
 	path = __dirname + "/views/",
 	bodyParser = require("body-parser"),
 	cookieSession = require("cookie-session"),
@@ -10,27 +9,9 @@ const express = require("express"),
 	morgan = require("morgan");
 dotenv.config();
 app.use(morgan("dev"));
-=======
-	path = __dirname + '/views/',
-	bodyParser = require('body-parser'),
-	cookieSession = require('cookie-session'),
-	mysql = require('mysql'),
-	AES = require('mysql-aes'),
-	morgan = require('morgan');
-dotenv.config();
-<<<<<<< HEAD
-app.use(logger('dev'));
->>>>>>> Add logger
-=======
-app.use(morgan('dev'));
->>>>>>> Update logger
 app.use(
 	cookieSession({
-<<<<<<< HEAD
 		name: "session",
-=======
-		name: 'session',
->>>>>>> Enhance session security
 		secret: `${process.env.cookie_secret}`,
 		signed: true,
 		maxAge: 1 * 60 * 60 * 1000 // 1 hour
@@ -42,25 +23,12 @@ app.use(
 		extended: false
 	})
 );
-<<<<<<< HEAD
 app.set("port", process.env.node_port);
 app.use(express.static(__dirname + "/public"));
 app.set("views", path);
 app.set("view engine", "ejs");
 app.listen(app.get("port"), function() {
 	console.log("App is running on port", app.get("port"));
-=======
-app.set('port', process.env.node_port);
-app.use(express.static(__dirname + '/public'));
-app.set('views', path);
-app.set('view engine', 'ejs');
-app.listen(app.get('port'), function() {
-<<<<<<< HEAD
-	console.log('Node app is running on port', app.get('port'));
->>>>>>> Enhance session security
-=======
-	console.log('App is running on port', app.get('port'));
->>>>>>> Fix error messages
 });
 const con = mysql.createConnection({
 	host: `${process.env.DB_host}`,
@@ -71,25 +39,16 @@ const con = mysql.createConnection({
 });
 con.connect(function(error) {
 	if (error) {
-<<<<<<< HEAD
 		console.log("Database connection failed");
 		return;
 	} else {
 		console.log("Database connection succeeded");
-=======
-		console.log('Database connection failed');
-		return;
-	} else {
-		console.log('Database connection succeeded');
->>>>>>> Fix error messages
 	}
 });
 function parseCookies(req) {
 	var list = {},
 		rc = req.headers.cookie;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	rc &&
 		rc.split(";").forEach(cookie => {
 			var parts = cookie.split("=");
@@ -107,33 +66,10 @@ app.get("/login", (req, res) => {
 	if (req.session.user) {
 		res.redirect("/dashboard");
 	} else res.render("login");
-=======
-app.get('/', function(req, res) {
-=======
-app.get('/', (req, res) => {
->>>>>>> Switch to arrow functions
-	if (req.session.user) {
-		res.redirect('/dashboard');
-	} else res.render('index');
 });
-app.get('/login', (req, res) => {
-	if (req.session.user) {
-		res.redirect('/dashboard');
-	} else res.render('login');
->>>>>>> Send to dashboard if logged in
-});
-<<<<<<< HEAD
 app.get("/dashboard", (req, res) => {
-=======
-app.get('/dashboard', (req, res) => {
->>>>>>> Switch to arrow functions
 	if (req.session.user) {
-<<<<<<< HEAD
-<<<<<<< HEAD
 		if (req.session.user.role === "teacher") {
-=======
-		if (req.session.user.role === 'teacher') {
->>>>>>> Reduce number of database calls for session
 			con.query(
 				"select * from booking where user_id='" +
 					req.session.user.id +
@@ -144,7 +80,6 @@ app.get('/dashboard', (req, res) => {
 							req.session.user.id +
 							"';",
 						function(err, events_data) {
-<<<<<<< HEAD
 							res.render("dashboard_teacher", {
 								res: req.session.user,
 								booking_data,
@@ -152,91 +87,18 @@ app.get('/dashboard', (req, res) => {
 							});
 						}
 					);
-=======
-		con.query(
-			"select * from users where id='" + req.session.user.id + "';",
-			function(err, user_data) {
-				if (!err) {
-					if (user_data[0].role === 'teacher') {
-						con.query(
-							"select * from booking where user_id='" +
-								req.session.user.id +
-								"';",
-							function(err, booking_data) {
-								con.query(
-									"select * from events where user_id='" +
-										req.session.user.id +
-										"';",
-									function(err, events_data) {
-										res.render('dashboard_teacher', {
-											res: req.session.user,
-											booking_data,
-											events_data
-										});
-									}
-								);
-							}
-						);
-					} else if (user_data[0].role === 'dean') {
-						con.query('select * from booking;', function(
-							err,
-							booking_data
-						) {
-							con.query('select * from events;', function(
-								err,
-								events_data
-							) {
-								res.render('dashboard_dean', {
-									res: req.session.user,
-									booking_data,
-									events_data
-								});
-							});
-						});
-					} else if (user_data[0].role === 'facility') {
-						con.query('select * from booking;', function(
-							err,
-							booking_data
-						) {
-							res.render('dashboard_facility', {
-=======
-							res.render('dashboard_teacher', {
->>>>>>> Reduce number of database calls for session
-								res: req.session.user,
-								booking_data,
-								events_data
-							});
-<<<<<<< HEAD
-						});
-					} else {
-						res.redirect('/login');
-					}
-				} else {
-					res.redirect('/login');
->>>>>>> Fix retrieval of data
 				}
 			);
 		} else if (req.session.user.role === "dean") {
 			con.query("select * from booking;", function(err, booking_data) {
 				con.query("select * from events;", function(err, events_data) {
 					res.render("dashboard_dean", {
-=======
-						}
-					);
-				}
-			);
-		} else if (req.session.user.role === 'dean') {
-			con.query('select * from booking;', function(err, booking_data) {
-				con.query('select * from events;', function(err, events_data) {
-					res.render('dashboard_dean', {
->>>>>>> Reduce number of database calls for session
 						res: req.session.user,
 						booking_data,
 						events_data
 					});
 				});
 			});
-<<<<<<< HEAD
 		} else if (req.session.user.role === "facility") {
 			con.query("select * from booking;", function(err, booking_data) {
 				con.query("select * from events;", function(err, events_data) {
@@ -249,49 +111,23 @@ app.get('/dashboard', (req, res) => {
 			});
 		} else {
 			res.redirect("/login");
-=======
-		} else if (req.session.user.role === 'facility') {
-			con.query('select * from booking;', function(err, booking_data) {
-				con.query('select * from events;', function(err, events_data) {
-					res.render('dashboard_facility', {
-						res: req.session.user,
-						booking_data,
-						events_data
-					});
-				});
-			});
-		} else {
-			res.redirect('/login');
->>>>>>> Reduce number of database calls for session
 		}
 	} else {
 		res.redirect("/login");
 	}
 });
-<<<<<<< HEAD
 app.get("/request", (req, res) => {
-=======
-app.get('/request', (req, res) => {
->>>>>>> Switch to arrow functions
 	if (req.session.user) {
 		res.render("request");
 	} else {
 		res.redirect("/login");
 	}
 });
-<<<<<<< HEAD
 app.get("/logout", (req, res) => {
 	res.clearCookie("session", { path: "/" });
 	res.redirect("/login");
 });
 app.post("/onLogin", (req, res) => {
-=======
-app.get('/logout', (req, res) => {
-	res.clearCookie('session', { path: '/' });
-	res.redirect('/login');
-});
-app.post('/onLogin', (req, res) => {
->>>>>>> Switch to arrow functions
 	var username = req.body.username;
 	var password = req.body.password;
 	con.query(
@@ -306,194 +142,43 @@ app.post('/onLogin', (req, res) => {
 						req.session.user = rows[0];
 						res.redirect("/dashboard");
 					} else {
-<<<<<<< HEAD
 						console.log("Invalid password");
 						res.status(401).render("error", {
 							error_message: "Authentication error!"
 						});
 					}
 				} else {
-<<<<<<< HEAD
-<<<<<<< HEAD
 					console.log("Username not found!");
 					res.status(401).render("error", {
 						error_message: "Authentication error!"
 					});
-=======
-					con.query(
-						"select * from users where username='" +
-							username +
-							"' and role='teacher';",
-						function(err, rows) {
-							if (!err) {
-								if (rows.length > 0) {
-									if (
-										password ===
-										AES.decrypt(
-											rows[0].password,
-											`${process.env.AES_key}`
-										)
-									) {
-										req.session.user = rows[0];
-										res.redirect('/getUserProfile');
-									} else {
-										console.log('Password is Wrong Buddy!');
-										res.render('error', {
-											message: 'Password is Wrong Buddy!'
-										});
-									}
-								} else {
-									con.query(
-										"select * from users where username='" +
-											username +
-											"' and role='facility';",
-										function(err, rows) {
-											if (!err) {
-												if (rows.length > 0) {
-													if (
-														password ===
-														AES.decrypt(
-															rows[0].password,
-															`${process.env.AES_key}`
-														)
-													) {
-														req.session.user =
-															rows[0];
-														res.redirect(
-															'/dashboard_tab'
-														);
-													} else {
-														console.log(
-															'Password is Wrong Buddy!'
-														);
-														res.render('error', {
-															message:
-																'Password is Wrong Buddy!'
-														});
-													}
-												} else {
-													console.log(
-														'Username Not Found!'
-													);
-													res.render('error', {
-														message:
-															'Username Not Found!'
-													});
-												}
-											}
-										}
-									);
-								}
-							}
-						}
-					);
->>>>>>> Enhance session security
 				}
 			} else {
 				console.log("Username not found!");
 				res.status(401).render("error", {
 					error_message: "Authentication error!"
-=======
-					console.log('Username Not Found!');
-=======
-						console.log('Invalid password');
-						res.status(401).render('error', {
-							error_message: 'Authentication error!'
-						});
-					}
-				} else {
-					console.log('Username not found!');
-<<<<<<< HEAD
->>>>>>> Fix error messages
-					res.render('error', {
-=======
-					res.status(401).render('error', {
->>>>>>> Fix HTTP status codes and error messages
-						error_message: 'Authentication error!'
-					});
-				}
-			} else {
-				console.log('Username not found!');
-<<<<<<< HEAD
-				res.render('error', {
-<<<<<<< HEAD
-					message: 'Username Not Found!'
->>>>>>> Remove unnecessary DB queries while logging in
-=======
-=======
-				res.status(401).render('error', {
->>>>>>> Fix HTTP status codes and error messages
-					error_message: 'Authentication error!'
->>>>>>> Fix error messages
 				});
 			}
 		}
 	);
 });
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 app.post("/checkHallAvailability", (req, res) => {
 	var query = `select hall_id from hall_schedule where booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='${req.body.date_wanted}')) and slot_id='10')`;
-=======
-app.post('/checkHallAvailability', function(req, res) {
-=======
-app.post('/checkHallAvailability', (req, res) => {
->>>>>>> Switch to arrow functions
-	var query =
-		"select hall_id from hall_schedule where booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='" +
-		req.body.date_wanted +
-		"')) and slot_id='10')";
->>>>>>> Add API for checking hall availability
 	con.query(query, function(err, result) {
 		res.send(result);
 	});
 });
-<<<<<<< HEAD
-<<<<<<< HEAD
 app.post("/checkSlotAvailability", (req, res) => {
 	var query = `SELECT hall_id FROM hall_schedule WHERE booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='${req.body.date_wanted}')) and slot_id='${req.body.slot_id}') AND hall_schedule.hall_id = '${req.body.hall_id}'`;
-=======
-app.post('/checkSlotAvailability', function(req, res) {
-=======
-app.post('/checkSlotAvailability', (req, res) => {
->>>>>>> Switch to arrow functions
-	var slot_id = req.body.slot_id;
-	var query =
-<<<<<<< HEAD
-		"select slot_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='" +
-		date_wanted +
-		"')) and slot_id='10'";
->>>>>>> Add API for checking hall availability
-=======
-		"select hall_id from hall_schedule where booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='" +
-		req.body.date_wanted +
-		"')) and slot_id='10')";
->>>>>>> Fix HTTP status codes and error messages
 	con.query(query, function(err, result) {
 		res.send(result);
 	});
 });
-<<<<<<< HEAD
-<<<<<<< HEAD
 app.post("/makeRequest", (req, res) => {
-=======
-=======
->>>>>>> Add API for checking hall availability
-app.post('/makeRequest', function(req, res) {
->>>>>>> Remove unwanted routes
-=======
-app.post('/makeRequest', (req, res) => {
->>>>>>> Switch to arrow functions
 	var user_id = req.session.user.id;
 	var date_wanted = req.body.date_wanted;
-<<<<<<< HEAD
 	var slot_id = parseCookies(req).slot_id;
 	var hall_id = parseCookies(req).hall_id;
-=======
-	var slot_id = '10';
-	var hall_id = '4';
->>>>>>> Add API for checking hall availability
 	var club = req.body.club_name;
 	var details = req.body.desc;
 	var title = req.body.event_name;
@@ -571,39 +256,9 @@ app.post('/makeRequest', (req, res) => {
 																				err,
 																				data
 																			) {
-<<<<<<< HEAD
-<<<<<<< HEAD
 																				res.redirect(
 																					"/dashboard"
 																				);
-=======
-																				if (
-																					req
-																						.session
-																						.user
-																						.role ==
-																					'dean'
-																				)
-																					res.redirect(
-																						'/dashboard'
-																					);
-																				else
-																					res.render(
-																						'dashboard',
-																						{
-																							res:
-																								req
-																									.session
-																									.user,
-																							data
-																						}
-																					);
->>>>>>> Fix paths
-=======
-																				res.redirect(
-																					'/dashboard'
-																				);
->>>>>>> Add API for checking hall availability
 																			}
 																		);
 																	} else {
@@ -613,21 +268,10 @@ app.post('/makeRequest', (req, res) => {
 																		res.status(
 																			500
 																		).render(
-<<<<<<< HEAD
 																			"error",
 																			{
 																				error_message:
-<<<<<<< HEAD
 																					"Inserting into hall_schedule failed!"
-=======
-																					'Inserting into hall_schedule failed.'
->>>>>>> Fix error messages
-=======
-																			'error',
-																			{
-																				error_message:
-																					'Inserting into hall_schedule failed!'
->>>>>>> Fix HTTP status codes and error messages
 																			}
 																		);
 																	}
@@ -635,38 +279,17 @@ app.post('/makeRequest', (req, res) => {
 															);
 														} else {
 															console.log(err);
-<<<<<<< HEAD
-<<<<<<< HEAD
 															res.status(
 																500
 															).render("error", {
 																error_message:
 																	"Inserting into slot_schedule failed!"
 															});
-=======
-															res.render(
-																'error',
-																{
-																	error_message:
-																		'Inserting into slot_schedule failed.'
-																}
-															);
->>>>>>> Fix error messages
-=======
-															res.status(
-																500
-															).render('error', {
-																error_message:
-																	'Inserting into slot_schedule failed!'
-															});
->>>>>>> Fix HTTP status codes and error messages
 														}
 													}
 												);
 											} else {
 												console.log(err);
-<<<<<<< HEAD
-<<<<<<< HEAD
 												res.status(500).render(
 													"error",
 													{
@@ -674,88 +297,34 @@ app.post('/makeRequest', (req, res) => {
 															"Retrieving booking_id failed!"
 													}
 												);
-=======
-												res.render('error', {
-													error_message:
-														'Retrieving booking_id failed'
-												});
->>>>>>> Fix error messages
-=======
-												res.status(500).render(
-													'error',
-													{
-														error_message:
-															'Retrieving booking_id failed!'
-													}
-												);
->>>>>>> Fix HTTP status codes and error messages
 											}
 										}
 									);
 								} else {
 									console.log(err);
-<<<<<<< HEAD
-<<<<<<< HEAD
 									res.status(500).render("error", {
 										error_message:
 											"Inserting into booking failed!"
-=======
-									res.render('error', {
-										error_message:
-											'Inserting into booking failed.'
->>>>>>> Fix error messages
-=======
-									res.status(500).render('error', {
-										error_message:
-											'Inserting into booking failed!'
->>>>>>> Fix HTTP status codes and error messages
 									});
 								}
 							}
 						);
 					} else {
 						console.log(err);
-<<<<<<< HEAD
-<<<<<<< HEAD
 						res.status(500).render("error", {
 							error_message: "Retrieving event_id failed!"
-=======
-						res.render('error', {
-							error_message: 'Retrieving event_id failed'
->>>>>>> Fix error messages
-=======
-						res.status(500).render('error', {
-							error_message: 'Retrieving event_id failed!'
->>>>>>> Fix HTTP status codes and error messages
 						});
 					}
 				}
 			);
 		} else {
 			console.log(err);
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 			res.status(500).render("error", {
 				error_message: "Inserting into event failed!"
 			});
-=======
-			res.render('error', { error_message: 'Inserting into event failed.' });
->>>>>>> Fix error messages
-=======
-			res.render('error', {
-				error_message: 'Inserting into event failed.'
-=======
-			res.status(500).render('error', {
-				error_message: 'Inserting into event failed!'
->>>>>>> Fix HTTP status codes and error messages
-			});
->>>>>>> Add API for checking hall availability
 		}
 	});
 });
-<<<<<<< HEAD
-<<<<<<< HEAD
 app.post("/updateRequest", (req, res) => {
 	console.log("updateRequest");
 	res.status(500).send("Need to add. Contact Aravind.");
@@ -763,64 +332,27 @@ app.post("/updateRequest", (req, res) => {
 app.post("/deleteRequest", (req, res) => {
 	console.log("deleteRequest");
 	res.status(500).send("Need to add. Contact Aravind.");
-=======
-app.post('/updateRequest', function(req, res) {
-=======
-app.post('/updateRequest', (req, res) => {
->>>>>>> Switch to arrow functions
-	console.log('updateRequest');
-	res.status(500).send('Need to add. Contact Aravind.');
 });
-app.post('/deleteRequest', (req, res) => {
-	console.log('deleteRequest');
-	res.status(500).send('Need to add. Contact Aravind.');
->>>>>>> Fix HTTP status codes and error messages
-});
-<<<<<<< HEAD
 app.post("/approve", (req, res) => {
 	var temp = localStorage.getItem("Approve");
-=======
-app.post('/approve', (req, res) => {
-	var temp = localStorage.getItem('Approve');
->>>>>>> Switch to arrow functions
 	var query = "update booking set status='1' where id ='" + temp + "';";
 	console.log("Approved is" + temp);
 	con.query(query, function(err, result) {
-<<<<<<< HEAD
 		console.log("app");
 		res.redirect("/dashboard");
-=======
-		console.log('app');
-		res.redirect('/dashboard');
->>>>>>> Fix paths
 	});
 });
-<<<<<<< HEAD
 app.post("/reject", (req, res) => {
 	var temp = localStorage.getItem("Reject");
-=======
-app.post('/reject', (req, res) => {
-	var temp = localStorage.getItem('Reject');
->>>>>>> Switch to arrow functions
 	var query = "update booking set status='2' where id ='" + temp + "';";
 	console.log("Rejected is" + temp);
 	con.query(query, function(err, result) {
-<<<<<<< HEAD
 		console.log("rej");
 		res.redirect("/dashboard");
-=======
-		console.log('rej');
-		res.redirect('/dashboard');
->>>>>>> Fix paths
 	});
 });
 app.use((req, res, next) => {
-<<<<<<< HEAD
 	res.status(404).render("error", {
 		error_message: "404!"
-=======
-	res.status(404).render('error', {
-		error_message: '404!'
->>>>>>> Fix HTTP status codes and error messages
 	});
 });
