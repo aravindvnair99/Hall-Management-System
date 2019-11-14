@@ -255,12 +255,10 @@
 								return;
 							}
 							response.json().then(function(data) {
-								try {
-									if (Object.entries(data).length != 0) {
-										var i = 0;
-										data.forEach(element => {
-											if (
-												element.hall_id ==
+								console.log({data})
+								if (Object.entries(data).length != 0) {
+									if (
+												data[0].hall_id ==
 												payload.hall_id
 											) {
 												$('#' + identifier).toggleClass(
@@ -270,27 +268,11 @@
 													'disabled',
 													'disabled'
 												);
-												i++;
-											} else {
-												$('#' + identifier).toggleClass(
+											}
+								} else {
+									$('#' + identifier).toggleClass(
 													'colour'
 												);
-												i++;
-											}
-										});
-										if (i != Object.entries(data).length) {
-											$('#' + identifier).toggleClass(
-												'colour'
-											);
-										}
-									} else {
-										$('#' + identifier).toggleClass(
-											'colour'
-										);
-									}
-								} catch (error) {
-									alert('Error is: ', error);
-									$('#' + identifier).toggleClass('colour');
 								}
 							});
 						})
