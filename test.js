@@ -162,71 +162,14 @@ app.post("/onLogin", (req, res) => {
 		}
 	);
 });
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-app.post('/checkHallAvailability', (req, res) => {
-=======
 app.post("/checkHallAvailability", (req, res) => {
->>>>>>> Update to query for hall and slot
-=======
-app.post("/checkHallAvailability", (req, res) => {
->>>>>>> Updates
 	var query = `select hall_id from hall_schedule where booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='${req.body.date_wanted}')) and slot_id='10')`;
-<<<<<<< HEAD
-=======
-app.post('/checkHallAvailability', function(req, res) {
-=======
-app.post('/checkHallAvailability', (req, res) => {
->>>>>>> Switch to arrow functions
-	var query =
-		"select hall_id from hall_schedule where booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='" +
-		req.body.date_wanted +
-		"')) and slot_id='10')";
->>>>>>> Fix HTTP status codes and error messages
-=======
->>>>>>> Add slot API
 	con.query(query, function(err, result) {
 		res.send(result);
 	});
 });
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-app.post('/checkSlotAvailability', (req, res) => {
-	var query = `SELECT hall_id FROM hall_schedule WHERE booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='${req.body.date_wanted}')) and slot_id='${req.body.slot_id}')`;
-=======
-app.post('/checkSlotAvailability', function(req, res) {
-=======
-app.post('/checkSlotAvailability', (req, res) => {
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> Switch to arrow functions
-	var slot_id = req.body.slot_id;
-=======
->>>>>>> Add slot checking
-	var query =
-		"select slot_id from slot_schedule where booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='" +
-		req.body.date_wanted +
-<<<<<<< HEAD
-		"')) and slot_id='10')";
->>>>>>> Fix HTTP status codes and error messages
-=======
-		"')) and slot_id='" + req.body.slot_id + "')";
->>>>>>> Add slot checking
-=======
-	var query = `SELECT hall_id FROM hall_schedule WHERE booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='${req.body.date_wanted}')) and slot_id='${req.body.slot_id}')`;
->>>>>>> Add slot API
-=======
 app.post("/checkSlotAvailability", (req, res) => {
 	var query = `SELECT hall_id FROM hall_schedule WHERE booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='${req.body.date_wanted}')) and slot_id='${req.body.slot_id}') AND hall_schedule.hall_id = '${req.body.hall_id}'`;
->>>>>>> Update to query for hall and slot
-=======
-app.post("/checkSlotAvailability", (req, res) => {
-	var query = `SELECT hall_id FROM hall_schedule WHERE booking_id in (select booking_id from slot_schedule where booking_id in (select id from booking where event_id in (select id from events WHERE date_wanted='${req.body.date_wanted}')) and slot_id='${req.body.slot_id}') AND hall_schedule.hall_id = '${req.body.hall_id}'`;
->>>>>>> Updates
 	con.query(query, function(err, result) {
 		res.send(result);
 	});
