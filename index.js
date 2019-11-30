@@ -1,17 +1,17 @@
-const express = require("express"),
-	dotenv = require("dotenv"),
+const express = require('express'),
+	dotenv = require('dotenv'),
 	app = express(),
-	path = __dirname + "/views/",
-	bodyParser = require("body-parser"),
-	cookieSession = require("cookie-session"),
-	mysql = require("mysql"),
-	AES = require("mysql-aes"),
-	morgan = require("morgan");
+	path = __dirname + '/views/',
+	bodyParser = require('body-parser'),
+	cookieSession = require('cookie-session'),
+	mysql = require('mysql'),
+	AES = require('mysql-aes'),
+	morgan = require('morgan');
 dotenv.config();
-app.use(morgan("dev"));
+app.use(morgan('dev'));
 app.use(
 	cookieSession({
-		name: "session",
+		name: 'session',
 		secret: `${process.env.cookie_secret}`,
 		signed: true,
 		maxAge: 1 * 60 * 60 * 1000 // 1 hour
@@ -23,12 +23,12 @@ app.use(
 		extended: false
 	})
 );
-app.set("port", process.env.node_port);
-app.use(express.static(__dirname + "/public"));
-app.set("views", path);
-app.set("view engine", "ejs");
-app.listen(app.get("port"), function() {
-	console.log("App is running on port", app.get("port"));
+app.set('port', process.env.node_port);
+app.use(express.static(__dirname + '/public'));
+app.set('views', path);
+app.set('view engine', 'ejs');
+app.listen(app.get('port'), function() {
+	console.log('App is running on port', app.get('port'));
 });
 const con = mysql.createConnection({
 	host: `${process.env.DB_host}`,
@@ -39,10 +39,10 @@ const con = mysql.createConnection({
 });
 con.connect(function(error) {
 	if (error) {
-		console.log("Database connection failed");
+		console.log('Database connection failed');
 		return;
 	} else {
-		console.log("Database connection succeeded");
+		console.log('Database connection succeeded');
 	}
 });
 // function parseCookies(req) {
@@ -58,19 +58,19 @@ con.connect(function(error) {
 // 	return list;
 // }
 // var hall_id = parseCookies(req).hall_id;
-app.get("/", (req, res) => {
+app.get('/', (req, res) => {
 	if (req.session.user) {
-		res.redirect("/dashboard");
-	} else res.render("index");
+		res.redirect('/dashboard');
+	} else res.render('index');
 });
-app.get("/login", (req, res) => {
+app.get('/login', (req, res) => {
 	if (req.session.user) {
-		res.redirect("/dashboard");
-	} else res.render("login");
+		res.redirect('/dashboard');
+	} else res.render('login');
 });
-app.get("/dashboard", (req, res) => {
+app.get('/dashboard', (req, res) => {
 	if (req.session.user) {
-		if (req.session.user.role === "teacher") {
+		if (req.session.user.role === 'teacher') {
 			con.query(
 				"select * from booking where user_id='" +
 					req.session.user.id +
@@ -81,7 +81,7 @@ app.get("/dashboard", (req, res) => {
 							req.session.user.id +
 							"';",
 						function(err, events_data) {
-							res.render("dashboard_teacher", {
+							res.render('dashboard_teacher', {
 								res: req.session.user,
 								booking_data,
 								events_data
@@ -90,20 +90,20 @@ app.get("/dashboard", (req, res) => {
 					);
 				}
 			);
-		} else if (req.session.user.role === "dean") {
-			con.query("select * from booking;", function(err, booking_data) {
-				con.query("select * from events;", function(err, events_data) {
-					res.render("dashboard_dean", {
+		} else if (req.session.user.role === 'dean') {
+			con.query('select * from booking;', function(err, booking_data) {
+				con.query('select * from events;', function(err, events_data) {
+					res.render('dashboard_dean', {
 						res: req.session.user,
 						booking_data,
 						events_data
 					});
 				});
 			});
-		} else if (req.session.user.role === "facility") {
-			con.query("select * from booking;", function(err, booking_data) {
-				con.query("select * from events;", function(err, events_data) {
-					res.render("dashboard_facility", {
+		} else if (req.session.user.role === 'facility') {
+			con.query('select * from booking;', function(err, booking_data) {
+				con.query('select * from events;', function(err, events_data) {
+					res.render('dashboard_facility', {
 						res: req.session.user,
 						booking_data,
 						events_data
@@ -111,24 +111,24 @@ app.get("/dashboard", (req, res) => {
 				});
 			});
 		} else {
-			res.redirect("/login");
+			res.redirect('/login');
 		}
 	} else {
-		res.redirect("/login");
+		res.redirect('/login');
 	}
 });
-app.get("/request", (req, res) => {
+app.get('/request', (req, res) => {
 	if (req.session.user) {
-		res.render("request");
+		res.render('request');
 	} else {
-		res.redirect("/login");
+		res.redirect('/login');
 	}
 });
-app.get("/logout", (req, res) => {
-	res.clearCookie("session", { path: "/" });
-	res.redirect("/login");
+app.get('/logout', (req, res) => {
+	res.clearCookie('session', { path: '/' });
+	res.redirect('/login');
 });
-app.post("/onLogin", (req, res) => {
+app.post('/onLogin', (req, res) => {
 	var username = req.body.username;
 	var password = req.body.password;
 	con.query(
@@ -141,45 +141,45 @@ app.post("/onLogin", (req, res) => {
 						AES.decrypt(rows[0].password, `${process.env.AES_key}`)
 					) {
 						req.session.user = rows[0];
-						res.redirect("/dashboard");
+						res.redirect('/dashboard');
 					} else {
-						console.log("Invalid password");
-						res.status(401).render("error", {
-							error_message: "Authentication error!"
+						console.log('Invalid password');
+						res.status(401).render('error', {
+							error_message: 'Authentication error!'
 						});
 					}
 				} else {
-					console.log("Username not found!");
-					res.status(401).render("error", {
-						error_message: "Authentication error!"
+					console.log('Username not found!');
+					res.status(401).render('error', {
+						error_message: 'Authentication error!'
 					});
 				}
 			} else {
-				console.log("Username not found!");
-				res.status(401).render("error", {
-					error_message: "Authentication error!"
+				console.log('Username not found!');
+				res.status(401).render('error', {
+					error_message: 'Authentication error!'
 				});
 			}
 		}
 	);
 });
-app.post("/checkAvailability", (req, res) => {
+app.post('/checkAvailability', (req, res) => {
 	var query = `SELECT slot_hall FROM booking WHERE event_id IN (SELECT id FROM events WHERE date_wanted = '${req.body.date_wanted}')`;
 	con.query(query, function(err, result) {
 		if (!err) {
 			res.send(result);
 		} else {
 			console.log(err);
-			res.status(500).render("error", {
-				error_message: "Availability checking failed!"
+			res.status(500).render('error', {
+				error_message: 'Availability checking failed!'
 			});
 		}
 	});
 });
-app.post("/makeRequest", (req, res) => {
+app.post('/makeRequest', (req, res) => {
 	var user_id = req.session.user.id;
 	var date_wanted = req.body.date_wanted;
-	var slot_hall = "";
+	var slot_hall = '';
 	for (var i = 1; i <= 7; i++)
 		for (var j = 1; j <= 9; j++) {
 			if (req.body[`cell${j}${i}`]) {
@@ -191,7 +191,7 @@ app.post("/makeRequest", (req, res) => {
 	var details = req.body.desc;
 	var title = req.body.event_name;
 	var requirements = req.body.requirements;
-	var status = "3";
+	var status = '3';
 	var event_obj = {
 		title: title,
 		club: club,
@@ -200,7 +200,7 @@ app.post("/makeRequest", (req, res) => {
 		date_wanted: date_wanted,
 		user_id: user_id
 	};
-	con.query("insert into events set ?", event_obj, function(err, result) {
+	con.query('insert into events set ?', event_obj, function(err, result) {
 		if (!err) {
 			console.log(`Inserted ${event_obj.title} into events.`);
 			con.query(
@@ -213,70 +213,70 @@ app.post("/makeRequest", (req, res) => {
 							user_id: user_id,
 							status_id: status,
 							event_id: event_id[0].id,
-							slot_hall : slot_hall
+							slot_hall: slot_hall
 						};
 						con.query(
-							"insert into booking set ?",
+							'insert into booking set ?',
 							booking_obj,
 							function(err, result) {
 								if (!err) {
 									console.log(
 										`Inserted event with id ${booking_obj.event_id} into booking.`
 									);
-									res.redirect("/dashboard");
+									res.redirect('/dashboard');
 								} else {
 									console.log(err);
-									res.status(500).render("error", {
+									res.status(500).render('error', {
 										error_message:
-											"Inserting into booking failed!"
+											'Inserting into booking failed!'
 									});
 								}
 							}
 						);
 					} else {
 						console.log(err);
-						res.status(500).render("error", {
-							error_message: "Retrieving event_id failed!"
+						res.status(500).render('error', {
+							error_message: 'Retrieving event_id failed!'
 						});
 					}
 				}
 			);
 		} else {
 			console.log(err);
-			res.status(500).render("error", {
-				error_message: "Inserting into event failed!"
+			res.status(500).render('error', {
+				error_message: 'Inserting into event failed!'
 			});
 		}
 	});
 });
-app.post("/updateRequest", (req, res) => {
-	console.log("updateRequest");
-	res.status(500).send("Need to add. Contact Aravind.");
+app.post('/updateRequest', (req, res) => {
+	console.log('updateRequest');
+	res.status(500).send('Need to add. Contact Aravind.');
 });
-app.post("/deleteRequest", (req, res) => {
-	console.log("deleteRequest");
-	res.status(500).send("Need to add. Contact Aravind.");
+app.post('/deleteRequest', (req, res) => {
+	console.log('deleteRequest');
+	res.status(500).send('Need to add. Contact Aravind.');
 });
-app.post("/approve", (req, res) => {
-	var temp = localStorage.getItem("Approve");
+app.post('/approve', (req, res) => {
+	var temp = localStorage.getItem('Approve');
 	var query = "update booking set status='1' where id ='" + temp + "';";
-	console.log("Approved is" + temp);
+	console.log('Approved is' + temp);
 	con.query(query, function(err, result) {
-		console.log("app");
-		res.redirect("/dashboard");
+		console.log('app');
+		res.redirect('/dashboard');
 	});
 });
-app.post("/reject", (req, res) => {
-	var temp = localStorage.getItem("Reject");
+app.post('/reject', (req, res) => {
+	var temp = localStorage.getItem('Reject');
 	var query = "update booking set status='2' where id ='" + temp + "';";
-	console.log("Rejected is" + temp);
+	console.log('Rejected is' + temp);
 	con.query(query, function(err, result) {
-		console.log("rej");
-		res.redirect("/dashboard");
+		console.log('rej');
+		res.redirect('/dashboard');
 	});
 });
 app.use((req, res, next) => {
-	res.status(404).render("error", {
-		error_message: "404!"
+	res.status(404).render('error', {
+		error_message: '404!'
 	});
 });

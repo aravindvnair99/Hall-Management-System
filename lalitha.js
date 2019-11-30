@@ -8,63 +8,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.engine('.html', require('ejs').__express);
 app.set('view engine', 'ejs');
 
-var connection;
-connection = mysql.createConnection({
-	host: 'localhost',
-	user: 'root',
-	password: '',
-	database: 'mydb'
-});
-
-connection.connect(function(err) {
-	if (err) {
-		console.error('error connecting: ' + err.stack);
-		return;
-	}
-});
-
-var student = [
-	{
-		oname: 'madhu',
-		password: '123456'
-	},
-	{
-		oname: 'kiran',
-		password: '123456'
-	}
-];
-var warden = [
-	{
-		dname: 'madhu',
-		password: '123456'
-	},
-	{
-		dname: 'kiran',
-		password: '123456'
-	}
-];
-
-var security = [
-	{
-		dname: 'madhu',
-		password: '123456'
-	},
-	{
-		dname: 'kiran',
-		password: '123456'
-	}
-];
-
-app.get('/ologin', function(req, res) {
-	res.sendFile(__dirname + '/public/studentlogin.html');
-});
-
-app.get('/wlogin', function(req, res) {
-	res.sendFile(__dirname + '/public/wardenlogin.html');
-});
-app.get('/slogin', function(req, res) {
-	res.sendFile(__dirname + '/public/securitylogin.html');
-});
 app.post('/createStudent', function(req, res) {
 	var a = req.body.username;
 	var b = req.body.password;
