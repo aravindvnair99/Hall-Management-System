@@ -175,79 +175,88 @@
 		<script src="js/init.js"></script>
 		<script>
 			$(document).ready(function() {
-				$("select").formSelect();
+				$('select').formSelect();
 			});
-			$(".datepicker").datepicker({
+			$('.datepicker').datepicker({
 				selectMonths: true,
 				selectYears: 15,
-				today: "Today",
-				clear: "Clear",
-				close: "Ok",
+				today: 'Today',
+				clear: 'Clear',
+				close: 'Ok',
 				closeOnSelect: false,
-				format: "yyyy/mm/dd"
+				format: 'yyyy/mm/dd'
 			});
-			$("#date_wanted").change(function() {
+			$('#date_wanted').change(function() {
 				var payload = {
-					date_wanted: document.getElementById("date_wanted").value,
+					date_wanted: document.getElementById('date_wanted').value,
 					slot_id: $(this)
-						.attr("id")
+						.attr('id')
 						.charAt(0)
 				};
-				fetch("/checkAvailability", {
-					method: "POST",
+				fetch('/checkAvailability', {
+					method: 'POST',
 					body: new URLSearchParams($.param(payload))
 				})
 					.then(function(response) {
 						if (response.status !== 200) {
 							alert(
-								"Looks like there was a problem. Status Code: " +
+								'Looks like there was a problem. Status Code: ' +
 									response.status
 							);
 							return;
 						}
 						response.json().then(function(data) {
-							$(".not_available").removeAttr("disabled");
-							$("td").removeClass();
+							$('.not_available').removeAttr('disabled');
+							$('td').removeClass();
 							var not_available = [];
 							data.forEach(element => {
-										for(let i =0; i<element.slot_hall.toString().length; i+=2){
-											not_available.push(element.slot_hall.toString().charAt(i) + element.slot_hall.toString().charAt(i+1));
-										}
-									});
-									console.log(not_available);
-							not_available.forEach(element => {
-								$("#" + element).toggleClass("not_available");
+								for (
+									let i = 0;
+									i < element.slot_hall.toString().length;
+									i += 2
+								) {
+									not_available.push(
+										element.slot_hall.toString().charAt(i) +
+											element.slot_hall
+												.toString()
+												.charAt(i + 1)
+									);
+								}
 							});
-							$(".not_available").attr("disabled", "disabled");
+							console.log(not_available);
+							not_available.forEach(element => {
+								$('#' + element).toggleClass('not_available');
+							});
+							$('.not_available').attr('disabled', 'disabled');
 						});
 					})
 					.catch(function(err) {
-						alert("Fetch Error :-S", err);
+						alert('Fetch Error :-S', err);
 					});
 			});
-			$("td").click(function() {
-				if ($(this).attr("disabled") == "disabled") {
-					alert("Slot not available! Try another date or venue!");
+			$('td').click(function() {
+				if ($(this).attr('disabled') == 'disabled') {
+					alert('Slot not available! Try another date or venue!');
 				} else {
-					var identifier = $(this).attr("id");
+					var identifier = $(this).attr('id');
 					var slot_id = $(this)
-						.attr("id")
+						.attr('id')
 						.charAt(0);
 					var hall_id = $(this)
-						.attr("id")
+						.attr('id')
 						.charAt(1);
 					var payload = {
-						date_wanted: document.getElementById("date_wanted")
+						date_wanted: document.getElementById('date_wanted')
 							.value
 					};
-					fetch("/checkAvailability", {
-						method: "POST",
+					fetch('/checkAvailability', {
+						method: 'POST',
 						body: new URLSearchParams($.param(payload))
 					})
 						.then(function(response) {
 							if (response.status !== 200) {
 								alert(
-									"Looks like there was a problem. Status Code: " +
+									'Looks like there was a problem. Status Code: ' +
 										response.status
 								);
 								return;
@@ -259,44 +268,64 @@
 								var slot = [];
 								if (Object.entries(data).length != 0) {
 									data.forEach(element => {
-										for(let i =0; i<element.slot_hall.toString().length; i+=2){
-											slot.push(element.slot_hall.toString().charAt(i));
+										for (
+											let i = 0;
+											i <
+											element.slot_hall.toString().length;
+											i += 2
+										) {
+											slot.push(
+												element.slot_hall
+													.toString()
+													.charAt(i)
+											);
 										}
-										for(let i =1; i<(element.slot_hall.toString().length)-1; i+=2){
-											hall.push(element.slot_hall.toString().charAt(i));
+										for (
+											let i = 1;
+											i <
+											element.slot_hall.toString()
+												.length -
+												1;
+											i += 2
+										) {
+											hall.push(
+												element.slot_hall
+													.toString()
+													.charAt(i)
+											);
 										}
 									});
 									console.log(hall.length, ' ha ha', list);
 									if (hall.includes(identifier)) {
-										$("#" + identifier).toggleClass(
-											"not_available"
+										$('#' + identifier).toggleClass(
+											'not_available'
 										);
-										$(".not_available").attr(
-											"disabled",
-											"disabled"
+										$('.not_available').attr(
+											'disabled',
+											'disabled'
 										);
 									} else {
-										$("#" + identifier).toggleClass(
-											"colour"
+										$('#' + identifier).toggleClass(
+											'colour'
 										);
 									}
-								} else $("#" + identifier).toggleClass("colour");
+								} else $('#' + identifier).toggleClass('colour');
 							});
 						})
 						.catch(function(err) {
-							alert("Fetch Error :-S", err);
+							alert('Fetch Error :-S', err);
 						});
 				}
 			});
-			$("#request_form").submit(function(eventObj) {
+			$('#request_form').submit(function(eventObj) {
 				for (var i = 1; i <= 7; i++)
 					for (var j = 1; j <= 9; j++)
-						if ($("#" + j + i).hasClass("colour"))
-							$("<input />")
-								.attr("type", "hidden")
-								.attr("name", "cell" + j + i)
-								.attr("value", j.toString() + i.toString())
-								.appendTo("#request_form");
+						if ($('#' + j + i).hasClass('colour'))
+							$('<input />')
+								.attr('type', 'hidden')
+								.attr('name', 'cell' + j + i)
+								.attr('value', j.toString() + i.toString())
+								.appendTo('#request_form');
 				return true;
 			});
 		</script>
