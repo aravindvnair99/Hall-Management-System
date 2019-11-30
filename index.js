@@ -164,7 +164,7 @@ app.post("/onLogin", (req, res) => {
 	);
 });
 app.post("/checkAvailability", (req, res) => {
-	var query = `SELECT halls, slots FROM booking WHERE event_id IN (SELECT id FROM events WHERE date_wanted = '${req.body.date_wanted}')`;
+	var query = `SELECT slot_hall FROM booking WHERE event_id IN (SELECT id FROM events WHERE date_wanted = '${req.body.date_wanted}')`;
 	con.query(query, function(err, result) {
 		if (!err) {
 			res.send(result);
@@ -179,16 +179,14 @@ app.post("/checkAvailability", (req, res) => {
 app.post("/makeRequest", (req, res) => {
 	var user_id = req.session.user.id;
 	var date_wanted = req.body.date_wanted;
-	var halls = "";
-	var slots = "";
+	var slot_hall = "";
 	for (var i = 1; i <= 7; i++)
 		for (var j = 1; j <= 9; j++) {
 			if (req.body[`cell${j}${i}`]) {
-				slots += j;
-				halls += i;
+				slot_hall += j.toString() + i.toString();
 			}
 		}
-	console.log({ slots }, { halls });
+	console.log({ slot_hall });
 	var club = req.body.club_name;
 	var details = req.body.desc;
 	var title = req.body.event_name;
@@ -215,8 +213,7 @@ app.post("/makeRequest", (req, res) => {
 							user_id: user_id,
 							status_id: status,
 							event_id: event_id[0].id,
-							halls: halls,
-							slots: slots
+							slot_hall : slot_hall
 						};
 						con.query(
 							"insert into booking set ?",
