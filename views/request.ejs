@@ -210,12 +210,11 @@
 							$("td").removeClass();
 							var not_available = [];
 							data.forEach(element => {
-								for (let h of element.halls.toString()) {
-									for (let s of element.slots.toString()) {
-										not_available.push(s + h);
-									}
-								}
-							});
+										for(let i =0; i<element.slot_hall.toString().length; i+=2){
+											not_available.push(element.slot_hall.toString().charAt(i) + element.slot_hall.toString().charAt(i+1));
+										}
+									});
+									console.log(not_available);
 							not_available.forEach(element => {
 								$("#" + element).toggleClass("not_available");
 							});
@@ -256,33 +255,19 @@
 							response.json().then(function(data) {
 								console.log(data);
 								var list = [];
+								var hall = [];
+								var slot = [];
 								if (Object.entries(data).length != 0) {
 									data.forEach(element => {
-										for (
-											let i = 0;
-											i < element.halls.toString().length;
-											i++
-										) {
-											for (
-												let j = 0;
-												j <
-												element.slots.toString().length;
-												j++
-											) {
-												list.push(
-													element.slots
-														.toString()
-														.charAt(j) +
-														element.halls
-															.toString()
-															.charAt(i)
-												);
-											}
+										for(let i =0; i<element.slot_hall.toString().length; i+=2){
+											slot.push(element.slot_hall.toString().charAt(i));
+										}
+										for(let i =1; i<(element.slot_hall.toString().length)-1; i+=2){
+											hall.push(element.slot_hall.toString().charAt(i));
 										}
 									});
-									console.log(list.length, ' ha ha', list);
-									if (list.includes(identifier)) {
-										alert("Entered if");
+									console.log(hall.length, ' ha ha', list);
+									if (hall.includes(identifier)) {
 										$("#" + identifier).toggleClass(
 											"not_available"
 										);
@@ -291,7 +276,6 @@
 											"disabled"
 										);
 									} else {
-										alert("Entered else");
 										$("#" + identifier).toggleClass(
 											"colour"
 										);
