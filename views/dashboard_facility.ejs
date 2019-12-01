@@ -20,88 +20,52 @@
 			rel="stylesheet"
 			media="screen,projection"
 		/>
-		<style>
-			table,
-			th,
-			td {
-				border: 1px solid #000000;
-			}
-			.timewidth {
-				width: 10%;
-			}
-		</style>
 	</head>
 
 	<body style="background-color: darkslateblue;">
 		<nav class="white" role="navigation">
 			<div class="nav-wrapper container">
-				<a id="logo-container" href="/dashboard" class="brand-logo"
-					>ASE-B Hall Booking</a
+				<b
+					><a id="logo-container" href="/" class="brand-logo"
+						>ASE-B Hall Booking</a
+					></b
 				>
-				<button
-					style="background-color: #35377c; margin-left: 80%;"
-					class="btn waves-effect waves-light"
-					onclick="location.href = '/logout'"
-				>
-					Logout
-				</button>
 			</div>
 		</nav>
-		<div class="row">
-			<div class="col s12 m8 l8 offset-l2 offset-m2">
-				<div class="card">
-					<div>
-						<div class="row"></div>
-						<div class="row"></div>
-						<div class="row"></div>
-						<div class="row">
-							<form
-								class="col s12"
-								action="/makeRequest"
-								method="post"
-							>
-								<div class="row">
-									<h3 class="center">Status of Halls</h3>
-								</div>
-								<div>
-									<div class="row container">
-										<div class="input-field col s12">
-											<input
-												id="date_wanted"
-												type="text"
-												class="datepicker"
-												name="date_wanted"
-											/>
-											<label>Choose a date</label>
-										</div>
-									</div>
-									<%- include calendarview.ejs %>
-								</div>
-								<br />
-							</form>
-						</div>
-					</div>
+
+		<div class="container">
+			<div class="row"></div>
+			<div class="row"></div>
+			<div class="row"></div>
+			<div class="row"></div>
+			<div class="row ">
+				<div class="col s12 m6 l6 offset-l3 offset-m3">
+					<h3 class="white-text center">
+						<b>Pick to continue</b>
+					</h3>
 				</div>
+			</div>
+			<div class="container" style="text-align: center;">
+				<button
+					class="btn waves-effect waves-light"
+					type="button"
+					onclick="location.href = '/dashboard_facility_card'"
+				>
+					Card View
+					<i class="material-icons right">dashboard</i></button
+				>&nbsp;&nbsp;&nbsp;&nbsp;
+				<button
+					class="btn waves-effect waves-light"
+					type="button"
+					onclick="location.href = '/dashboard_facility_table'"
+				>
+					Table View
+					<i class="material-icons right">event </i>
+				</button>
 			</div>
 		</div>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 		<script src="js/init.js"></script>
-		<script>
-			$(document).ready(function() {
-				$('select').material_select();
-			});
-		</script>
-		<script>
-			$('.datepicker').datepicker({
-				selectMonths: true, // Creates a dropdown to control month
-				selectYears: 15, // Creates a dropdown of 15 years to control year,
-				today: 'Today',
-				clear: 'Clear',
-				close: 'Ok',
-				closeOnSelect: false, // Close upon selecting a date,
-				format: 'yyyy/mm/dd'
-			});
-		</script>
 	</body>
 </html>

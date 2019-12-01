@@ -101,21 +101,35 @@ app.get('/dashboard', (req, res) => {
 				});
 			});
 		} else if (req.session.user.role === 'facility') {
-			con.query('select * from booking;', function(err, booking_data) {
-				con.query('select * from events;', function(err, events_data) {
-					res.render('dashboard_facility', {
-						res: req.session.user,
-						booking_data,
-						events_data
-					});
-				});
-			});
+			res.render('dashboard_facility');
 		} else {
 			res.redirect('/login');
 		}
 	} else {
 		res.redirect('/login');
 	}
+});
+app.get('/dashboard_facility_card', (req, res) => {
+	con.query('select * from booking;', function(err, booking_data) {
+		con.query('select * from events;', function(err, events_data) {
+			res.render('dashboard_facility_card', {
+				res: req.session.user,
+				booking_data,
+				events_data
+			});
+		});
+	});
+});
+app.get('/dashboard_facility_table', (req, res) => {
+	con.query('select * from booking;', function(err, booking_data) {
+		con.query('select * from events;', function(err, events_data) {
+			res.render('dashboard_facility_table', {
+				res: req.session.user,
+				booking_data,
+				events_data
+			});
+		});
+	});
 });
 app.get('/request', (req, res) => {
 	if (req.session.user) {
