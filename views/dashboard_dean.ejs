@@ -153,13 +153,11 @@
 				$('.modal').modal();
 			});
 			$('[name="updateStatus"]').click(function() {
-				alert($(this).attr('id'));
 				var payload = {
 					type: $(this).attr('id').slice(0,-1),
-					booking_id: $(this).attr('id').charAt()
+					booking_id: $(this).attr('id').slice(-1)
 				};
-				console.log(payload)
-				fetch('/checkAvailability', {
+				fetch('/updateStatus', {
 					method: 'POST',
 					body: new URLSearchParams($.param(payload))
 				})
@@ -172,7 +170,7 @@
 							return;
 						}
 						response.json().then(function(data) {
-							console.log(data);
+							location.reload();
 						});
 					})
 					.catch(function(err) {

@@ -27,7 +27,7 @@ app.set('port', process.env.node_port);
 app.use(express.static(__dirname + '/public'));
 app.set('views', path);
 app.set('view engine', 'ejs');
-app.listen(app.get('port'), function() {
+app.listen(app.get('port'), function () {
 	console.log('App is running on port', app.get('port'));
 });
 const con = mysql.createConnection({
@@ -37,7 +37,7 @@ const con = mysql.createConnection({
 	database: `${process.env.DB_name}`,
 	multipleStatements: true
 });
-con.connect(function(error) {
+con.connect(function (error) {
 	if (error) {
 		console.log('Database connection failed');
 		return;
@@ -73,14 +73,14 @@ app.get('/dashboard', (req, res) => {
 		if (req.session.user.role === 'teacher') {
 			con.query(
 				"select * from booking where user_id='" +
-					req.session.user.id +
-					"';",
-				function(err, booking_data) {
+				req.session.user.id +
+				"';",
+				function (err, booking_data) {
 					con.query(
 						"select * from events where user_id='" +
-							req.session.user.id +
-							"';",
-						function(err, events_data) {
+						req.session.user.id +
+						"';",
+						function (err, events_data) {
 							res.render('dashboard_teacher', {
 								res: req.session.user,
 								booking_data,
@@ -91,8 +91,8 @@ app.get('/dashboard', (req, res) => {
 				}
 			);
 		} else if (req.session.user.role === 'dean') {
-			con.query('select * from booking;', function(err, booking_data) {
-				con.query('select * from events;', function(err, events_data) {
+			con.query('select * from booking;', function (err, booking_data) {
+				con.query('select * from events;', function (err, events_data) {
 					res.render('dashboard_dean', {
 						res: req.session.user,
 						booking_data,
@@ -110,8 +110,8 @@ app.get('/dashboard', (req, res) => {
 	}
 });
 app.get('/dashboard_facility_card', (req, res) => {
-	con.query('select * from booking;', function(err, booking_data) {
-		con.query('select * from events;', function(err, events_data) {
+	con.query('select * from booking;', function (err, booking_data) {
+		con.query('select * from events;', function (err, events_data) {
 			res.render('dashboard_facility_card', {
 				res: req.session.user,
 				booking_data,
@@ -121,8 +121,8 @@ app.get('/dashboard_facility_card', (req, res) => {
 	});
 });
 app.get('/dashboard_facility_table', (req, res) => {
-	con.query('select * from booking;', function(err, booking_data) {
-		con.query('select * from events;', function(err, events_data) {
+	con.query('select * from booking;', function (err, booking_data) {
+		con.query('select * from events;', function (err, events_data) {
 			res.render('dashboard_facility_table', {
 				res: req.session.user,
 				booking_data,
@@ -139,7 +139,9 @@ app.get('/request', (req, res) => {
 	}
 });
 app.get('/logout', (req, res) => {
-	res.clearCookie('session', { path: '/' });
+	res.clearCookie('session', {
+		path: '/'
+	});
 	res.redirect('/login');
 });
 app.post('/onLogin', (req, res) => {
@@ -147,7 +149,7 @@ app.post('/onLogin', (req, res) => {
 	var password = req.body.password;
 	con.query(
 		"select * from users where username='" + username + "';",
-		function(err, rows) {
+		function (err, rows) {
 			if (!err) {
 				if (rows.length > 0) {
 					if (
@@ -179,7 +181,7 @@ app.post('/onLogin', (req, res) => {
 });
 app.post('/checkAvailability', (req, res) => {
 	var query = `SELECT slot_hall FROM booking WHERE event_id IN (SELECT id FROM events WHERE date_wanted = '${req.body.date_wanted}')`;
-	con.query(query, function(err, result) {
+	con.query(query, function (err, result) {
 		if (!err) {
 			res.send(result);
 		} else {
@@ -200,7 +202,9 @@ app.post('/makeRequest', (req, res) => {
 				slot_hall += j.toString() + i.toString();
 			}
 		}
-	console.log({ slot_hall });
+	console.log({
+		slot_hall
+	});
 	var club = req.body.club_name;
 	var details = req.body.desc;
 	var title = req.body.event_name;
@@ -213,14 +217,14 @@ app.post('/makeRequest', (req, res) => {
 		date_wanted: date_wanted,
 		user_id: user_id
 	};
-	con.query('insert into events set ?', event_obj, function(err, result) {
+	con.query('insert into events set ?', event_obj, function (err, result) {
 		if (!err) {
 			console.log(`Inserted ${event_obj.title} into events.`);
 			con.query(
 				"select id from events WHERE user_id='" +
-					req.session.user.id +
-					"' ORDER BY id DESC LIMIT 1;",
-				function(err, event_id) {
+				req.session.user.id +
+				"' ORDER BY id DESC LIMIT 1;",
+				function (err, event_id) {
 					if (!err) {
 						var booking_obj = {
 							user_id: user_id,
@@ -230,7 +234,7 @@ app.post('/makeRequest', (req, res) => {
 						con.query(
 							'insert into booking set ?',
 							booking_obj,
-							function(err, result) {
+							function (err, result) {
 								if (!err) {
 									console.log(
 										`Inserted event with id ${booking_obj.event_id} into booking.`
@@ -239,8 +243,7 @@ app.post('/makeRequest', (req, res) => {
 								} else {
 									console.log(err);
 									res.status(500).render('error', {
-										error_message:
-											'Inserting into booking failed!'
+										error_message: 'Inserting into booking failed!'
 									});
 								}
 							}
@@ -270,13 +273,28 @@ app.post('/deleteRequest', (req, res) => {
 	res.status(500).send('Need to add. Contact Aravind.');
 });
 app.post('/updateStatus', (req, res) => {
-	var query =
-		"update booking set status='Approved' where id ='" + temp + "';";
-	console.log('Approved is' + temp);
-	con.query(query, function(err, result) {
-		console.log('app');
-		res.redirect('/dashboard');
-	});
+	var type = req.body.type;
+	var booking_id = req.body.booking_id;
+	if (type === "approve") {
+		var query =
+			"update booking set status='Approved' where id ='" + booking_id + "';";
+		console.log(`${booking_id} is approved`);
+		con.query(query, function (err, result) {
+			res.send(JSON.stringify(result));
+		});
+	} else if (type === "reject") {
+		var query =
+			"update booking set status='Rejected' where id ='" + booking_id + "';";
+		console.log(`${booking_id} is rejected.`);
+		con.query(query, function (err, result) {
+			res.send(JSON.stringify(result));
+		});
+	} else {
+		res.status(500).render('error', {
+			error_message: 'Status Update failed!'
+		});
+	}
+
 });
 app.use((req, res, next) => {
 	res.status(404).render('error', {
