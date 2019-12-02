@@ -269,23 +269,12 @@ app.post('/deleteRequest', (req, res) => {
 	console.log('deleteRequest');
 	res.status(500).send('Need to add. Contact Aravind.');
 });
-app.post('/approve', (req, res) => {
-	var temp = localStorage.getItem('Approve');
+app.post('/updateStatus', (req, res) => {
 	var query =
 		"update booking set status='Approved' where id ='" + temp + "';";
 	console.log('Approved is' + temp);
 	con.query(query, function(err, result) {
 		console.log('app');
-		res.redirect('/dashboard');
-	});
-});
-app.post('/reject', (req, res) => {
-	var temp = localStorage.getItem('Reject');
-	var query =
-		"update booking set status='Rejected' where id ='" + temp + "';";
-	console.log('Rejected is' + temp);
-	con.query(query, function(err, result) {
-		console.log('rej');
 		res.redirect('/dashboard');
 	});
 });
