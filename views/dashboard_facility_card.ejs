@@ -26,6 +26,7 @@
 			td {
 				border: 1px solid black;
 			}
+
 			td.random {
 				background-color: red;
 			}
@@ -114,7 +115,7 @@
 						<br />
 						<b>Club:</b> <%= events_data[i].club %>
 						<br />
-						<b>Requirements:</b> <%= events_data[i].req %>
+						<b>Requirements:</b> <%= events_data[i].requirements %>
 						<br />
 						<b>Details:</b> <%= events_data[i].details %>
 						<br />
@@ -132,6 +133,7 @@
 					</div>
 				</div>
 			</div>
+			<% } %>
 		</div>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
