@@ -276,17 +276,13 @@ app.post('/updateStatus', (req, res) => {
 	var type = req.body.type;
 	var booking_id = req.body.booking_id;
 	if (type === "approve") {
-		var query =
-			"update booking set status='Approved' where id ='" + booking_id + "';";
 		console.log(`${booking_id} is approved`);
-		con.query(query, function (err, result) {
+		con.query("update booking set status='Approved' where id ='" + booking_id + "';", function (err, result) {
 			res.send(JSON.stringify(result));
 		});
 	} else if (type === "reject") {
-		var query =
-			"update booking set status='Rejected' where id ='" + booking_id + "';";
 		console.log(`${booking_id} is rejected.`);
-		con.query(query, function (err, result) {
+		con.query("update booking set status='Rejected' where id ='" + booking_id + "';", function (err, result) {
 			res.send(JSON.stringify(result));
 		});
 	} else {
