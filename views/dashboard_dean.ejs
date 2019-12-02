@@ -87,11 +87,7 @@
 							<br />
 							<b>Club:</b> <%= events_data[i].club %>
 							<br />
-							<b>Status:</b> <% if (booking_data[i].status_id ==
-							1) { %> Approved <% } else if
-							(booking_data[i].status_id == 3) { %> Pending <% }
-							else if (booking_data[i].status_id == 2) { %>
-							Rejected <% } else { %> Unknown <% } %>
+							<b>Status:</b> <%= booking_data[i].status %>
 						</div>
 					</div>
 					<div class="card-action">
@@ -123,10 +119,7 @@
 						<br />
 						<b>Details:</b> <%= events_data[i].details %>
 						<br />
-						<b>Status:</b> <% if (booking_data[i].status_id == 1) {
-						%> Approved <% } else if (booking_data[i].status_id ==
-						3) { %> Pending <% } else if (booking_data[i].status_id
-						== 2) { %> Rejected <% } else { %> Unknown <% } %>
+						<b>Status:</b> <%= booking_data[i].status %>
 					</div>
 					<div class="modal-footer">
 						<a
@@ -149,36 +142,6 @@
 					</div>
 				</div>
 			</div>
-
-			<!-- <div class="row">
-            <div class="container">
-                <br><br>
-                <b>Booking ID: <%= booking_data[i].id %></b>
-                <br>
-                <b>User ID:</b> <%= booking_data[i].user_id %>
-                <br>
-                <b>Date requested:</b> <%= booking_data[i].date_req %>
-                <br>
-                <b>Date wanted:</b> <%= events_data[i].date_wanted %>
-                <br>
-                <b>Title:</b> <%= events_data[i].title %>
-                <br>
-                <b>Club:</b> <%= events_data[i].club %>
-                <br>
-                <b>Requirements:</b> <%= events_data[i].req %>
-                <br>
-                <b>Details:</b> <%= events_data[i].details %>
-                <br>
-                <b>Status:</b> <% if (booking_data[i].status_id == 1) { %>
-                    Approved
-                    <% } else if (booking_data[i].status_id == 3) { %>  
-                        Pending
-                    <% } else if (booking_data[i].status_id == 2) { %>  
-                        Rejected
-                    <% } else { %>  
-                        Unknown
-                    <% } %>
-            </div>         -->
 			<% } %>
 		</div>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
