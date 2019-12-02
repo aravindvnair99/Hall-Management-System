@@ -79,10 +79,11 @@
 							><%= events_data[i].title %></span
 						>
 						<div>
-							<b>Booking ID: <%= booking_data[i].id %></b>
+							<b>Booking ID:</b> <%= booking_data[i].id %>
 							<br />
-							<b>Date requested:</b> <%= booking_data[i].date_req
-							%>
+							<b>Date requested:</b> <%=
+							booking_data[i].date_req.toDateString() + ' ' +
+							booking_data[i].date_req.toLocaleTimeString() %>
 							<br />
 							<b>Club:</b> <%= events_data[i].club %>
 							<br />
@@ -103,19 +104,22 @@
 				</div>
 				<div id="<%= booking_data[i].id %>" class="modal">
 					<div class="modal-content">
-						<b>Booking ID: <%= booking_data[i].id %></b>
+						<b>Booking ID:</b> <%= booking_data[i].id %>
 						<br />
 						<b>User ID:</b> <%= booking_data[i].user_id %>
 						<br />
-						<b>Date requested:</b> <%= booking_data[i].date_req %>
+						<b>Date requested:</b> <%=
+						booking_data[i].date_req.toDateString() + ' ' +
+						booking_data[i].date_req.toLocaleTimeString() %>
 						<br />
-						<b>Date wanted:</b> <%= events_data[i].date_wanted %>
+						<b>Date wanted:</b> <%=
+						events_data[i].date_wanted.toDateString() %>
 						<br />
 						<b>Title:</b> <%= events_data[i].title %>
 						<br />
 						<b>Club:</b> <%= events_data[i].club %>
 						<br />
-						<b>Requirements:</b> <%= events_data[i].req %>
+						<b>Requirements:</b> <%= events_data[i].requirements %>
 						<br />
 						<b>Details:</b> <%= events_data[i].details %>
 						<br />
@@ -126,12 +130,14 @@
 					</div>
 					<div class="modal-footer">
 						<a
-							href="#!" name = "Accept"
+							href="#!"
+							name="Accept"
 							class="modal-close waves-effect waves-green btn-flat"
 							>Accept</a
 						>
 						<a
-							href="#!" name = "Reject"
+							href="#!"
+							name="Reject"
 							class="modal-close waves-effect waves-green btn-flat"
 							>Reject</a
 						>
