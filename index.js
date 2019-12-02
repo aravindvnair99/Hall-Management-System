@@ -205,7 +205,6 @@ app.post('/makeRequest', (req, res) => {
 	var details = req.body.desc;
 	var title = req.body.event_name;
 	var requirements = req.body.requirements;
-	var status = '3';
 	var event_obj = {
 		title: title,
 		club: club,
@@ -225,7 +224,6 @@ app.post('/makeRequest', (req, res) => {
 					if (!err) {
 						var booking_obj = {
 							user_id: user_id,
-							status_id: status,
 							event_id: event_id[0].id,
 							slot_hall: slot_hall
 						};
@@ -273,7 +271,8 @@ app.post('/deleteRequest', (req, res) => {
 });
 app.post('/approve', (req, res) => {
 	var temp = localStorage.getItem('Approve');
-	var query = "update booking set status='1' where id ='" + temp + "';";
+	var query =
+		"update booking set status='Approved' where id ='" + temp + "';";
 	console.log('Approved is' + temp);
 	con.query(query, function(err, result) {
 		console.log('app');
@@ -282,7 +281,8 @@ app.post('/approve', (req, res) => {
 });
 app.post('/reject', (req, res) => {
 	var temp = localStorage.getItem('Reject');
-	var query = "update booking set status='2' where id ='" + temp + "';";
+	var query =
+		"update booking set status='Rejected' where id ='" + temp + "';";
 	console.log('Rejected is' + temp);
 	con.query(query, function(err, result) {
 		console.log('rej');
