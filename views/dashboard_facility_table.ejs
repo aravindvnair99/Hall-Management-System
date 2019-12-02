@@ -101,6 +101,7 @@
 											id="club_name"
 											name="club_name"
 											type="text"
+											disabled
 										/>
 										<label for="club_name">Club Name</label>
 									</div>
@@ -111,6 +112,7 @@
 											id="desc"
 											type="text"
 											name="desc"
+											disabled
 										/>
 										<label for="desc">Description</label>
 									</div>
@@ -121,6 +123,7 @@
 											id="event_name"
 											type="text"
 											name="event_name"
+											disabled
 										/>
 										<label for="event_name"
 											>Event Name</label
@@ -133,6 +136,7 @@
 											id="requirements"
 											type="text"
 											name="requirements"
+											disabled
 										/>
 										<label for="requirements"
 											>Requirements</label
@@ -212,7 +216,7 @@
 			});
 			$('td').click(function() {
 				if ($(this).attr('disabled') == 'disabled') {
-					alert('Slot not available! Try another date or venue!');
+					alert('Need to add function to fetch details!');
 				} else {
 					var identifier = $(this).attr('id');
 					var slot_id = $(this)
