@@ -269,8 +269,15 @@ app.post('/updateRequest', (req, res) => {
 	res.status(500).send('Need to add. Contact Aravind.');
 });
 app.post('/deleteRequest', (req, res) => {
-	console.log('deleteRequest');
-	res.status(500).send('Need to add. Contact Aravind.');
+	var booking_id = req.body.booking_id;
+		con.query("delete from booking where id ='" + booking_id + "';", function (err, result) {
+			res.send(JSON.stringify(result));
+		});
+		console.log(`${booking_id} is deleted.`);
+		// res.status(500).render('error', {
+		// 	error_message: 'Delete request failed!'
+		// });
+	}
 });
 app.post('/updateStatus', (req, res) => {
 	var type = req.body.type;
@@ -290,7 +297,6 @@ app.post('/updateStatus', (req, res) => {
 			error_message: 'Status Update failed!'
 		});
 	}
-
 });
 app.use((req, res, next) => {
 	res.status(404).render('error', {
