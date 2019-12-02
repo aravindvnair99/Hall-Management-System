@@ -123,14 +123,14 @@
 					</div>
 					<div class="modal-footer">
 						<a
-							href="#!"
-							name="Accept"
+							id="approve<%= booking_data[i].id %>"
+							name="updateStatus"
 							class="modal-close waves-effect waves-green btn-flat"
-							>Accept</a
+							>Approve</a
 						>
 						<a
-							href="#!"
-							name="Reject"
+							id="reject<%= booking_data[i].id %>"
+							name="updateStatus"
 							class="modal-close waves-effect waves-green btn-flat"
 							>Reject</a
 						>
@@ -144,12 +144,48 @@
 			</div>
 			<% } %>
 		</div>
+		<form id="updateStatus" action="/updateStatus" method="post"></form>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 		<script src="js/init.js"></script>
 		<script>
-			$(document).ready(function() {
+			$(document).ready(() => {
 				$('.modal').modal();
+			});
+			$('[name="updateStatus"]').click(function() {
+				alert($(this).attr('id'));
+				var payload = {
+					type: $(this).attr('id').slice(0,-1),
+					booking_id: $(this).attr('id').charAt()
+				};
+				console.log(payload)
+				fetch('/checkAvailability', {
+					method: 'POST',
+					body: new URLSearchParams($.param(payload))
+				})
+					.then(function(response) {
+						if (response.status !== 200) {
+							alert(
+								'Looks like there was a problem. Status Code: ' +
+									response.status
+							);
+							return;
+						}
+						response.json().then(function(data) {
+							console.log(data);
+						});
+					})
+					.catch(function(err) {
+						alert('Submit Error :-S', err);
+					});
+			});
+			$('#updateStatus').submit(eventObj => {
+				$('<input />')
+					.attr('type', 'hidden')
+					.attr('name', 'cell' + j + i)
+					.attr('value', j.toString() + i.toString())
+					.appendTo('#updateStatus');
+				return true;
 			});
 		</script>
 	</body>
