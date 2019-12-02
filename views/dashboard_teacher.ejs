@@ -84,11 +84,7 @@
 							<br />
 							<b>Club:</b> <%= events_data[i].club %>
 							<br />
-							<b>Status:</b> <% if (booking_data[i].status_id ==
-							1) { %> Approved <% } else if
-							(booking_data[i].status_id == 3) { %> Pending <% }
-							else if (booking_data[i].status_id == 2) { %>
-							Rejected <% } else { %> Unknown <% } %>
+							<b>Status:</b> <%= booking_data[i].status %>
 						</div>
 					</div>
 					<div class="card-action">
@@ -117,10 +113,7 @@
 						<br />
 						<b>Details:</b> <%= events_data[i].details %>
 						<br />
-						<b>Status:</b> <% if (booking_data[i].status_id == 1) {
-						%> Approved <% } else if (booking_data[i].status_id ==
-						3) { %> Pending <% } else if (booking_data[i].status_id
-						== 2) { %> Rejected <% } else { %> Unknown <% } %>
+						<b>Status:</b> <%= booking_data[i].status %>
 					</div>
 					<div class="modal-footer">
 						<a
