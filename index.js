@@ -221,7 +221,7 @@ app.post('/makeRequest', (req, res) => {
 			date_wanted: date_wanted,
 			user_id: user_id
 		};
-		con.query('insert into events set ?', event_obj, (err, result) => {
+		con.query('insert into events set ?', event_obj, (err) => {
 			if (!err) {
 				console.log(`Inserted ${event_obj.title} into events.`);
 				con.query(
@@ -238,7 +238,7 @@ app.post('/makeRequest', (req, res) => {
 							con.query(
 								'insert into booking set ?',
 								booking_obj,
-								(err, result) => {
+								(err) => {
 									if (!err) {
 										console.log(
 											`Inserted event with id ${booking_obj.event_id} into booking.`
@@ -292,7 +292,7 @@ app.post('/deleteBooking', (req, res) => {
 						"delete from events where id ='" +
 							result[0].event_id +
 							"';",
-						(err, result) => {
+						(err) => {
 							if (!err) {
 								con.query(
 									"delete from booking where id ='" +
@@ -355,7 +355,7 @@ app.post('/updateStatus', (req, res) => {
 		res.redirect('/login');
 	}
 });
-app.use((req, res, next) => {
+app.use((req, res) => {
 	res.status(404).render('error', {
 		error_message: '404!'
 	});
