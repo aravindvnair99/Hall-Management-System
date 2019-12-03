@@ -326,8 +326,10 @@ app.post('/updateStatus', (req, res) => {
 					req.body.booking_id +
 					"';",
 				(err, result) => {
-					console.log(`${req.body.booking_id} is approved`);
-					res.send(JSON.stringify(result));
+					if (!err) {
+						console.log(`${req.body.booking_id} is approved`);
+						res.send(JSON.stringify(result));
+					} else res.send(JSON.stringify(err.code));
 				}
 			);
 		} else if (req.body.type === 'reject') {
@@ -336,8 +338,10 @@ app.post('/updateStatus', (req, res) => {
 					req.body.booking_id +
 					"';",
 				(err, result) => {
-					console.log(`${req.body.booking_id} is rejected.`);
-					res.send(JSON.stringify(result));
+					if (!err) {
+						console.log(`${req.body.booking_id} is rejected`);
+						res.send(JSON.stringify(result));
+					} else res.send(JSON.stringify(err.code));
 				}
 			);
 		} else {
