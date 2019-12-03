@@ -134,12 +134,12 @@
 							class="modal-close waves-effect waves-green btn-flat"
 							>Reject</a
 						>
-						<a
+						<!-- <a
 							id="delete<%= booking_data[i].id %>"
 							name="deleteBooking"
 							class="modal-close waves-effect waves-green btn-flat"
 							>Delete</a
-						>
+						> -->
 						<a
 							href="#!"
 							class="modal-close waves-effect waves-green btn-flat"
@@ -162,10 +162,11 @@
 				var payload = {
 					type: $(this)
 						.attr('id')
-						.slice(0, -1),
+						.includes('approve')?"approve":"reject",
 					booking_id: $(this)
 						.attr('id')
-						.slice(-1)
+						.includes('approve')?$(this).attr('id').replace('approve', ''): $(this).attr('id').replace('reject', '')
+					
 				};
 				fetch('/updateStatus', {
 					method: 'POST',
@@ -183,6 +184,7 @@
 							if (data.affectedRows == 1) {
 								location.reload();
 							} else {
+								console.log(data);
 								alert(data);
 								location.reload();
 							}
