@@ -27,23 +27,15 @@ app.set('port', process.env.node_port);
 app.use(express.static(__dirname + '/public'));
 app.set('views', path);
 app.set('view engine', 'ejs');
-app.listen(app.get('port'), function() {
+app.listen(app.get('port'), () => {
 	console.log('App is running on port', app.get('port'));
 });
-const con = mysql.createConnection({
+const con = mysql.createPool({
 	host: `${process.env.DB_host}`,
 	user: `${process.env.DB_user}`,
 	password: `${process.env.DB_password}`,
 	database: `${process.env.DB_name}`,
 	multipleStatements: true
-});
-con.connect(function(error) {
-	if (error) {
-		console.log('Database connection failed');
-		return;
-	} else {
-		console.log('Database connection succeeded');
-	}
 });
 // function parseCookies(req) {
 // 	var list = {},
@@ -191,7 +183,7 @@ app.post('/checkAvailability', (req, res) => {
 	if (req.session.user) {
 		con.query(
 			`SELECT slot_hall FROM booking WHERE event_id IN (SELECT id FROM events WHERE date_wanted = '${req.body.date_wanted}')`,
-			function(err, result) {
+			(err, result) => {
 				if (!err) {
 					res.send(result);
 				} else {
@@ -229,7 +221,7 @@ app.post('/makeRequest', (req, res) => {
 			date_wanted: date_wanted,
 			user_id: user_id
 		};
-		con.query('insert into events set ?', event_obj, function(err, result) {
+		con.query('insert into events set ?', event_obj, (err, result) => {
 			if (!err) {
 				console.log(`Inserted ${event_obj.title} into events.`);
 				con.query(
@@ -246,7 +238,7 @@ app.post('/makeRequest', (req, res) => {
 							con.query(
 								'insert into booking set ?',
 								booking_obj,
-								function(err, result) {
+								(err, result) => {
 									if (!err) {
 										console.log(
 											`Inserted event with id ${booking_obj.event_id} into booking.`
@@ -290,29 +282,28 @@ app.post('/updateRequest', (req, res) => {
 });
 app.post('/updateStatus', (req, res) => {
 	if (req.session.user) {
-		var type = req.body.type;
-		var booking_id = req.body.booking_id;
-		if (type === 'approve') {
-			console.log(`${booking_id} is approved`);
+		if (req.body.type === 'approve') {
 			con.query(
 				"update booking set status='Approved' where id ='" +
-					booking_id +
+					req.body.booking_id +
 					"';",
-				function(err, result) {
+				(err, result) => {
+					console.log(`${req.body.booking_id} is approved`);
 					res.send(JSON.stringify(result));
 				}
 			);
-		} else if (type === 'reject') {
-			console.log(`${booking_id} is rejected.`);
+		} else if (req.body.type === 'reject') {
 			con.query(
 				"update booking set status='Rejected' where id ='" +
-					booking_id +
+					req.body.booking_id +
 					"';",
-				function(err, result) {
+				(err, result) => {
+					console.log(`${req.body.booking_id} is rejected.`);
 					res.send(JSON.stringify(result));
 				}
 			);
 		} else {
+			console.log(`${req.body.booking_id} status update failed.`);
 			res.status(500).render('error', {
 				error_message: 'Status Update failed!'
 			});
@@ -331,7 +322,7 @@ app.post('/deleteRequest', (req, res) => {
 				"update booking set status='Approved' where id ='" +
 					booking_id +
 					"';",
-				function(err, result) {
+				(err, result) => {
 					res.send(JSON.stringify(result));
 				}
 			);
@@ -341,7 +332,7 @@ app.post('/deleteRequest', (req, res) => {
 				"update booking set status='Rejected' where id ='" +
 					booking_id +
 					"';",
-				function(err, result) {
+				(err, result) => {
 					res.send(JSON.stringify(result));
 				}
 			);
