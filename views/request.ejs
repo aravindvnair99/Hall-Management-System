@@ -184,12 +184,9 @@
 				$('select').formSelect();
 			});
 			$('.datepicker').datepicker({
-				selectMonths: true,
-				selectYears: 15,
-				today: 'Today',
-				clear: 'Clear',
-				close: 'Ok',
-				closeOnSelect: false,
+				yearRange: 1,
+				minDate: new Date(),
+				maxDate: new Date(new Date(Date.now() + 90 * 86400000)),
 				format: 'yyyy/mm/dd'
 			});
 			$('#date_wanted').change(function() {
