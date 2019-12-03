@@ -116,14 +116,14 @@
 						<b>Status:</b> <%= booking_data[i].status %>
 					</div>
 					<div class="modal-footer">
-							<a
+						<!-- <a
 							id="approve<%= booking_data[i].id %>"
 							name="editBooking"
 							class="modal-close waves-effect waves-green btn-flat"
 							>Edit</a
-						>
+						> -->
 						<a
-							id="reject<%= booking_data[i].id %>"
+							id="delete<%= booking_data[i].id %>"
 							name="deleteBooking"
 							class="modal-close waves-effect waves-green btn-flat"
 							>Delete</a
@@ -144,6 +144,37 @@
 		<script>
 			$(document).ready(function() {
 				$('.modal').modal();
+			});
+			$('[name="deleteBooking"]').click(function() {
+				var payload = {
+					booking_id: $(this)
+						.attr('id')
+						.replace('delete', '')
+				};
+				fetch('/deleteBooking', {
+					method: 'POST',
+					body: new URLSearchParams($.param(payload))
+				})
+					.then(function(response) {
+						if (response.status !== 200) {
+							alert(
+								'Looks like there was a problem. Status Code: ' +
+									response.status
+							);
+							return;
+						}
+						response.json().then(function(data) {
+							if (data.affectedRows == 1) {
+								location.reload();
+							} else {
+								alert(data);
+								location.reload();
+							}
+						});
+					})
+					.catch(function(err) {
+						alert('Submit Error :-S', err);
+					});
 			});
 		</script>
 	</body>
