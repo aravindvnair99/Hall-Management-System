@@ -180,7 +180,12 @@
 							return;
 						}
 						response.json().then(function(data) {
-							location.reload();
+							if (data.affectedRows == 1) {
+								location.reload();
+							} else {
+								alert(data);
+								location.reload();
+							}
 						});
 					})
 					.catch(function(err) {
