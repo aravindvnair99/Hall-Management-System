@@ -79,6 +79,7 @@
 								class="col s12"
 								action="/makeRequest"
 								method="post"
+								onsubmit="return validateForm()"
 							>
 								<div class="row">
 									<h3 class="center">Request Form</h3>
@@ -322,17 +323,29 @@
 						});
 				}
 			});
-			$('#request_form').submit(function(eventObj) {
+			$('#request_form').submit(eventObj => {
 				for (var i = 1; i <= 7; i++)
 					for (var j = 1; j <= 9; j++)
-						if ($('#' + j + i).hasClass('colour'))
+						if ($('#' + j + i).hasClass('colour')) {
+							k++;
 							$('<input />')
 								.attr('type', 'hidden')
 								.attr('name', 'cell' + j + i)
 								.attr('value', j.toString() + i.toString())
 								.appendTo('#request_form');
+						}
 				return true;
 			});
+			function validateForm() {
+				var k = 0;
+				for (var i = 1; i <= 7; i++)
+					for (var j = 1; j <= 9; j++)
+						if ($('#' + j + i).hasClass('colour')) k++;
+				if (k == 0) {
+					alert('Please select at least one slot and hall.');
+					return false;
+				}
+			}
 		</script>
 	</body>
 </html>
