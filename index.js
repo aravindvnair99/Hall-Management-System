@@ -319,6 +319,7 @@ app.post('/deleteBooking', (req, res) => {
 	}
 });
 app.post('/updateStatus', (req, res) => {
+	console.log(req.body.type);
 	if (req.session.user) {
 		if (req.body.type === 'approve') {
 			con.query(
