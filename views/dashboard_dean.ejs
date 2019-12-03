@@ -135,6 +135,12 @@
 							>Reject</a
 						>
 						<a
+							id="delete<%= booking_data[i].id %>"
+							name="deleteBooking"
+							class="modal-close waves-effect waves-green btn-flat"
+							>Delete</a
+						>
+						<a
 							href="#!"
 							class="modal-close waves-effect waves-green btn-flat"
 							>Close</a
@@ -154,8 +160,12 @@
 			});
 			$('[name="updateStatus"]').click(function() {
 				var payload = {
-					type: $(this).attr('id').slice(0,-1),
-					booking_id: $(this).attr('id').slice(-1)
+					type: $(this)
+						.attr('id')
+						.slice(0, -1),
+					booking_id: $(this)
+						.attr('id')
+						.slice(-1)
 				};
 				fetch('/updateStatus', {
 					method: 'POST',
@@ -171,6 +181,37 @@
 						}
 						response.json().then(function(data) {
 							location.reload();
+						});
+					})
+					.catch(function(err) {
+						alert('Submit Error :-S', err);
+					});
+			});
+			$('[name="deleteBooking"]').click(function() {
+				var payload = {
+					booking_id: $(this)
+						.attr('id')
+						.replace('delete', '')
+				};
+				fetch('/deleteBooking', {
+					method: 'POST',
+					body: new URLSearchParams($.param(payload))
+				})
+					.then(function(response) {
+						if (response.status !== 200) {
+							alert(
+								'Looks like there was a problem. Status Code: ' +
+									response.status
+							);
+							return;
+						}
+						response.json().then(function(data) {
+							if (data.affectedRows == 1) {
+								location.reload();
+							} else {
+								alert(data);
+								location.reload();
+							}
 						});
 					})
 					.catch(function(err) {

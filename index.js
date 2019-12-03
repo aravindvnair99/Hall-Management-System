@@ -272,10 +272,48 @@ app.post('/makeRequest', (req, res) => {
 		res.redirect('/login');
 	}
 });
-app.post('/updateRequest', (req, res) => {
+app.post('/updateBooking', (req, res) => {
 	if (req.session.user) {
 		console.log('updateRequest');
 		res.status(500).send('Need to add. Contact Aravind.');
+	} else {
+		res.redirect('/login');
+	}
+});
+app.post('/deleteBooking', (req, res) => {
+	if (req.session.user) {
+		con.query(
+			"select event_id from booking where id ='" +
+				req.body.booking_id +
+				"';",
+			(err, result) => {
+				if (result) {
+					con.query(
+						"delete from events where id ='" +
+							result[0].event_id +
+							"';",
+						(err, result) => {
+							if (!err) {
+								con.query(
+									"delete from booking where id ='" +
+										req.body.booking_id +
+										"';",
+									(err, result) => {
+										if (!err) {
+											console.log(
+												`${req.body.booking_id} is deleted`
+											);
+											res.send(JSON.stringify(result));
+										} else
+											res.send(JSON.stringify(err.code));
+									}
+								);
+							} else res.send(JSON.stringify(err.code));
+						}
+					);
+				} else res.send(JSON.stringify(err.code));
+			}
+		);
 	} else {
 		res.redirect('/login');
 	}
@@ -304,39 +342,6 @@ app.post('/updateStatus', (req, res) => {
 			);
 		} else {
 			console.log(`${req.body.booking_id} status update failed.`);
-			res.status(500).render('error', {
-				error_message: 'Status Update failed!'
-			});
-		}
-	} else {
-		res.redirect('/login');
-	}
-});
-app.post('/deleteRequest', (req, res) => {
-	if (req.session.user) {
-		var type = req.body.type;
-		var booking_id = req.body.booking_id;
-		if (type === 'approve') {
-			console.log(`${booking_id} is approved`);
-			con.query(
-				"update booking set status='Approved' where id ='" +
-					booking_id +
-					"';",
-				(err, result) => {
-					res.send(JSON.stringify(result));
-				}
-			);
-		} else if (type === 'reject') {
-			console.log(`${booking_id} is rejected.`);
-			con.query(
-				"update booking set status='Rejected' where id ='" +
-					booking_id +
-					"';",
-				(err, result) => {
-					res.send(JSON.stringify(result));
-				}
-			);
-		} else {
 			res.status(500).render('error', {
 				error_message: 'Status Update failed!'
 			});
