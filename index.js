@@ -110,26 +110,34 @@ app.get('/dashboard', (req, res) => {
 	}
 });
 app.get('/dashboard_facility_card', (req, res) => {
-	con.query('select * from booking;', function(err, booking_data) {
-		con.query('select * from events;', function(err, events_data) {
-			res.render('dashboard_facility_card', {
-				res: req.session.user,
-				booking_data,
-				events_data
+	if (req.session.user) {
+		con.query('select * from booking;', function(err, booking_data) {
+			con.query('select * from events;', function(err, events_data) {
+				res.render('dashboard_facility_card', {
+					res: req.session.user,
+					booking_data,
+					events_data
+				});
 			});
 		});
-	});
+	} else {
+		res.redirect('/login');
+	}
 });
 app.get('/dashboard_facility_table', (req, res) => {
-	con.query('select * from booking;', function(err, booking_data) {
-		con.query('select * from events;', function(err, events_data) {
-			res.render('dashboard_facility_table', {
-				res: req.session.user,
-				booking_data,
-				events_data
+	if (req.session.user) {
+		con.query('select * from booking;', function(err, booking_data) {
+			con.query('select * from events;', function(err, events_data) {
+				res.render('dashboard_facility_table', {
+					res: req.session.user,
+					booking_data,
+					events_data
+				});
 			});
 		});
-	});
+	} else {
+		res.redirect('/login');
+	}
 });
 app.get('/request', (req, res) => {
 	if (req.session.user) {
@@ -180,151 +188,170 @@ app.post('/onLogin', (req, res) => {
 	);
 });
 app.post('/checkAvailability', (req, res) => {
-	var query = `SELECT slot_hall FROM booking WHERE event_id IN (SELECT id FROM events WHERE date_wanted = '${req.body.date_wanted}')`;
-	con.query(query, function(err, result) {
-		if (!err) {
-			res.send(result);
-		} else {
-			console.log(err);
-			res.status(500).render('error', {
-				error_message: 'Availability checking failed!'
-			});
-		}
-	});
+	if (req.session.user) {
+		con.query(
+			`SELECT slot_hall FROM booking WHERE event_id IN (SELECT id FROM events WHERE date_wanted = '${req.body.date_wanted}')`,
+			function(err, result) {
+				if (!err) {
+					res.send(result);
+				} else {
+					console.log(err);
+					res.status(500).render('error', {
+						error_message: 'Availability checking failed!'
+					});
+				}
+			}
+		);
+	} else {
+		res.redirect('/login');
+	}
 });
 app.post('/makeRequest', (req, res) => {
-	var user_id = req.session.user.id;
-	var date_wanted = req.body.date_wanted;
-	var slot_hall = '';
-	for (var i = 1; i <= 7; i++)
-		for (var j = 1; j <= 9; j++) {
-			if (req.body[`cell${j}${i}`]) {
-				slot_hall += j.toString() + i.toString();
+	if (req.session.user) {
+		var user_id = req.session.user.id;
+		var date_wanted = req.body.date_wanted;
+		var slot_hall = '';
+		for (var i = 1; i <= 7; i++)
+			for (var j = 1; j <= 9; j++) {
+				if (req.body[`cell${j}${i}`]) {
+					slot_hall += j.toString() + i.toString();
+				}
 			}
-		}
-	console.log({
-		slot_hall
-	});
-	var club = req.body.club_name;
-	var details = req.body.desc;
-	var title = req.body.event_name;
-	var requirements = req.body.requirements;
-	var event_obj = {
-		title: title,
-		club: club,
-		requirements: requirements,
-		details: details,
-		date_wanted: date_wanted,
-		user_id: user_id
-	};
-	con.query('insert into events set ?', event_obj, function(err, result) {
-		if (!err) {
-			console.log(`Inserted ${event_obj.title} into events.`);
-			con.query(
-				"select id from events WHERE user_id='" +
-					req.session.user.id +
-					"' ORDER BY id DESC LIMIT 1;",
-				function(err, event_id) {
-					if (!err) {
-						var booking_obj = {
-							user_id: user_id,
-							event_id: event_id[0].id,
-							slot_hall: slot_hall
-						};
-						con.query(
-							'insert into booking set ?',
-							booking_obj,
-							function(err, result) {
-								if (!err) {
-									console.log(
-										`Inserted event with id ${booking_obj.event_id} into booking.`
-									);
-									res.redirect('/dashboard');
-								} else {
-									console.log(err);
-									res.status(500).render('error', {
-										error_message:
-											'Inserting into booking failed!'
-									});
+		var club = req.body.club_name;
+		var details = req.body.desc;
+		var title = req.body.event_name;
+		var requirements = req.body.requirements;
+		var event_obj = {
+			title: title,
+			club: club,
+			requirements: requirements,
+			details: details,
+			date_wanted: date_wanted,
+			user_id: user_id
+		};
+		con.query('insert into events set ?', event_obj, function(err, result) {
+			if (!err) {
+				console.log(`Inserted ${event_obj.title} into events.`);
+				con.query(
+					"select id from events WHERE user_id='" +
+						req.session.user.id +
+						"' ORDER BY id DESC LIMIT 1;",
+					function(err, event_id) {
+						if (!err) {
+							var booking_obj = {
+								user_id: user_id,
+								event_id: event_id[0].id,
+								slot_hall: slot_hall
+							};
+							con.query(
+								'insert into booking set ?',
+								booking_obj,
+								function(err, result) {
+									if (!err) {
+										console.log(
+											`Inserted event with id ${booking_obj.event_id} into booking.`
+										);
+										res.redirect('/dashboard');
+									} else {
+										console.log(err);
+										res.status(500).render('error', {
+											error_message:
+												'Inserting into booking failed!'
+										});
+									}
 								}
-							}
-						);
-					} else {
-						console.log(err);
-						res.status(500).render('error', {
-							error_message: 'Retrieving event_id failed!'
-						});
+							);
+						} else {
+							console.log(err);
+							res.status(500).render('error', {
+								error_message: 'Retrieving event_id failed!'
+							});
+						}
 					}
+				);
+			} else {
+				console.log(err);
+				res.status(500).render('error', {
+					error_message: 'Inserting into event failed!'
+				});
+			}
+		});
+	} else {
+		res.redirect('/login');
+	}
+});
+app.post('/updateRequest', (req, res) => {
+	if (req.session.user) {
+		console.log('updateRequest');
+		res.status(500).send('Need to add. Contact Aravind.');
+	} else {
+		res.redirect('/login');
+	}
+});
+app.post('/updateStatus', (req, res) => {
+	if (req.session.user) {
+		var type = req.body.type;
+		var booking_id = req.body.booking_id;
+		if (type === 'approve') {
+			console.log(`${booking_id} is approved`);
+			con.query(
+				"update booking set status='Approved' where id ='" +
+					booking_id +
+					"';",
+				function(err, result) {
+					res.send(JSON.stringify(result));
+				}
+			);
+		} else if (type === 'reject') {
+			console.log(`${booking_id} is rejected.`);
+			con.query(
+				"update booking set status='Rejected' where id ='" +
+					booking_id +
+					"';",
+				function(err, result) {
+					res.send(JSON.stringify(result));
 				}
 			);
 		} else {
-			console.log(err);
 			res.status(500).render('error', {
-				error_message: 'Inserting into event failed!'
+				error_message: 'Status Update failed!'
 			});
 		}
-	});
-});
-app.post('/updateRequest', (req, res) => {
-	console.log('updateRequest');
-	res.status(500).send('Need to add. Contact Aravind.');
-});
-app.post('/updateStatus', (req, res) => {
-	var type = req.body.type;
-	var booking_id = req.body.booking_id;
-	if (type === 'approve') {
-		console.log(`${booking_id} is approved`);
-		con.query(
-			"update booking set status='Approved' where id ='" +
-				booking_id +
-				"';",
-			function(err, result) {
-				res.send(JSON.stringify(result));
-			}
-		);
-	} else if (type === 'reject') {
-		console.log(`${booking_id} is rejected.`);
-		con.query(
-			"update booking set status='Rejected' where id ='" +
-				booking_id +
-				"';",
-			function(err, result) {
-				res.send(JSON.stringify(result));
-			}
-		);
 	} else {
-		res.status(500).render('error', {
-			error_message: 'Status Update failed!'
-		});
+		res.redirect('/login');
 	}
 });
 app.post('/deleteRequest', (req, res) => {
-	var type = req.body.type;
-	var booking_id = req.body.booking_id;
-	if (type === 'approve') {
-		console.log(`${booking_id} is approved`);
-		con.query(
-			"update booking set status='Approved' where id ='" +
-				booking_id +
-				"';",
-			function(err, result) {
-				res.send(JSON.stringify(result));
-			}
-		);
-	} else if (type === 'reject') {
-		console.log(`${booking_id} is rejected.`);
-		con.query(
-			"update booking set status='Rejected' where id ='" +
-				booking_id +
-				"';",
-			function(err, result) {
-				res.send(JSON.stringify(result));
-			}
-		);
+	if (req.session.user) {
+		var type = req.body.type;
+		var booking_id = req.body.booking_id;
+		if (type === 'approve') {
+			console.log(`${booking_id} is approved`);
+			con.query(
+				"update booking set status='Approved' where id ='" +
+					booking_id +
+					"';",
+				function(err, result) {
+					res.send(JSON.stringify(result));
+				}
+			);
+		} else if (type === 'reject') {
+			console.log(`${booking_id} is rejected.`);
+			con.query(
+				"update booking set status='Rejected' where id ='" +
+					booking_id +
+					"';",
+				function(err, result) {
+					res.send(JSON.stringify(result));
+				}
+			);
+		} else {
+			res.status(500).render('error', {
+				error_message: 'Status Update failed!'
+			});
+		}
 	} else {
-		res.status(500).render('error', {
-			error_message: 'Status Update failed!'
-		});
+		res.redirect('/login');
 	}
 });
 app.use((req, res, next) => {
