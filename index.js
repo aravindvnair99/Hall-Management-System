@@ -66,11 +66,11 @@ app.get("/dashboard", (req, res) => {
 			con.query(
 				"select * from booking where user_id= ?",
 				req.session.user.id,
-				function(err, booking_data) {
+				(err, booking_data) => {
 					con.query(
 						"select * from events where user_id= ?",
 						req.session.user.id,
-						function(err, events_data) {
+						(err, events_data) => {
 							res.render("dashboard_teacher", {
 								res: req.session.user,
 								booking_data,
@@ -81,8 +81,8 @@ app.get("/dashboard", (req, res) => {
 				}
 			);
 		} else if (req.session.user.role === "dean") {
-			con.query("select * from booking;", function(err, booking_data) {
-				con.query("select * from events;", function(err, events_data) {
+			con.query("select * from booking;", (err, booking_data) => {
+				con.query("select * from events;", (err, events_data) => {
 					res.render("dashboard_dean", {
 						res: req.session.user,
 						booking_data,
@@ -101,8 +101,8 @@ app.get("/dashboard", (req, res) => {
 });
 app.get("/dashboard_facility_card", (req, res) => {
 	if (req.session.user) {
-		con.query("select * from booking;", function(err, booking_data) {
-			con.query("select * from events;", function(err, events_data) {
+		con.query("select * from booking;", (err, booking_data) => {
+			con.query("select * from events;", (err, events_data) => {
 				res.render("dashboard_facility_card", {
 					res: req.session.user,
 					booking_data,
@@ -116,8 +116,8 @@ app.get("/dashboard_facility_card", (req, res) => {
 });
 app.get("/dashboard_facility_table", (req, res) => {
 	if (req.session.user) {
-		con.query("select * from booking;", function(err, booking_data) {
-			con.query("select * from events;", function(err, events_data) {
+		con.query("select * from booking;", (err, booking_data) => {
+			con.query("select * from events;", (err, events_data) => {
 				res.render("dashboard_facility_table", {
 					res: req.session.user,
 					booking_data,
@@ -138,21 +138,17 @@ app.get("/request", (req, res) => {
 });
 app.get("/requestUpdate", (req, res) => {
 	if (req.session.user) {
-		con.query("select * from booking where id=4;", function(
-			err,
-			booking_data
-		) {
-			con.query("select * from events where id=30;", function(
-				err,
-				events_data
-			) {
-				console.log({ booking_data }, { events_data });
-				res.render("requestUpdate", {
-					res: req.session.user,
-					booking_data,
-					events_data
-				});
-			});
+		con.query("select * from booking where id=4;", (err, booking_data) => {
+			con.query(
+				"select * from events where id=30;",
+				(err, events_data) => {
+					res.render("requestUpdate", {
+						res: req.session.user,
+						booking_data,
+						events_data
+					});
+				}
+			);
 		});
 	} else {
 		res.redirect("/login");
@@ -169,7 +165,7 @@ app.post("/onLogin", (req, res) => {
 	var password = req.body.password;
 	con.query(
 		"select * from users where username='" + username + "';",
-		function(err, rows) {
+		(err, rows) => {
 			if (!err) {
 				if (rows.length > 0) {
 					if (
@@ -202,7 +198,8 @@ app.post("/onLogin", (req, res) => {
 app.post("/checkAvailability", (req, res) => {
 	if (req.session.user) {
 		con.query(
-			`SELECT slot_hall FROM booking WHERE event_id IN (SELECT id FROM events WHERE date_wanted = '${req.body.date_wanted}')`,
+			"SELECT slot_hall FROM booking WHERE event_id IN (SELECT id FROM events WHERE date_wanted = ?)",
+			req.body.date_wanted,
 			(err, result) => {
 				if (!err) {
 					res.send(result);
@@ -247,7 +244,7 @@ app.post("/makeRequest", (req, res) => {
 				con.query(
 					"select id from events WHERE user_id= ? ORDER BY id DESC LIMIT 1",
 					req.session.user.id,
-					function(err, event_id) {
+					(err, event_id) => {
 						if (!err) {
 							var booking_obj = {
 								user_id: user_id,
