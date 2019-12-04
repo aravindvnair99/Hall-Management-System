@@ -64,14 +64,12 @@ app.get('/dashboard', (req, res) => {
 	if (req.session.user) {
 		if (req.session.user.role === 'teacher') {
 			con.query(
-				"select * from booking where user_id='" +
-					req.session.user.id +
-					"';",
+				'select * from booking where user_id= ?',
+				req.session.user.id,
 				function(err, booking_data) {
 					con.query(
-						"select * from events where user_id='" +
-							req.session.user.id +
-							"';",
+						'select * from events where user_id= ?',
+						req.session.user.id,
 						function(err, events_data) {
 							res.render('dashboard_teacher', {
 								res: req.session.user,
@@ -221,13 +219,12 @@ app.post('/makeRequest', (req, res) => {
 			date_wanted: date_wanted,
 			user_id: user_id
 		};
-		con.query('insert into events set ?', event_obj, (err) => {
+		con.query('insert into events set ?', event_obj, err => {
 			if (!err) {
 				console.log(`Inserted ${event_obj.title} into events.`);
 				con.query(
-					"select id from events WHERE user_id='" +
-						req.session.user.id +
-						"' ORDER BY id DESC LIMIT 1;",
+					'select id from events WHERE user_id= ? ORDER BY id DESC LIMIT 1',
+					req.session.user.id,
 					function(err, event_id) {
 						if (!err) {
 							var booking_obj = {
@@ -238,7 +235,7 @@ app.post('/makeRequest', (req, res) => {
 							con.query(
 								'insert into booking set ?',
 								booking_obj,
-								(err) => {
+								err => {
 									if (!err) {
 										console.log(
 											`Inserted event with id ${booking_obj.event_id} into booking.`
@@ -283,21 +280,18 @@ app.post('/updateBooking', (req, res) => {
 app.post('/deleteBooking', (req, res) => {
 	if (req.session.user) {
 		con.query(
-			"select event_id from booking where id ='" +
-				req.body.booking_id +
-				"';",
+			'select event_id from booking where id = ?',
+			req.body.booking_id,
 			(err, result) => {
 				if (result) {
 					con.query(
-						"delete from events where id ='" +
-							result[0].event_id +
-							"';",
-						(err) => {
+						'delete from events where id = ?',
+						result[0].event_id,
+						err => {
 							if (!err) {
 								con.query(
-									"delete from booking where id ='" +
-										req.body.booking_id +
-										"';",
+									'delete from booking where id =?',
+									req.body.booking_id,
 									(err, result) => {
 										if (!err) {
 											console.log(
@@ -323,9 +317,8 @@ app.post('/updateStatus', (req, res) => {
 	if (req.session.user) {
 		if (req.body.type === 'approve') {
 			con.query(
-				"update booking set status='Approved' where id ='" +
-					req.body.booking_id +
-					"';",
+				'update booking set status="Approved" where id = ?',
+				req.body.booking_id,
 				(err, result) => {
 					if (!err) {
 						console.log(`${req.body.booking_id} is approved`);
@@ -335,9 +328,8 @@ app.post('/updateStatus', (req, res) => {
 			);
 		} else if (req.body.type === 'reject') {
 			con.query(
-				"update booking set status='Rejected' where id ='" +
-					req.body.booking_id +
-					"';",
+				'update booking set status="Rejected" where id = ?',
+				req.body.booking_id,
 				(err, result) => {
 					if (!err) {
 						console.log(`${req.body.booking_id} is rejected`);
