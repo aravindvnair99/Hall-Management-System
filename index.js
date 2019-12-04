@@ -136,6 +136,28 @@ app.get("/request", (req, res) => {
 		res.redirect("/login");
 	}
 });
+app.get("/requestUpdate", (req, res) => {
+	if (req.session.user) {
+		con.query("select * from booking where id=4;", function(
+			err,
+			booking_data
+		) {
+			con.query("select * from events where id=30;", function(
+				err,
+				events_data
+			) {
+				console.log({ booking_data }, { events_data });
+				res.render("requestUpdate", {
+					res: req.session.user,
+					booking_data,
+					events_data
+				});
+			});
+		});
+	} else {
+		res.redirect("/login");
+	}
+});
 app.get("/logout", (req, res) => {
 	res.clearCookie("session", {
 		path: "/"
