@@ -92,7 +92,7 @@
 											class="datepicker"
 											name="date_wanted"
 											required
-											value="<%=events_data[0].date_wanted %>"
+											value="<%=eventsData[0].date_wanted %>"
 										/>
 										<label>Choose a date</label>
 									</div>
@@ -105,7 +105,7 @@
 											name="club_name"
 											type="text"
 											required
-											value="<%= events_data[0].club %>"
+											value="<%= eventsData[0].club %>"
 										/>
 										<label for="club_name">Club Name</label>
 									</div>
@@ -117,7 +117,7 @@
 											type="text"
 											name="desc"
 											required
-											value="<%= events_data[0].details %>"
+											value="<%= eventsData[0].details %>"
 										/>
 										<label for="desc">Description</label>
 									</div>
@@ -129,7 +129,7 @@
 											type="text"
 											name="event_name"
 											required
-											value="<%= events_data[0].title %>"
+											value="<%= eventsData[0].title %>"
 										/>
 										<label for="event_name"
 											>Event Name</label
@@ -143,7 +143,7 @@
 											type="text"
 											name="requirements"
 											required
-											value="<%= events_data[0].details %>"
+											value="<%= eventsData[0].details %>"
 										/>
 										<label for="requirements"
 											>Requirements</label
@@ -196,13 +196,13 @@
 			});
 			for (
 				var i = 0;
-				i <= `<%=booking_data[0].slot_hall %>`.length;
+				i <= `<%=bookingData[0].slotHall %>`.length;
 				i += 2
 			) {
 				$(
 					"#" +
-						`<%=booking_data[0].slot_hall %>`[i].toString() +
-						`<%=booking_data[0].slot_hall %>`[i + 1].toString()
+						`<%=bookingData[0].slotHall %>`[i].toString() +
+						`<%=bookingData[0].slotHall %>`[i + 1].toString()
 				).toggleClass("not_available");
 			}
 			$("#date_wanted").change(function() {
@@ -231,12 +231,12 @@
 							data.forEach(element => {
 								for (
 									let i = 0;
-									i < element.slot_hall.toString().length;
+									i < element.slotHall.toString().length;
 									i += 2
 								) {
 									not_available.push(
-										element.slot_hall.toString().charAt(i) +
-											element.slot_hall
+										element.slotHall.toString().charAt(i) +
+											element.slotHall
 												.toString()
 												.charAt(i + 1)
 									);
@@ -290,11 +290,11 @@
 										for (
 											let i = 0;
 											i <
-											element.slot_hall.toString().length;
+											element.slotHall.toString().length;
 											i += 2
 										) {
 											slot.push(
-												element.slot_hall
+												element.slotHall
 													.toString()
 													.charAt(i)
 											);
@@ -302,13 +302,13 @@
 										for (
 											let i = 1;
 											i <
-											element.slot_hall.toString()
+											element.slotHall.toString()
 												.length -
 												1;
 											i += 2
 										) {
 											hall.push(
-												element.slot_hall
+												element.slotHall
 													.toString()
 													.charAt(i)
 											);
