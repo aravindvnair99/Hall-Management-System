@@ -6,8 +6,15 @@ const express = require("express"),
 	cookieSession = require("cookie-session"),
 	mysql = require("mysql"),
 	AES = require("mysql-aes"),
-	morgan = require("morgan");
+	morgan = require("morgan"),
+	RateLimit = require("express-rate-limit");
 dotenv.config();
+app.use(
+	new RateLimit({
+		windowMs: 1 * 60 * 1000, // 1 minute
+		max: 15
+	})
+);
 app.use(morgan("dev"));
 app.use(
 	cookieSession({
