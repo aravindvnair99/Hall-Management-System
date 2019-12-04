@@ -71,29 +71,29 @@ app.get("/dashboard", (req, res) => {
 	if (req.session.user) {
 		if (req.session.user.role === "teacher") {
 			con.query(
-				"select * from booking where user_id= ?",
+				"select * from booking where userID= ?",
 				req.session.user.id,
-				(err, booking_data) => {
+				(err, bookingData) => {
 					con.query(
-						"select * from events where user_id= ?",
+						"select * from events where userID= ?",
 						req.session.user.id,
-						(err, events_data) => {
+						(err, eventsData) => {
 							res.render("dashboard_teacher", {
 								res: req.session.user,
-								booking_data,
-								events_data
+								bookingData,
+								eventsData
 							});
 						}
 					);
 				}
 			);
 		} else if (req.session.user.role === "dean") {
-			con.query("select * from booking;", (err, booking_data) => {
-				con.query("select * from events;", (err, events_data) => {
+			con.query("select * from booking;", (err, bookingData) => {
+				con.query("select * from events;", (err, eventsData) => {
 					res.render("dashboard_dean", {
 						res: req.session.user,
-						booking_data,
-						events_data
+						bookingData,
+						eventsData
 					});
 				});
 			});
@@ -108,12 +108,12 @@ app.get("/dashboard", (req, res) => {
 });
 app.get("/dashboard_facility_card", (req, res) => {
 	if (req.session.user) {
-		con.query("select * from booking;", (err, booking_data) => {
-			con.query("select * from events;", (err, events_data) => {
+		con.query("select * from booking;", (err, bookingData) => {
+			con.query("select * from events;", (err, eventsData) => {
 				res.render("dashboard_facility_card", {
 					res: req.session.user,
-					booking_data,
-					events_data
+					bookingData,
+					eventsData
 				});
 			});
 		});
@@ -123,12 +123,12 @@ app.get("/dashboard_facility_card", (req, res) => {
 });
 app.get("/dashboard_facility_table", (req, res) => {
 	if (req.session.user) {
-		con.query("select * from booking;", (err, booking_data) => {
-			con.query("select * from events;", (err, events_data) => {
+		con.query("select * from booking;", (err, bookingData) => {
+			con.query("select * from events;", (err, eventsData) => {
 				res.render("dashboard_facility_table", {
 					res: req.session.user,
-					booking_data,
-					events_data
+					bookingData,
+					eventsData
 				});
 			});
 		});
@@ -145,14 +145,14 @@ app.get("/request", (req, res) => {
 });
 app.get("/requestUpdate", (req, res) => {
 	if (req.session.user) {
-		con.query("select * from booking where id=4;", (err, booking_data) => {
+		con.query("select * from booking where id=4;", (err, bookingData) => {
 			con.query(
 				"select * from events where id=30;",
-				(err, events_data) => {
+				(err, eventsData) => {
 					res.render("requestUpdate", {
 						res: req.session.user,
-						booking_data,
-						events_data
+						bookingData,
+						eventsData
 					});
 				}
 			);
@@ -184,19 +184,19 @@ app.post("/onLogin", (req, res) => {
 					} else {
 						console.log("Invalid password");
 						res.status(401).render("error", {
-							error_message: "Authentication error!"
+							errorMessage: "Authentication error!"
 						});
 					}
 				} else {
 					console.log("Username not found!");
 					res.status(401).render("error", {
-						error_message: "Authentication error!"
+						errorMessage: "Authentication error!"
 					});
 				}
 			} else {
 				console.log("Username not found!");
 				res.status(401).render("error", {
-					error_message: "Authentication error!"
+					errorMessage: "Authentication error!"
 				});
 			}
 		}
@@ -205,7 +205,7 @@ app.post("/onLogin", (req, res) => {
 app.post("/checkAvailability", (req, res) => {
 	if (req.session.user) {
 		con.query(
-			"SELECT slot_hall FROM booking WHERE event_id IN (SELECT id FROM events WHERE date_wanted = ?)",
+			"SELECT slotHall FROM booking WHERE event_id IN (SELECT id FROM events WHERE date_wanted = ?)",
 			req.body.date_wanted,
 			(err, result) => {
 				if (!err) {
@@ -213,7 +213,7 @@ app.post("/checkAvailability", (req, res) => {
 				} else {
 					console.log(err);
 					res.status(500).render("error", {
-						error_message: "Availability checking failed!"
+						errorMessage: "Availability checking failed!"
 					});
 				}
 			}
@@ -224,13 +224,13 @@ app.post("/checkAvailability", (req, res) => {
 });
 app.post("/makeRequest", (req, res) => {
 	if (req.session.user) {
-		var user_id = req.session.user.id;
+		var userID = req.session.user.id;
 		var date_wanted = req.body.date_wanted;
-		var slot_hall = "";
+		var slotHall = "";
 		for (var i = 1; i <= 7; i++)
 			for (var j = 1; j <= 9; j++) {
 				if (req.body[`cell${j}${i}`]) {
-					slot_hall += j.toString() + i.toString();
+					slotHall += j.toString() + i.toString();
 				}
 			}
 		var club = req.body.club_name;
@@ -243,20 +243,20 @@ app.post("/makeRequest", (req, res) => {
 			requirements: requirements,
 			details: details,
 			date_wanted: date_wanted,
-			user_id: user_id
+			userID: userID
 		};
 		con.query("insert into events set ?", event_obj, err => {
 			if (!err) {
 				console.log(`Inserted ${event_obj.title} into events.`);
 				con.query(
-					"select id from events WHERE user_id= ? ORDER BY id DESC LIMIT 1",
+					"select id from events WHERE userID= ? ORDER BY id DESC LIMIT 1",
 					req.session.user.id,
 					(err, event_id) => {
 						if (!err) {
 							var booking_obj = {
-								user_id: user_id,
+								userID: userID,
 								event_id: event_id[0].id,
-								slot_hall: slot_hall
+								slotHall: slotHall
 							};
 							con.query(
 								"insert into booking set ?",
@@ -270,7 +270,7 @@ app.post("/makeRequest", (req, res) => {
 									} else {
 										console.log(err);
 										res.status(500).render("error", {
-											error_message:
+											errorMessage:
 												"Inserting into booking failed!"
 										});
 									}
@@ -279,7 +279,7 @@ app.post("/makeRequest", (req, res) => {
 						} else {
 							console.log(err);
 							res.status(500).render("error", {
-								error_message: "Retrieving event_id failed!"
+								errorMessage: "Retrieving event_id failed!"
 							});
 						}
 					}
@@ -287,7 +287,7 @@ app.post("/makeRequest", (req, res) => {
 			} else {
 				console.log(err);
 				res.status(500).render("error", {
-					error_message: "Inserting into event failed!"
+					errorMessage: "Inserting into event failed!"
 				});
 			}
 		});
@@ -366,7 +366,7 @@ app.post("/updateStatus", (req, res) => {
 		} else {
 			console.log(`${req.body.booking_id} status update failed.`);
 			res.status(500).render("error", {
-				error_message: "Status Update failed!"
+				errorMessage: "Status Update failed!"
 			});
 		}
 	} else {
@@ -375,6 +375,6 @@ app.post("/updateStatus", (req, res) => {
 });
 app.use((req, res) => {
 	res.status(404).render("error", {
-		error_message: "404!"
+		errorMessage: "404!"
 	});
 });

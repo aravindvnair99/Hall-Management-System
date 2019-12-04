@@ -215,12 +215,12 @@
 							data.forEach(element => {
 								for (
 									let i = 0;
-									i < element.slot_hall.toString().length;
+									i < element.slotHall.toString().length;
 									i += 2
 								) {
 									not_available.push(
-										element.slot_hall.toString().charAt(i) +
-											element.slot_hall
+										element.slotHall.toString().charAt(i) +
+											element.slotHall
 												.toString()
 												.charAt(i + 1)
 									);
@@ -274,11 +274,11 @@
 										for (
 											let i = 0;
 											i <
-											element.slot_hall.toString().length;
+											element.slotHall.toString().length;
 											i += 2
 										) {
 											slot.push(
-												element.slot_hall
+												element.slotHall
 													.toString()
 													.charAt(i)
 											);
@@ -286,13 +286,13 @@
 										for (
 											let i = 1;
 											i <
-											element.slot_hall.toString()
+											element.slotHall.toString()
 												.length -
 												1;
 											i += 2
 										) {
 											hall.push(
-												element.slot_hall
+												element.slotHall
 													.toString()
 													.charAt(i)
 											);
