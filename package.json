@@ -44,6 +44,7 @@
 		"dotenv": "^8.2.0",
 		"ejs": "^3.0.1",
 		"express": "^4.17.1",
+		"express-rate-limit": "^5.0.0",
 		"morgan": "^1.9.1",
 		"mysql": "^2.17.1",
 		"mysql-aes": "^0.0.1"
