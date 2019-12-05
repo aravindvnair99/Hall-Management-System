@@ -294,9 +294,70 @@ app.post("/makeRequest", (req, res) => {
 	}
 });
 app.post("/updateBooking", (req, res) => {
+	//need to fix
 	if (req.session.user) {
-		console.log("updateRequest");
-		res.status(500).send("Need to add. Contact Aravind.");
+		var slotHall = "";
+		for (var i = 1; i <= 7; i++) {
+			for (var j = 1; j <= 9; j++) {
+				if (req.body[`cell${j}${i}`]) {
+					slotHall += j.toString() + i.toString();
+				}
+			}
+		}
+		var eventPayload = {
+			title: req.body.event_name,
+			club: req.body.clubName,
+			requirements: req.body.requirements,
+			details: req.body.desc,
+			dateWanted: req.body.dateWanted,
+			userID: req.session.user.id
+		};
+		con.query("insert into events set ?", eventPayload, (err) => {
+			if (!err) {
+				console.log(`Inserted ${eventPayload.title} into events.`);
+				con.query(
+					"select id from events WHERE userID= ? ORDER BY id DESC LIMIT 1",
+					req.session.user.id,
+					(err, eventID) => {
+						if (!err) {
+							var bookingPayload = {
+								userID: req.session.user.id,
+								eventID: eventID[0].id,
+								slotHall
+							};
+							con.query(
+								"insert into booking set ?",
+								bookingPayload,
+								(err) => {
+									if (!err) {
+										console.log(
+											`Inserted event with id ${bookingPayload.eventID} into booking.`
+										);
+										res.redirect("/dashboard");
+									} else {
+										console.log(err);
+										res.status(500).render("error", {
+											errorMessage:
+												"Inserting into booking failed!"
+										});
+									}
+								}
+							);
+						} else {
+							console.log(err);
+							res.status(500).render("error", {
+								errorMessage: "Retrieving eventID failed!"
+							});
+						}
+					}
+				);
+			} else {
+				console.log(err);
+				res.status(500).render("error", {
+					errorMessage: "Inserting into event failed!"
+				});
+			}
+		});
 	} else {
 		res.redirect("/login");
 	}
