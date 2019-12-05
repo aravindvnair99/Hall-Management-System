@@ -254,7 +254,7 @@ app.post("/makeRequest", (req, res) => {
 							var bookingPayload = {
 								userID: req.session.user.id,
 								eventID: eventID[0].id,
-								slotHall: slotHall
+								slotHall
 							};
 							con.query(
 								"insert into booking set ?",
