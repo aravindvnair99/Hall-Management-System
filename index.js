@@ -205,8 +205,8 @@ app.post("/onLogin", (req, res) => {
 app.post("/checkAvailability", (req, res) => {
 	if (req.session.user) {
 		con.query(
-			"SELECT slotHall FROM booking WHERE event_id IN (SELECT id FROM events WHERE date_wanted = ?)",
-			req.body.date_wanted,
+			"SELECT slotHall FROM booking WHERE eventID IN (SELECT id FROM events WHERE dateWanted = ?)",
+			req.body.dateWanted,
 			(err, result) => {
 				if (!err) {
 					res.send(result);
@@ -225,7 +225,7 @@ app.post("/checkAvailability", (req, res) => {
 app.post("/makeRequest", (req, res) => {
 	if (req.session.user) {
 		var userID = req.session.user.id;
-		var date_wanted = req.body.date_wanted;
+		var dateWanted = req.body.dateWanted;
 		var slotHall = "";
 		for (var i = 1; i <= 7; i++)
 			for (var j = 1; j <= 9; j++) {
@@ -242,7 +242,7 @@ app.post("/makeRequest", (req, res) => {
 			club: club,
 			requirements: requirements,
 			details: details,
-			date_wanted: date_wanted,
+			dateWanted: dateWanted,
 			userID: userID
 		};
 		con.query("insert into events set ?", event_obj, err => {
@@ -251,11 +251,11 @@ app.post("/makeRequest", (req, res) => {
 				con.query(
 					"select id from events WHERE userID= ? ORDER BY id DESC LIMIT 1",
 					req.session.user.id,
-					(err, event_id) => {
+					(err, eventID) => {
 						if (!err) {
 							var booking_obj = {
 								userID: userID,
-								event_id: event_id[0].id,
+								eventID: eventID[0].id,
 								slotHall: slotHall
 							};
 							con.query(
@@ -264,7 +264,7 @@ app.post("/makeRequest", (req, res) => {
 								err => {
 									if (!err) {
 										console.log(
-											`Inserted event with id ${booking_obj.event_id} into booking.`
+											`Inserted event with id ${booking_obj.eventID} into booking.`
 										);
 										res.redirect("/dashboard");
 									} else {
@@ -279,7 +279,7 @@ app.post("/makeRequest", (req, res) => {
 						} else {
 							console.log(err);
 							res.status(500).render("error", {
-								errorMessage: "Retrieving event_id failed!"
+								errorMessage: "Retrieving eventID failed!"
 							});
 						}
 					}
@@ -306,13 +306,13 @@ app.post("/updateBooking", (req, res) => {
 app.post("/deleteBooking", (req, res) => {
 	if (req.session.user) {
 		con.query(
-			"select event_id from booking where id = ?",
+			"select eventID from booking where id = ?",
 			req.body.booking_id,
 			(err, result) => {
 				if (result) {
 					con.query(
 						"delete from events where id = ?",
-						result[0].event_id,
+						result[0].eventID,
 						err => {
 							if (!err) {
 								con.query(

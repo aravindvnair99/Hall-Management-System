@@ -87,10 +87,10 @@
 								<div class="container">
 									<div class="input-field col s12">
 										<input
-											id="date_wanted"
+											id="dateWanted"
 											type="text"
 											class="datepicker"
-											name="date_wanted"
+											name="dateWanted"
 											required
 										/>
 										<label>Choose a date</label>
@@ -189,9 +189,9 @@
 				maxDate: new Date(new Date(Date.now() + 90 * 86400000)),
 				format: 'yyyy/mm/dd'
 			});
-			$('#date_wanted').change(function() {
+			$('#dateWanted').change(function() {
 				var payload = {
-					date_wanted: document.getElementById('date_wanted').value,
+					dateWanted: document.getElementById('dateWanted').value,
 					slot_id: $(this)
 						.attr('id')
 						.charAt(0)
@@ -249,7 +249,7 @@
 						.attr('id')
 						.charAt(1);
 					var payload = {
-						date_wanted: document.getElementById('date_wanted')
+						dateWanted: document.getElementById('dateWanted')
 							.value
 					};
 					fetch('/checkAvailability', {

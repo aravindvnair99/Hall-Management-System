@@ -65,7 +65,7 @@
 					>account_box</i
 				>
 				<span style="color:black;font-size: 30px"
-					>Welcome <%= res.first_name %> <%= res.last_name %>!
+					>Welcome <%= res.firstName %> <%= res.lastName %>!
 				</span></b
 			>
 		</div>
@@ -82,8 +82,8 @@
 							<b>Booking ID:</b> <%= bookingData[i].id %>
 							<br />
 							<b>Date requested:</b> <%=
-							bookingData[i].date_req.toDateString() + ' ' +
-							bookingData[i].date_req.toLocaleTimeString() %>
+							bookingData[i].dateRequested.toDateString() + ' ' +
+							bookingData[i].dateRequested.toLocaleTimeString() %>
 							<br />
 							<b>Club:</b> <%= eventsData[i].club %>
 							<br />
@@ -105,11 +105,11 @@
 						<b>User ID:</b> <%= bookingData[i].userID %>
 						<br />
 						<b>Date requested:</b> <%=
-						bookingData[i].date_req.toDateString() + ' ' +
-						bookingData[i].date_req.toLocaleTimeString() %>
+						bookingData[i].dateRequested.toDateString() + ' ' +
+						bookingData[i].dateRequested.toLocaleTimeString() %>
 						<br />
 						<b>Date wanted:</b> <%=
-						eventsData[i].date_wanted.toDateString() %>
+						eventsData[i].dateWanted.toDateString() %>
 						<br />
 						<b>Title:</b> <%= eventsData[i].title %>
 						<br />
