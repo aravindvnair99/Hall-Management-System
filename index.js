@@ -321,7 +321,7 @@ app.post("/onRequestUpdate", (req, res) => {
 		con.query(
 			"update events set ? where id = ?",
 			eventPayload,
-			req.body.booking_id,
+			req.body.bookingID,
 			(err) => {
 				if (!err) {
 					console.log(`Updated event with id ${req.body.eventID}.`);
@@ -342,7 +342,7 @@ app.post("/deleteBooking", (req, res) => {
 	if (req.session.user) {
 		con.query(
 			"select eventID from booking where id = ?",
-			req.body.booking_id,
+			req.body.bookingID,
 			(err, result) => {
 				if (result) {
 					con.query(
@@ -352,11 +352,11 @@ app.post("/deleteBooking", (req, res) => {
 							if (!err) {
 								con.query(
 									"delete from booking where id =?",
-									req.body.booking_id,
+									req.body.bookingID,
 									(err, result) => {
 										if (!err) {
 											console.log(
-												`${req.body.booking_id} is deleted`
+												`${req.body.bookingID} is deleted`
 											);
 											res.send(JSON.stringify(result));
 										} else {
@@ -383,10 +383,10 @@ app.post("/updateStatus", (req, res) => {
 		if (req.body.type === "approve") {
 			con.query(
 				"update booking set status='Approved' where id = ?",
-				req.body.booking_id,
+				req.body.bookingID,
 				(err, result) => {
 					if (!err) {
-						console.log(`${req.body.booking_id} is approved`);
+						console.log(`${req.body.bookingID} is approved`);
 						res.send(JSON.stringify(result));
 					} else {
 						res.send(JSON.stringify(err.code));
@@ -396,10 +396,10 @@ app.post("/updateStatus", (req, res) => {
 		} else if (req.body.type === "reject") {
 			con.query(
 				"update booking set status='Rejected' where id = ?",
-				req.body.booking_id,
+				req.body.bookingID,
 				(err, result) => {
 					if (!err) {
-						console.log(`${req.body.booking_id} is rejected`);
+						console.log(`${req.body.bookingID} is rejected`);
 						res.send(JSON.stringify(result));
 					} else {
 						res.send(JSON.stringify(err.code));
@@ -407,7 +407,7 @@ app.post("/updateStatus", (req, res) => {
 				}
 			);
 		} else {
-			console.log(`${req.body.booking_id} status update failed.`);
+			console.log(`${req.body.bookingID} status update failed.`);
 			res.status(500).render("error", {
 				errorMessage: "Status Update failed!"
 			});

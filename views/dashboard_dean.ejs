@@ -163,7 +163,7 @@
 					type: $(this)
 						.attr('id')
 						.includes('approve')?"approve":"reject",
-					booking_id: $(this)
+					bookingID: $(this)
 						.attr('id')
 						.includes('approve')?$(this).attr('id').replace('approve', ''): $(this).attr('id').replace('reject', '')
 					
@@ -196,7 +196,7 @@
 			});
 			$('[name="deleteBooking"]').click(function() {
 				var payload = {
-					booking_id: $(this)
+					bookingID: $(this)
 						.attr('id')
 						.replace('delete', '')
 				};
