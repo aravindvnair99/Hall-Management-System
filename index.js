@@ -11,7 +11,7 @@ const express = require("express"),
 dotenv.config();
 app.use(
 	new RateLimit({
-		windowMs: 1 * 60 * 1000, // 1 minute
+		windowMs: 15 * 1000, // 15 seconds
 		max: 15
 	})
 );
@@ -60,12 +60,16 @@ const con = mysql.createPool({
 app.get("/", (req, res) => {
 	if (req.session.user) {
 		res.redirect("/dashboard");
-	} else res.render("index");
+	} else {
+		res.render("index");
+	}
 });
 app.get("/login", (req, res) => {
 	if (req.session.user) {
 		res.redirect("/dashboard");
-	} else res.render("login");
+	} else {
+		res.render("login");
+	}
 });
 app.get("/dashboard", (req, res) => {
 	if (req.session.user) {
@@ -324,14 +328,19 @@ app.post("/deleteBooking", (req, res) => {
 												`${req.body.booking_id} is deleted`
 											);
 											res.send(JSON.stringify(result));
-										} else
+										} else {
 											res.send(JSON.stringify(err.code));
+										}
 									}
 								);
-							} else res.send(JSON.stringify(err.code));
+							} else {
+								res.send(JSON.stringify(err.code));
+							}
 						}
 					);
-				} else res.send(JSON.stringify(err.code));
+				} else {
+					res.send(JSON.stringify(err.code));
+				}
 			}
 		);
 	} else {
@@ -349,7 +358,9 @@ app.post("/updateStatus", (req, res) => {
 					if (!err) {
 						console.log(`${req.body.booking_id} is approved`);
 						res.send(JSON.stringify(result));
-					} else res.send(JSON.stringify(err.code));
+					} else {
+						res.send(JSON.stringify(err.code));
+					}
 				}
 			);
 		} else if (req.body.type === "reject") {
@@ -360,7 +371,9 @@ app.post("/updateStatus", (req, res) => {
 					if (!err) {
 						console.log(`${req.body.booking_id} is rejected`);
 						res.send(JSON.stringify(result));
-					} else res.send(JSON.stringify(err.code));
+					} else {
+						res.send(JSON.stringify(err.code));
+					}
 				}
 			);
 		} else {
