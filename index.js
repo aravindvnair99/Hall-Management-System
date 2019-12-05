@@ -251,18 +251,18 @@ app.post("/makeRequest", (req, res) => {
 					req.session.user.id,
 					(err, eventID) => {
 						if (!err) {
-							var booking_obj = {
+							var bookingPayload = {
 								userID: req.session.user.id,
 								eventID: eventID[0].id,
 								slotHall: slotHall
 							};
 							con.query(
 								"insert into booking set ?",
-								booking_obj,
+								bookingPayload,
 								(err) => {
 									if (!err) {
 										console.log(
-											`Inserted event with id ${booking_obj.eventID} into booking.`
+											`Inserted event with id ${bookingPayload.eventID} into booking.`
 										);
 										res.redirect("/dashboard");
 									} else {
