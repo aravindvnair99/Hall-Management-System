@@ -345,7 +345,7 @@ app.post("/updateStatus", (req, res) => {
 	if (req.session.user) {
 		if (req.body.type === "approve") {
 			con.query(
-				'update booking set status="Approved" where id = ?',
+				"update booking set status='Approved' where id = ?",
 				req.body.booking_id,
 				(err, result) => {
 					if (!err) {
@@ -358,7 +358,7 @@ app.post("/updateStatus", (req, res) => {
 			);
 		} else if (req.body.type === "reject") {
 			con.query(
-				'update booking set status="Rejected" where id = ?',
+				"update booking set status='Rejected' where id = ?",
 				req.body.booking_id,
 				(err, result) => {
 					if (!err) {
