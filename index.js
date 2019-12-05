@@ -241,7 +241,7 @@ app.post("/makeRequest", (req, res) => {
 		var details = req.body.desc;
 		var title = req.body.event_name;
 		var requirements = req.body.requirements;
-		var event_obj = {
+		var eventPayload = {
 			title: title,
 			club: club,
 			requirements: requirements,
@@ -249,9 +249,9 @@ app.post("/makeRequest", (req, res) => {
 			dateWanted: dateWanted,
 			userID: userID
 		};
-		con.query("insert into events set ?", event_obj, err => {
+		con.query("insert into events set ?", eventPayload, err => {
 			if (!err) {
-				console.log(`Inserted ${event_obj.title} into events.`);
+				console.log(`Inserted ${eventPayload.title} into events.`);
 				con.query(
 					"select id from events WHERE userID= ? ORDER BY id DESC LIMIT 1",
 					req.session.user.id,
