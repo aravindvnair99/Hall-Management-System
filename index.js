@@ -151,8 +151,14 @@ app.get("/requestUpdate", (req, res) => {
 	if (req.session.user) {
 		con.query("select * from booking where id=4;", (err, bookingData) => {
 			con.query(
-				"select * from events where id=30;",
+				"select * from events where id=31;",
 				(err, eventsData) => {
+					eventsData[0].dateWanted =
+						eventsData[0].dateWanted.getFullYear() +
+						"/" +
+						eventsData[0].dateWanted.getMonth() +
+						"/" +
+						eventsData[0].dateWanted.getDate();
 					res.render("requestUpdate", {
 						res: req.session.user,
 						bookingData,
@@ -293,17 +299,16 @@ app.post("/makeRequest", (req, res) => {
 		res.redirect("/login");
 	}
 });
-app.post("/updateBooking", (req, res) => {
-	//need to fix
+app.post("/onRequestUpdate", (req, res) => {
 	if (req.session.user) {
-		var slotHall = "";
-		for (var i = 1; i <= 7; i++) {
-			for (var j = 1; j <= 9; j++) {
-				if (req.body[`cell${j}${i}`]) {
-					slotHall += j.toString() + i.toString();
-				}
-			}
-		}
+		// var slotHall = "";
+		// for (var i = 1; i <= 7; i++) {
+		// 	for (var j = 1; j <= 9; j++) {
+		// 		if (req.body[`cell${j}${i}`]) {
+		// 			slotHall += j.toString() + i.toString();
+		// 		}
+		// 	}
+		// }
 		var eventPayload = {
 			title: req.body.event_name,
 			club: req.body.clubName,
@@ -312,52 +317,23 @@ app.post("/updateBooking", (req, res) => {
 			dateWanted: req.body.dateWanted,
 			userID: req.session.user.id
 		};
-		con.query("insert into events set ?", eventPayload, (err) => {
-			if (!err) {
-				console.log(`Inserted ${eventPayload.title} into events.`);
-				con.query(
-					"select id from events WHERE userID= ? ORDER BY id DESC LIMIT 1",
-					req.session.user.id,
-					(err, eventID) => {
-						if (!err) {
-							var bookingPayload = {
-								userID: req.session.user.id,
-								eventID: eventID[0].id,
-								slotHall
-							};
-							con.query(
-								"insert into booking set ?",
-								bookingPayload,
-								(err) => {
-									if (!err) {
-										console.log(
-											`Inserted event with id ${bookingPayload.eventID} into booking.`
-										);
-										res.redirect("/dashboard");
-									} else {
-										console.log(err);
-										res.status(500).render("error", {
-											errorMessage:
-												"Inserting into booking failed!"
-										});
-									}
-								}
-							);
-						} else {
-							console.log(err);
-							res.status(500).render("error", {
-								errorMessage: "Retrieving eventID failed!"
-							});
-						}
-					}
-				);
-			} else {
-				console.log(err);
-				res.status(500).render("error", {
-					errorMessage: "Inserting into event failed!"
-				});
+		console.log({eventPayload}, req.body.bookingID)
+		con.query(
+			"update events set ? where id = ?",
+			eventPayload,
+			req.body.booking_id,
+			(err) => {
+				if (!err) {
+					console.log(`Updated event with id ${req.body.eventID}.`);
+					res.redirect("/dashboard");
+				} else {
+					console.log(err);
+					res.status(500).render("error", {
+						errorMessage: "Updating event failed!"
+					});
+				}
 			}
-		});
+		);
 	} else {
 		res.redirect("/login");
 	}
