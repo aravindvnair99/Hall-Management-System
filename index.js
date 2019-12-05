@@ -228,12 +228,13 @@ app.post("/checkAvailability", (req, res) => {
 app.post("/makeRequest", (req, res) => {
 	if (req.session.user) {
 		var slotHall = "";
-		for (var i = 1; i <= 7; i++)
+		for (var i = 1; i <= 7; i++) {
 			for (var j = 1; j <= 9; j++) {
 				if (req.body[`cell${j}${i}`]) {
 					slotHall += j.toString() + i.toString();
 				}
 			}
+		}
 		var eventPayload = {
 			title: req.body.event_name,
 			club: req.body.clubName,
@@ -242,7 +243,7 @@ app.post("/makeRequest", (req, res) => {
 			dateWanted: req.body.dateWanted,
 			userID: req.session.user.id
 		};
-		con.query("insert into events set ?", eventPayload, err => {
+		con.query("insert into events set ?", eventPayload, (err) => {
 			if (!err) {
 				console.log(`Inserted ${eventPayload.title} into events.`);
 				con.query(
@@ -258,7 +259,7 @@ app.post("/makeRequest", (req, res) => {
 							con.query(
 								"insert into booking set ?",
 								booking_obj,
-								err => {
+								(err) => {
 									if (!err) {
 										console.log(
 											`Inserted event with id ${booking_obj.eventID} into booking.`
@@ -310,7 +311,7 @@ app.post("/deleteBooking", (req, res) => {
 					con.query(
 						"delete from events where id = ?",
 						result[0].eventID,
-						err => {
+						(err) => {
 							if (!err) {
 								con.query(
 									"delete from booking where id =?",
