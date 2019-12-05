@@ -172,15 +172,14 @@ app.get("/logout", (req, res) => {
 	res.redirect("/login");
 });
 app.post("/onLogin", (req, res) => {
-	var username = req.body.username;
-	var password = req.body.password;
 	con.query(
-		"select * from users where username='" + username + "';",
+		"select * from users where username= ?",
+		req.body.username,
 		(err, rows) => {
 			if (!err) {
 				if (rows.length > 0) {
 					if (
-						password ===
+						req.body.password ===
 						AES.decrypt(rows[0].password, `${process.env.AES_key}`)
 					) {
 						req.session.user = rows[0];
@@ -228,8 +227,6 @@ app.post("/checkAvailability", (req, res) => {
 });
 app.post("/makeRequest", (req, res) => {
 	if (req.session.user) {
-		var userID = req.session.user.id;
-		var dateWanted = req.body.dateWanted;
 		var slotHall = "";
 		for (var i = 1; i <= 7; i++)
 			for (var j = 1; j <= 9; j++) {
@@ -237,17 +234,13 @@ app.post("/makeRequest", (req, res) => {
 					slotHall += j.toString() + i.toString();
 				}
 			}
-		var club = req.body.club_name;
-		var details = req.body.desc;
-		var title = req.body.event_name;
-		var requirements = req.body.requirements;
 		var eventPayload = {
-			title: title,
-			club: club,
-			requirements: requirements,
-			details: details,
-			dateWanted: dateWanted,
-			userID: userID
+			title: req.body.event_name,
+			club: req.body.clubName,
+			requirements: req.body.requirements,
+			details: req.body.desc,
+			dateWanted: req.body.dateWanted,
+			userID: req.session.user.id
 		};
 		con.query("insert into events set ?", eventPayload, err => {
 			if (!err) {
@@ -258,7 +251,7 @@ app.post("/makeRequest", (req, res) => {
 					(err, eventID) => {
 						if (!err) {
 							var booking_obj = {
-								userID: userID,
+								userID: req.session.user.id,
 								eventID: eventID[0].id,
 								slotHall: slotHall
 							};
@@ -348,7 +341,6 @@ app.post("/deleteBooking", (req, res) => {
 	}
 });
 app.post("/updateStatus", (req, res) => {
-	console.log(req.body.type);
 	if (req.session.user) {
 		if (req.body.type === "approve") {
 			con.query(
