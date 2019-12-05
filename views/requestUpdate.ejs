@@ -87,12 +87,12 @@
 								<div class="container">
 									<div class="input-field col s12">
 										<input
-											id="date_wanted"
+											id="dateWanted"
 											type="text"
 											class="datepicker"
-											name="date_wanted"
+											name="dateWanted"
 											required
-											value="<%=eventsData[0].date_wanted %>"
+											value="<%=eventsData[0].dateWanted %>"
 										/>
 										<label>Choose a date</label>
 									</div>
@@ -205,9 +205,9 @@
 						`<%=bookingData[0].slotHall %>`[i + 1].toString()
 				).toggleClass("not_available");
 			}
-			$("#date_wanted").change(function() {
+			$("#dateWanted").change(function() {
 				var payload = {
-					date_wanted: document.getElementById("date_wanted").value,
+					dateWanted: document.getElementById("dateWanted").value,
 					slot_id: $(this)
 						.attr("id")
 						.charAt(0)
@@ -265,7 +265,7 @@
 						.attr("id")
 						.charAt(1);
 					var payload = {
-						date_wanted: document.getElementById("date_wanted")
+						dateWanted: document.getElementById("dateWanted")
 							.value
 					};
 					fetch("/checkAvailability", {
