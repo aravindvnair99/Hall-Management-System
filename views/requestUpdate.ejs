@@ -77,9 +77,8 @@
 							<form
 								id="request_form"
 								class="col s12"
-								action="/makeRequest"
+								action="/onRequestUpdate"
 								method="post"
-								onsubmit="return validateForm()"
 							>
 								<div class="row">
 									<h3 class="center">Request Form</h3>
@@ -175,6 +174,8 @@
 									</button>
 								</div>
 								<br />
+								<input type="hidden" name="bookingID" value="`<%=bookingData[0].id %>`">
+								<input type="hidden" name="eventID" value="`<%=eventsData[0].id %>`">
 							</form>
 						</div>
 					</div>
@@ -348,18 +349,6 @@
 						}
 				return true;
 			});
-			function validateForm() {
-				var k = 0;
-				for (var i = 1; i <= 7; i++) {
-					for (var j = 1; j <= 9; j++) {
-						if ($("#" + j + i).hasClass("colour")) k++;
-					}
-				}
-				if (k == 0) {
-					alert("Please select at least one slot and hall.");
-					return false;
-				}
-			}
 		</script>
 	</body>
 </html>
