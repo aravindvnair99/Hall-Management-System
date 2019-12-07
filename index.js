@@ -149,21 +149,29 @@ app.get("/request", (req, res) => {
 });
 app.post("/requestUpdate", (req, res) => {
 	if (req.session.user) {
-		con.query("select * from booking where id=?;", req.body.bookingID, (err, bookingData) => {
-			con.query("select * from events where id=?;", req.body.eventID, (err, eventsData) => {
-				eventsData[0].dateWanted =
-					eventsData[0].dateWanted.getFullYear() +
-					"/" +
-					eventsData[0].dateWanted.getMonth() +
-					"/" +
-					eventsData[0].dateWanted.getDate();
-				res.render("requestUpdate", {
-					res: req.session.user,
-					bookingData,
-					eventsData
-				});
-			});
-		});
+		con.query(
+			"select * from booking where id=?;",
+			req.body.bookingID,
+			(err, bookingData) => {
+				con.query(
+					"select * from events where id=?;",
+					req.body.eventID,
+					(err, eventsData) => {
+						eventsData[0].dateWanted =
+							eventsData[0].dateWanted.getFullYear() +
+							"/" +
+							eventsData[0].dateWanted.getMonth() +
+							"/" +
+							eventsData[0].dateWanted.getDate();
+						res.render("requestUpdate", {
+							res: req.session.user,
+							bookingData,
+							eventsData
+						});
+					}
+				);
+			}
+		);
 	} else {
 		res.redirect("/login");
 	}
