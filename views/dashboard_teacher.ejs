@@ -79,8 +79,8 @@
 						<div>
 							<b>Booking ID: <%= bookingData[i].id %></b>
 							<br />
-							<b>Date requested:</b> <%= bookingData[i].dateRequested
-							%>
+							<b>Date requested:</b> <%=
+							bookingData[i].dateRequested %>
 							<br />
 							<b>Club:</b> <%= eventsData[i].club %>
 							<br />
@@ -101,7 +101,8 @@
 						<br />
 						<b>User ID:</b> <%= bookingData[i].userID %>
 						<br />
-						<b>Date requested:</b> <%= bookingData[i].dateRequested %>
+						<b>Date requested:</b> <%= bookingData[i].dateRequested
+						%>
 						<br />
 						<b>Date wanted:</b> <%= eventsData[i].dateWanted %>
 						<br />
@@ -116,21 +117,30 @@
 						<b>Status:</b> <%= bookingData[i].status %>
 					</div>
 					<div class="modal-footer">
-						<!-- <a
-							id="approve<%= bookingData[i].id %>"
+						<form
+							action="/requestUpdate"
+							method="post"
+							id="requestUpdate<%= bookingData[i].id %>"
+						>
+							<input type="hidden" name="bookingID" value=<%=
+							bookingData[i].id %>>
+							<input type="hidden" name="eventID" value=<%=
+							eventsData[i].id %>>
+						</form>
+						<a
+							id="edit<%= bookingData[i].id %>"
 							name="editBooking"
+							onclick="editBooking($(this))"
 							class="modal-close waves-effect waves-green btn-flat"
 							>Edit</a
-						> -->
+						>
 						<a
 							id="delete<%= bookingData[i].id %>"
 							name="deleteBooking"
 							class="modal-close waves-effect waves-green btn-flat"
 							>Delete</a
 						>
-						<a
-							href="#!"
-							class="modal-close waves-effect waves-green btn-flat"
+						<a class="modal-close waves-effect waves-green btn-flat"
 							>Close</a
 						>
 					</div>
@@ -143,22 +153,25 @@
 		<script src="js/init.js"></script>
 		<script>
 			$(document).ready(function() {
-				$('.modal').modal();
+				$(".modal").modal();
 			});
+			function editBooking(params) {
+				$("#requestUpdate" + params[0].id.replace("edit", "")).submit();
+			}
 			$('[name="deleteBooking"]').click(function() {
 				var payload = {
 					bookingID: $(this)
-						.attr('id')
-						.replace('delete', '')
+						.attr("id")
+						.replace("delete", "")
 				};
-				fetch('/deleteBooking', {
-					method: 'POST',
+				fetch("/deleteBooking", {
+					method: "POST",
 					body: new URLSearchParams($.param(payload))
 				})
 					.then(function(response) {
 						if (response.status !== 200) {
 							alert(
-								'Looks like there was a problem. Status Code: ' +
+								"Looks like there was a problem. Status Code: " +
 									response.status
 							);
 							return;
@@ -173,7 +186,7 @@
 						});
 					})
 					.catch(function(err) {
-						alert('Submit Error :-S', err);
+						alert("Submit Error :-S", err);
 					});
 			});
 		</script>
