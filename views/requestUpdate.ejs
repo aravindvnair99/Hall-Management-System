@@ -174,8 +174,10 @@
 									</button>
 								</div>
 								<br />
-								<input type="hidden" name="bookingID" value="`<%=bookingData[0].id %>`">
-								<input type="hidden" name="eventID" value="`<%=eventsData[0].id %>`">
+								<input type="hidden" name="bookingID"
+								value=<%=bookingData[0].id %>> <input
+								type="hidden" name="eventID"
+								value=<%=eventsData[0].id %>>
 							</form>
 						</div>
 					</div>
@@ -229,7 +231,7 @@
 							$(".not_available").removeAttr("disabled");
 							$("td").removeClass();
 							var not_available = [];
-							data.forEach(element => {
+							data.forEach((element) => {
 								for (
 									let i = 0;
 									i < element.slotHall.toString().length;
@@ -244,7 +246,7 @@
 								}
 							});
 							console.log(not_available);
-							not_available.forEach(element => {
+							not_available.forEach((element) => {
 								$("#" + element).toggleClass("not_available");
 							});
 							$(".not_available").attr("disabled", "disabled");
@@ -266,8 +268,7 @@
 						.attr("id")
 						.charAt(1);
 					var payload = {
-						dateWanted: document.getElementById("dateWanted")
-							.value
+						dateWanted: document.getElementById("dateWanted").value
 					};
 					fetch("/checkAvailability", {
 						method: "POST",
@@ -287,7 +288,7 @@
 								var hall = [];
 								var slot = [];
 								if (Object.entries(data).length != 0) {
-									data.forEach(element => {
+									data.forEach((element) => {
 										for (
 											let i = 0;
 											i <
@@ -303,8 +304,7 @@
 										for (
 											let i = 1;
 											i <
-											element.slotHall.toString()
-												.length -
+											element.slotHall.toString().length -
 												1;
 											i += 2
 										) {
@@ -337,7 +337,7 @@
 						});
 				}
 			});
-			$("#request_form").submit(eventObj => {
+			$("#request_form").submit((eventObj) => {
 				for (var i = 1; i <= 7; i++)
 					for (var j = 1; j <= 9; j++)
 						if ($("#" + j + i).hasClass("colour")) {

@@ -147,25 +147,22 @@ app.get("/request", (req, res) => {
 		res.redirect("/login");
 	}
 });
-app.get("/requestUpdate", (req, res) => {
+app.post("/requestUpdate", (req, res) => {
 	if (req.session.user) {
-		con.query("select * from booking where id=4;", (err, bookingData) => {
-			con.query(
-				"select * from events where id=31;",
-				(err, eventsData) => {
-					eventsData[0].dateWanted =
-						eventsData[0].dateWanted.getFullYear() +
-						"/" +
-						eventsData[0].dateWanted.getMonth() +
-						"/" +
-						eventsData[0].dateWanted.getDate();
-					res.render("requestUpdate", {
-						res: req.session.user,
-						bookingData,
-						eventsData
-					});
-				}
-			);
+		con.query("select * from booking where id=?;", req.body.bookingID, (err, bookingData) => {
+			con.query("select * from events where id=?;", req.body.eventID, (err, eventsData) => {
+				eventsData[0].dateWanted =
+					eventsData[0].dateWanted.getFullYear() +
+					"/" +
+					eventsData[0].dateWanted.getMonth() +
+					"/" +
+					eventsData[0].dateWanted.getDate();
+				res.render("requestUpdate", {
+					res: req.session.user,
+					bookingData,
+					eventsData
+				});
+			});
 		});
 	} else {
 		res.redirect("/login");
@@ -301,14 +298,14 @@ app.post("/makeRequest", (req, res) => {
 });
 app.post("/onRequestUpdate", (req, res) => {
 	if (req.session.user) {
-		// var slotHall = "";
-		// for (var i = 1; i <= 7; i++) {
-		// 	for (var j = 1; j <= 9; j++) {
-		// 		if (req.body[`cell${j}${i}`]) {
-		// 			slotHall += j.toString() + i.toString();
-		// 		}
-		// 	}
-		// }
+		var slotHall = "";
+		for (var i = 1; i <= 7; i++) {
+			for (var j = 1; j <= 9; j++) {
+				if (req.body[`cell${j}${i}`]) {
+					slotHall += j.toString() + i.toString();
+				}
+			}
+		}
 		var eventPayload = {
 			title: req.body.event_name,
 			club: req.body.clubName,
@@ -317,11 +314,9 @@ app.post("/onRequestUpdate", (req, res) => {
 			dateWanted: req.body.dateWanted,
 			userID: req.session.user.id
 		};
-		console.log({eventPayload}, req.body.bookingID)
 		con.query(
 			"update events set ? where id = ?",
-			eventPayload,
-			req.body.bookingID,
+			[eventPayload, req.body.eventID],
 			(err) => {
 				if (!err) {
 					console.log(`Updated event with id ${req.body.eventID}.`);
