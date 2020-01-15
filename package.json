@@ -1,7 +1,7 @@
 {
 	"title": "Hall Management System",
 	"name": "hall-management-system",
-	"version": "1.0.1",
+	"version": "2.0.0",
 	"description": "",
 	"main": "app.js",
 	"keywords": [
@@ -16,8 +16,7 @@
 		"./README.MD"
 	],
 	"scripts": {
-		"test": "node test.js",
-		"start": "node app.js"
+		"start": "node index.js"
 	},
 	"repository": {
 		"type": "git",
@@ -45,8 +44,9 @@
 		"dotenv": "^8.2.0",
 		"ejs": "^3.0.1",
 		"express": "^4.17.1",
+		"express-rate-limit": "^5.0.0",
 		"morgan": "^1.9.1",
 		"mysql": "^2.17.1",
-		"mysql-aes": "0.0.1"
+		"mysql-aes": "^0.0.1"
 	}
 }
