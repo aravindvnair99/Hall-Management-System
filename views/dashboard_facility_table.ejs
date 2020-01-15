@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>Request Form | AHMS</title>
+		<title>Facility Dashboard | AHMS</title>
 		<link
 			href="https://fonts.googleapis.com/icon?family=Material+Icons"
 			rel="stylesheet"
@@ -79,7 +79,6 @@
 								class="col s12"
 								action="/makeRequest"
 								method="post"
-								onsubmit="return validateForm()"
 							>
 								<div class="row">
 									<h3 class="center">Request Form</h3>
@@ -91,7 +90,6 @@
 											type="text"
 											class="datepicker"
 											name="dateWanted"
-											required
 										/>
 										<label>Choose a date</label>
 									</div>
@@ -103,7 +101,7 @@
 											id="clubName"
 											name="clubName"
 											type="text"
-											required
+											disabled
 										/>
 										<label for="clubName">Club Name</label>
 									</div>
@@ -114,7 +112,7 @@
 											id="desc"
 											type="text"
 											name="desc"
-											required
+											disabled
 										/>
 										<label for="desc">Description</label>
 									</div>
@@ -125,7 +123,7 @@
 											id="event_name"
 											type="text"
 											name="event_name"
-											required
+											disabled
 										/>
 										<label for="event_name"
 											>Event Name</label
@@ -138,36 +136,12 @@
 											id="requirements"
 											type="text"
 											name="requirements"
-											required
+											disabled
 										/>
 										<label for="requirements"
 											>Requirements</label
 										>
 									</div>
-								</div>
-								<div
-									class="container"
-									style="text-align: center;"
-								>
-									<button
-										style="background-color: #35377c"
-										class="btn waves-effect waves-light"
-										type="submit"
-									>
-										Submit
-										<i class="material-icons right">send</i>
-									</button>
-									<button
-										style="background-color: #35377c"
-										class="btn waves-effect waves-light"
-										type="button"
-										onclick="window.history.go(-1); return false;"
-									>
-										Back
-										<i class="material-icons right"
-											>cancel_schedule_send
-										</i>
-									</button>
 								</div>
 								<br />
 							</form>
@@ -184,9 +158,12 @@
 				$('select').formSelect();
 			});
 			$('.datepicker').datepicker({
-				yearRange: 1,
-				minDate: new Date(),
-				maxDate: new Date(new Date(Date.now() + 90 * 86400000)),
+				selectMonths: true,
+				selectYears: 15,
+				today: 'Today',
+				clear: 'Clear',
+				close: 'Ok',
+				closeOnSelect: false,
 				format: 'yyyy/mm/dd'
 			});
 			$('#dateWanted').change(function() {
@@ -239,7 +216,7 @@
 			});
 			$('td').click(function() {
 				if ($(this).attr('disabled') == 'disabled') {
-					alert('Slot not available! Try another date or venue!');
+					alert('Need to add function to fetch details!');
 				} else {
 					var identifier = $(this).attr('id');
 					var slot_id = $(this)
@@ -320,28 +297,6 @@
 						});
 				}
 			});
-			$('#request_form').submit(eventObj => {
-				for (var i = 1; i <= 7; i++)
-					for (var j = 1; j <= 9; j++)
-						if ($('#' + j + i).hasClass('colour')) {
-							$('<input />')
-								.attr('type', 'hidden')
-								.attr('name', 'cell' + j + i)
-								.attr('value', j.toString() + i.toString())
-								.appendTo('#request_form');
-						}
-				return true;
-			});
-			function validateForm() {
-				var k = 0;
-				for (var i = 1; i <= 7; i++)
-					for (var j = 1; j <= 9; j++)
-						if ($('#' + j + i).hasClass('colour')) k++;
-				if (k == 0) {
-					alert('Please select at least one slot and hall.');
-					return false;
-				}
-			}
 		</script>
 	</body>
 </html>

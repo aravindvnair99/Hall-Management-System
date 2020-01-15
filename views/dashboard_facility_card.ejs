@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>Teacher Dashboard | AHMS</title>
+		<title>Facility Dashboard | AHMS</title>
 		<link
 			href="https://fonts.googleapis.com/icon?family=Material+Icons"
 			rel="stylesheet"
@@ -26,6 +26,7 @@
 			td {
 				border: 1px solid black;
 			}
+
 			td.random {
 				background-color: red;
 			}
@@ -33,9 +34,9 @@
 	</head>
 
 	<body style="background-color: darkslateblue;">
-		<nav class="dark" role="navigation">
+		<nav class="white" role="navigation">
 			<div class="nav-wrapper container">
-				<a id="logo-container" href="/" class="brand-logo"
+				<a id="logo-container" href="/dashboard" class="brand-logo"
 					>ASE-B Hall Booking</a
 				>
 				<button
@@ -56,13 +57,14 @@
 			</div>
 		</nav>
 		<div>
+			<br /><br />
 			<b>
 				<i
 					style="padding-left: 15%"
 					class="medium small material-icons prefix "
 					>account_box</i
 				>
-				<span style="color:white;font-size: 30px"
+				<span style="color:black;font-size: 30px"
 					>Welcome <%= res.firstName %> <%= res.lastName %>!
 				</span></b
 			>
@@ -71,16 +73,17 @@
 		<div class="row">
 			<% for(var i=(bookingData.length-1); i>=0; i--) {%>
 			<div class="col s12 m6 l3">
-				<div class="card green darken-3">
+				<div class="card blue-grey darken-1">
 					<div class="card-content white-text">
 						<span class="card-title"
 							><%= eventsData[i].title %></span
 						>
 						<div>
-							<b>Booking ID: <%= bookingData[i].id %></b>
+							<b>Booking ID:</b> <%= bookingData[i].id %>
 							<br />
 							<b>Date requested:</b> <%=
-							bookingData[i].dateRequested %>
+							bookingData[i].dateRequested.toDateString() + ' ' +
+							bookingData[i].dateRequested.toLocaleTimeString() %>
 							<br />
 							<b>Club:</b> <%= eventsData[i].club %>
 							<br />
@@ -97,14 +100,16 @@
 				</div>
 				<div id="<%= bookingData[i].id %>" class="modal">
 					<div class="modal-content">
-						<b>Booking ID: <%= bookingData[i].id %></b>
+						<b>Booking ID:</b> <%= bookingData[i].id %>
 						<br />
 						<b>User ID:</b> <%= bookingData[i].userID %>
 						<br />
-						<b>Date requested:</b> <%= bookingData[i].dateRequested
-						%>
+						<b>Date requested:</b> <%=
+						bookingData[i].dateRequested.toDateString() + ' ' +
+						bookingData[i].dateRequested.toLocaleTimeString() %>
 						<br />
-						<b>Date wanted:</b> <%= eventsData[i].dateWanted %>
+						<b>Date wanted:</b> <%=
+						eventsData[i].dateWanted.toDateString() %>
 						<br />
 						<b>Title:</b> <%= eventsData[i].title %>
 						<br />
@@ -117,29 +122,9 @@
 						<b>Status:</b> <%= bookingData[i].status %>
 					</div>
 					<div class="modal-footer">
-						<form
-							action="/requestUpdate"
-							method="post"
-							id="requestUpdate<%= bookingData[i].id %>"
-						>
-							<input type="hidden" name="bookingID" value=<%=
-							bookingData[i].id %>> <input type="hidden"
-							name="eventID" value=<%= eventsData[i].id %>>
-						</form>
 						<a
-							id="edit<%= bookingData[i].id %>"
-							name="editBooking"
-							onclick="editBooking($(this))"
+							href="#!"
 							class="modal-close waves-effect waves-green btn-flat"
-							>Edit</a
-						>
-						<a
-							id="delete<%= bookingData[i].id %>"
-							name="deleteBooking"
-							class="modal-close waves-effect waves-green btn-flat"
-							>Delete</a
-						>
-						<a class="modal-close waves-effect waves-green btn-flat"
 							>Close</a
 						>
 					</div>
@@ -152,41 +137,7 @@
 		<script src="js/init.js"></script>
 		<script>
 			$(document).ready(function() {
-				$(".modal").modal();
-			});
-			function editBooking(params) {
-				$("#requestUpdate" + params[0].id.replace("edit", "")).submit();
-			}
-			$('[name="deleteBooking"]').click(function() {
-				var payload = {
-					bookingID: $(this)
-						.attr("id")
-						.replace("delete", "")
-				};
-				fetch("/deleteBooking", {
-					method: "POST",
-					body: new URLSearchParams($.param(payload))
-				})
-					.then(function(response) {
-						if (response.status !== 200) {
-							alert(
-								"Looks like there was a problem. Status Code: " +
-									response.status
-							);
-							return;
-						}
-						response.json().then(function(data) {
-							if (data.affectedRows == 1) {
-								location.reload();
-							} else {
-								alert(data);
-								location.reload();
-							}
-						});
-					})
-					.catch(function(err) {
-						alert("Submit Error :-S", err);
-					});
+				$('.modal').modal();
 			});
 		</script>
 	</body>
