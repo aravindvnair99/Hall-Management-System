@@ -1,7 +1,7 @@
 {
 	"title": "Hall Management System",
 	"name": "hall-management-system",
-	"version": "1.0.1",
+	"version": "2.0.0",
 	"description": "",
 	"main": "app.js",
 	"keywords": [
