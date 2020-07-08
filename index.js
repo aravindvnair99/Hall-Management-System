@@ -35,7 +35,7 @@ app.use(express.static(__dirname + "/public"));
 app.set("views", path);
 app.set("view engine", "ejs");
 app.listen(app.get("port"), () => {
-	console.log("App is running on port", app.get("port"));
+	console.info("App is running on port", app.get("port"));
 });
 const con = mysql.createPool({
 	host: `${process.env.DB_host}`,
@@ -196,21 +196,21 @@ app.post("/onLogin", (req, res) => {
 						req.session.user = rows[0];
 						res.redirect("/dashboard");
 					} else {
-						console.log("Invalid password");
-						res.status(401).render("error", {
+						console.error("Invalid password");
+						res.status(403).render("error", {
 							errorMessage: "Authentication error!"
 						});
 					}
 				} else {
-					console.log("Username not found!");
+					console.error("Username not found!");
 					res.status(401).render("error", {
 						errorMessage: "Authentication error!"
 					});
 				}
 			} else {
-				console.log("Username not found!");
-				res.status(401).render("error", {
-					errorMessage: "Authentication error!"
+				console.error("Database connectivity error!");
+				res.status(503).render("error", {
+					errorMessage: "Database connectivity error!"
 				});
 			}
 		}
@@ -225,7 +225,7 @@ app.post("/checkAvailability", (req, res) => {
 				if (!err) {
 					res.send(result);
 				} else {
-					console.log(err);
+					console.error(err);
 					res.status(500).render("error", {
 						errorMessage: "Availability checking failed!"
 					});
@@ -256,7 +256,7 @@ app.post("/makeRequest", (req, res) => {
 		};
 		con.query("insert into events set ?", eventPayload, (err) => {
 			if (!err) {
-				console.log(`Inserted ${eventPayload.title} into events.`);
+				console.info(`Inserted ${eventPayload.title} into events.`);
 				con.query(
 					"select id from events WHERE userID= ? ORDER BY id DESC LIMIT 1",
 					req.session.user.id,
@@ -272,12 +272,12 @@ app.post("/makeRequest", (req, res) => {
 								bookingPayload,
 								(err) => {
 									if (!err) {
-										console.log(
+										console.info(
 											`Inserted event with id ${bookingPayload.eventID} into booking.`
 										);
 										res.redirect("/dashboard");
 									} else {
-										console.log(err);
+										console.error(err);
 										res.status(500).render("error", {
 											errorMessage:
 												"Inserting into booking failed!"
@@ -286,7 +286,7 @@ app.post("/makeRequest", (req, res) => {
 								}
 							);
 						} else {
-							console.log(err);
+							console.error(err);
 							res.status(500).render("error", {
 								errorMessage: "Retrieving eventID failed!"
 							});
@@ -294,7 +294,7 @@ app.post("/makeRequest", (req, res) => {
 					}
 				);
 			} else {
-				console.log(err);
+				console.error(err);
 				res.status(500).render("error", {
 					errorMessage: "Inserting into event failed!"
 				});
@@ -327,10 +327,10 @@ app.post("/onRequestUpdate", (req, res) => {
 			[eventPayload, req.body.eventID],
 			(err) => {
 				if (!err) {
-					console.log(`Updated event with id ${req.body.eventID}.`);
+					console.info(`Updated event with id ${req.body.eventID}.`);
 					res.redirect("/dashboard");
 				} else {
-					console.log(err);
+					console.error(err);
 					res.status(500).render("error", {
 						errorMessage: "Updating event failed!"
 					});
@@ -358,7 +358,7 @@ app.post("/deleteBooking", (req, res) => {
 									req.body.bookingID,
 									(err, result) => {
 										if (!err) {
-											console.log(
+											console.info(
 												`${req.body.bookingID} is deleted`
 											);
 											res.send(JSON.stringify(result));
@@ -389,7 +389,7 @@ app.post("/updateStatus", (req, res) => {
 				req.body.bookingID,
 				(err, result) => {
 					if (!err) {
-						console.log(`${req.body.bookingID} is approved`);
+						console.info(`${req.body.bookingID} is approved`);
 						res.send(JSON.stringify(result));
 					} else {
 						res.send(JSON.stringify(err.code));
@@ -402,7 +402,7 @@ app.post("/updateStatus", (req, res) => {
 				req.body.bookingID,
 				(err, result) => {
 					if (!err) {
-						console.log(`${req.body.bookingID} is rejected`);
+						console.info(`${req.body.bookingID} is rejected`);
 						res.send(JSON.stringify(result));
 					} else {
 						res.send(JSON.stringify(err.code));
@@ -410,7 +410,7 @@ app.post("/updateStatus", (req, res) => {
 				}
 			);
 		} else {
-			console.log(`${req.body.bookingID} status update failed.`);
+			console.error(`${req.body.bookingID} status update failed.`);
 			res.status(500).render("error", {
 				errorMessage: "Status Update failed!"
 			});
