@@ -1,4 +1,4 @@
-# :office: Hall-Management-System
+# :office: Hall-Management-System ![](https://komarev.com/ghpvc/?username=AravindVNair99&label=Views)
 A Hall Management System made originally for Amrita University based on HTML, CSS, JS, Node.js
 
 # :computer: How to contribute?
