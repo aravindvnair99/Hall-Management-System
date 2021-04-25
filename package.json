@@ -2,16 +2,8 @@
 	"title": "Hall Management System",
 	"name": "hall-management-system",
 	"version": "2.0.0",
-	"description": "",
-	"main": "app.js",
-	"keywords": [
-		"Amrita",
-		"BookMyHall",
-		"Hall",
-		"Booking",
-		"System",
-		"Management"
-	],
+	"description": "A Hall Management System made originally for Amrita University based on HTML5, CSS3 + Materialize, JS, Node.js, MySQL",
+	"main": "index.js",
 	"man": [
 		"./README.MD"
 	],
@@ -26,7 +18,7 @@
 	"contributors": [
 		{
 			"name": "Aravind V Nair",
-			"url": "https://aravindvnair1999.blogspot.com"
+			"url": "https://github.com/aravindvnair99"
 		},
 		{
 			"name": "Abhishek Sai",
