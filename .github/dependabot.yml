@@ -11,9 +11,3 @@ updates:
   - AravindVNair99
   assignees:
   - AravindVNair99
-  ignore:
-  - dependency-name: express-rate-limit
-    versions:
-    - 5.2.3
-    - 5.2.5
-    - 5.2.6
