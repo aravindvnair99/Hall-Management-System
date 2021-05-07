@@ -11,7 +11,7 @@ const express = require("express"),
 dotenv.config();
 app.use(
 	new RateLimit({
-		windowMs: 15 * 1000, // 15 seconds
+		windowMs: 15 * 1000,
 		max: 15,
 	})
 );
@@ -20,7 +20,8 @@ app.use(
 	cookieSession({
 		name: "session",
 		secret: `${process.env.cookie_secret}`,
-		maxAge: 1 * 60 * 60 * 1000, // 1 hour
+		maxAge: 1 * 60 * 60 * 1000,
+		secure: true,
 	})
 );
 app.use(bodyParser.json());
