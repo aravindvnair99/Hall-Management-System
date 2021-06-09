@@ -4,7 +4,7 @@
 name: Shift Left Scan
 
 on:
-  push:
+  pull_request:
   schedule:
     - cron: '15 22 * * 5'
 
