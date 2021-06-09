@@ -1,7 +1,7 @@
 name: Codacy Security Scan
 
 on:
-  push:
+  pull_request:
   schedule:
     - cron: '44 5 * * 6'
 
